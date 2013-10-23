@@ -2,20 +2,23 @@
 f = open("jma_cat_2000_2012_Mth2.5_formatted.dat", 'r')
 print(f)
 
-#criação da matriz que no momento é o grid. Cada ˜bin˜ é uma coluna
-matrix = [[0 for x in xrange(100)] for x in xrange(7739)] 
+#criacao da matriz que no momento e o grid. Cada bin e uma coluna
+
+matrix = [[0 for x in xrange(5000)] for y in xrange(77398)] 
 
 i = 0
 j = 0
-
-#construção da matriz, começa com um nome terremoto+i e o conteúdo da linha
+i = long(i)
+j = long(j)
+#construcao da matriz, comeca com um nome terremoto+i e o conteudo da linha
 for line in f:
-	k = i % 100
+	k = i % 5000
 	matrix[k][j] = "terremoto" + str(i), line
 	if k == 99:
 		j = j + 1
 	i = i + 1
-	if i == 9999:
+	if i == 77398:
 		break
 	
-
+print(i)
+print(j)
