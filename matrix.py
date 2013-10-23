@@ -1,4 +1,4 @@
-f = open("1.dat", 'r')
+f = open("jma_cat_2000_2012_Mth2.5_formatted.dat", 'r')
 print(f)
 
 matrix = [[0 for x in xrange(100)] for x in xrange(7739)] 
@@ -12,7 +12,7 @@ for line in f:
 	k = i % 100
 
 	#raw_input('press enter!')
-	matrix[k][j] = "terremoto" + str(i)
+	matrix[k][j] = "terremoto" + str(i), line
 	#print(matrix[k][j])
 	if k == 99:
 		j = j + 1
@@ -24,12 +24,8 @@ for line in f:
 
 for ncols in xrange(i):
 	for nrows in xrange(j):
-		#print matrix[99][nrows]
-		a = 0
-		#raw_input('press enter!')
+		print matrix[0][nrows]
+		raw_input('press enter!')
 		
-print("ncols = ",ncols)
 print("i = ",i)
-
-print("nrows = ",nrows)
 print("j = ",j)
