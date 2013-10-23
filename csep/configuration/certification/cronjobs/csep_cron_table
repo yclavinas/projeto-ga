@@ -1,0 +1,36 @@
+# Crontab file for CSEP periodic processes
+
+# Usage:
+# crontab $CSEP/cronjobs/csep_cron_table - to install cronjobs
+# crontab -e - to edit cronjobs
+# crontab -l - to view installed cronjobs
+# crontab -r - to remove cronjobs
+
+# Schedule format as follows:
+# Minute	Hour	Day of month	Month	Day of week	Command
+# (0-59)	(0-23)	(1-31)		(1-12)	(0-6)		command to run
+
+
+# Install daily Dispatcher runs at 00:00am, capture background process id
+05	00	*	*	*	/bin/tcsh /home/csep/operations/cronjobs/dispatcher_ANSS1985_forecasts.tcsh >& /home/csep/cronjob_logs/daily_anss1985_crontab_log.txt;
+10  00  *   *   *   /bin/tcsh /home/csep/operations/cronjobs/dispatcher_ANSS1932.tcsh >& /home/csep/cronjob_logs/daily_anss1932_crontab_log.txt;
+15  00  *   *   *   /bin/tcsh /home/csep/operations/cronjobs/dispatcher_ANSS1932_notFiltered.tcsh >& /home/csep/cronjob_logs/daily_anss1932_notfiltered_crontab_log.txt;
+
+00  03  *   *   *   /bin/tcsh /home/csep/operations/cronjobs/dispatcher_ANSS1985.tcsh >& /home/csep/cronjob_logs/daily_anss1985_crontab_log.txt;
+05  03  *   *   *   /bin/tcsh /home/csep/operations/cronjobs/dispatcher_ANSS1932_notFiltered_defaults.tcsh >& /home/csep/cronjob_logs/daily_anss1932_notfiltered_defaults_crontab_log.txt;
+
+#00	17	16	4	*	/bin/tcsh /home/csep/operations/reprocess/batch_reprocess.tcsh >& /home/csep/cronjob_logs/batch_log.txt;
+
+# Install daily Dispatcher runs for Western Pacific testing region
+00	00	*	*	*	/bin/tcsh /home/csep/operations/testing-regions/NWPacific/cronjobs/dispatcher_one_year.tcsh >& /home/csep/cronjob_logs/NWPacific_1year.txt;
+05	00	*	*	*	/bin/tcsh /home/csep/operations/testing-regions/NWPacific/cronjobs/dispatcher_daily.tcsh >& /home/csep/cronjob_logs/NWPacific_1day.txt;
+
+00	00	*	*	*	/bin/tcsh /home/csep/operations/testing-regions/SWPacific/cronjobs/dispatcher_one_year.tcsh >& /home/csep/cronjob_logs/SWPacific_1year.txt;
+05	00	*	*	*	/bin/tcsh /home/csep/operations/testing-regions/SWPacific/cronjobs/dispatcher_daily.tcsh >& /home/csep/cronjob_logs/SWPacific_1day.txt;
+
+# Install daily Dispatcher runs for Global testing region
+30  00  *   *   *   /bin/tcsh /home/csep/operations/testing-regions/Global/cronjobs/dispatcher_one_year.tcsh >& /home/csep/cronjob_logs/Global_1year.txt;
+00  01  *   *   *   /bin/tcsh /home/csep/operations/testing-regions/Global/cronjobs/dispatcher_one_year_V12.1.tcsh >& /home/csep/cronjob_logs/Global_1year_V12.1.txt;
+
+# Install daily Dispatcher runs for OceanicTransformFaults testing region
+35  00  *   *   *   /bin/tcsh /home/csep/operations/testing-regions/OceanicTransformFaults/cronjobs/dispatcher_daily.tcsh >& /home/csep/cronjob_logs/OceanicTransformFaults_1day.txt;

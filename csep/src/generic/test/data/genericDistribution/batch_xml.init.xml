@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="utf-8"?>
+<batch xmlns="http://www.scec.org/xml-ns/csep/0.1">
+   
+   <directory>batch_runs</directory>
+   
+   <!-- Common to all processes command-line options -->
+   <commandLineOptions enableForecastXMLTemplate=""
+                       disableXMLForecastValidation=""/>
+                       
+
+   <!-- Invoke RELM N-test for XML format of the forecast -->
+   <process executable="src/generic/EvaluationTest.py"
+            forecasts="testForecasts"
+            testDir="NTestForecast"
+            postProcessing="RELMAftershock"
+            tests="N"
+            logFile="logs/testXMLForecastNTest">
+     <schedule>
+        <year>
+            2009
+            <month>
+                7
+                <day>1</day>
+            </month>
+        </year>
+     </schedule>         
+   </process>
+
+   <!-- Invoke RELM L-test for XML format of the forecast -->
+   <process executable="src/generic/EvaluationTest.py"
+            forecasts="testForecasts"
+            testDir="LTestForecast"
+            postProcessing="RELMAftershock"
+            tests="L"
+            numTestSimulations="10"
+            logFile="logs/testXMLForecastLTest">
+     <schedule>
+        <year>
+            2009
+            <month>
+                7
+                <day>2</day>
+            </month>
+        </year>
+     </schedule>         
+   </process>
+
+   <!-- Invoke RELM R-test for XML format of the forecast -->
+   <process executable="src/generic/EvaluationTest.py"
+            forecasts="testForecasts"
+            testDir="RTestForecast"
+            postProcessing="RELMAftershock"
+            tests="R"
+            numTestSimulations="5"
+            logFile="logs/testXMLForecastRTest">
+     <schedule>
+        <year>
+            2009
+            <month>
+                7
+                <day>3</day>
+            </month>    
+        </year>
+     </schedule>         
+   </process>
+
+   <!-- Invoke RELM M-test for XML format of the forecast -->
+   <process executable="src/generic/EvaluationTest.py"
+            forecasts="testForecasts"
+            testDir="MTestForecast"
+            postProcessing="RELMAftershock"
+            tests="M"
+            numTestSimulations="5"
+            logFile="logs/testXMLForecastMTest">
+     <schedule>
+        <year>
+            2009
+            <month>
+                7
+                <day>4</day>
+            </month>
+        </year>
+     </schedule>         
+   </process>
+
+   <!-- Invoke RELM S-test for XML format of the forecast -->
+   <process executable="src/generic/EvaluationTest.py"
+            forecasts="testForecasts"
+            testDir="STestForecast"
+            postProcessing="RELMAftershock"
+            tests="S"
+            numTestSimulations="5"
+            logFile="logs/testXMLForecastSTest">
+     <schedule>
+        <year>
+            2009
+            <month>
+                7
+                <day>5</day>
+            </month>
+        </year>
+     </schedule>         
+   </process>
+
+   <!-- Invoke RELM N-test for XML format of the forecast with manual settings -->
+   <process executable="src/generic/EvaluationTest.py"
+            forecasts="testForecasts"
+            testDir="NTestForecastManualSettings"
+            startDate="2006-01-01"
+            endDate="2011-01-01"
+            catalog="NTestForecastManualSettings/catalog.nodecl.mat"
+            tests="N"
+            logFile="logs/testXMLForecastNTestManualSettings">
+     <schedule>
+        <year>
+            2009
+            <month>
+                7
+                <day>1</day>
+            </month>
+        </year>
+     </schedule>         
+   </process>
+
+   <!-- Invoke RELM L-test for XML format of the forecast with manual settings -->
+   <process executable="src/generic/EvaluationTest.py"
+            forecasts="testForecasts"
+            testDir="LTestForecastManualSettings"
+            startDate="2006-01-01"
+            endDate="2011-01-01"
+            numTestSimulations="10"
+            catalog="LTestForecastManualSettings/catalog.nodecl.dat"
+            tests="L"
+            logFile="logs/testXMLForecastLTestManualSettings">
+     <schedule>
+        <year>
+            2009
+            <month>
+                7
+                <day>2</day>
+            </month>
+        </year>
+     </schedule>         
+   </process>
+
+   <!-- Invoke RELM R-test for XML format of the forecast with manual settings -->
+   <process executable="src/generic/EvaluationTest.py"
+            forecasts="testForecasts"
+            testDir="RTestForecastManualSettings"
+            startDate="2006-01-01"
+            endDate="2011-01-01"
+            numTestSimulations="10"
+            catalog="RTestForecastManualSettings/catalog.nodecl.dat"
+            tests="R"
+            logFile="logs/testXMLForecastRTestManualSettings">
+     <schedule>
+        <year>
+            2009
+            <month>
+                7
+                <day>3</day>
+            </month>
+        </year>
+     </schedule>         
+   </process>
+
+   <!-- Invoke RELM M-test for XML format of the forecast with manual settings -->
+   <process executable="src/generic/EvaluationTest.py"
+            forecasts="testForecasts"
+            testDir="MTestForecastManualSettings"
+            startDate="2006-01-01"
+            endDate="2011-01-01"
+            numTestSimulations="10"
+            catalog="MTestForecastManualSettings/catalog.nodecl.dat"
+            tests="M"
+            logFile="logs/testXMLForecastMTestManualSettings">
+     <schedule>
+        <year>
+            2009
+            <month>
+                7
+                <day>4</day>
+            </month>
+        </year>
+     </schedule>         
+   </process>
+
+   <!-- Invoke RELM S-test for XML format of the forecast with manual settings -->
+   <process executable="src/generic/EvaluationTest.py"
+            forecasts="testForecasts"
+            testDir="STestForecastManualSettings"
+            startDate="2006-01-01"
+            endDate="2011-01-01"
+            numTestSimulations="10"
+            catalog="STestForecastManualSettings/catalog.nodecl.dat"
+            tests="S"
+            logFile="logs/testXMLForecastSTestManualSettings">
+     <schedule>
+        <year>
+            2009
+            <month>
+                7
+                <day>5</day>
+            </month>
+        </year>
+     </schedule>         
+   </process>
+
+</batch>

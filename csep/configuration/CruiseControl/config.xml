@@ -1,0 +1,41 @@
+<cruisecontrol>
+  <project name="CSEP" buildafterfailed="true" requireModification="false">
+	<property name="cruise.home" value="/usr/usc/cruise/projects"/>
+        <property environment="env"/>
+
+	<modificationset>
+	   <svn localworkingcopy="${cruise.home}/${project.name}/checkout"/>
+	</modificationset>
+
+    <listeners>
+       <currentbuildstatuslistener file="${cruise.home}/logs/${project.name}/status.txt"/>
+    </listeners>
+
+    <!-- Schedule Build at 0:00am -->
+    <schedule>
+       <ant anthome="/usr" 
+            antworkingdir="${cruise.home}/${project.name}/checkout"
+            uselogger="false"
+            usedebug="true" 
+            time="0200"
+            buildfile="build.xml"
+            target="ccbuild">
+       </ant>
+    </schedule>
+
+    <log dir="${cruise.home}/logs/${project.name}">
+       <delete every="1" unit="WEEK"/>
+    </log>
+
+    <publishers>
+       <email mailhost="email.usc.edu"
+              subjectprefix="[BUILD@csep-cert]"
+              buildresultsurl="http://csep.usc.edu:8080/cruisecontrol/buildresults/CSEP"
+              returnaddress="liukis@usc.edu">
+       <always address="maechlin@usc.edu, liukis@usc.edu"/>
+          </email>
+    </publishers>
+
+  </project>
+</cruisecontrol>
+

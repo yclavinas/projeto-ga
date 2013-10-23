@@ -1,0 +1,62 @@
+<ns0:ForecastGroup name="CSEP V12.10.0 new three months forecast group due to CONAN model Md2 introduced by Agnes Helmstetter and Max Werner" 
+                   xmlns:ns0="http://www.scec.org/xml-ns/csep/0.1">
+  <ns0:forecastDir>forecasts</ns0:forecastDir>
+  <ns0:resultDir>results</ns0:resultDir>
+  <ns0:catalogDir>observations</ns0:catalogDir>
+  <ns0:postProcessing>ThreeMonthsModel</ns0:postProcessing>
+  <ns0:startDate>2008-05-16 00:00:00</ns0:startDate>
+  <ns0:endDate>2008-08-16 00:00:00</ns0:endDate>
+  <ns0:entryDate>2012-07-01 00:00:00</ns0:entryDate>
+  
+  <ns0:models>
+      CONANThreeMonth
+
+      <ns0:inputs>Md=2</ns0:inputs>
+      
+      <ns0:schedule>
+        <ns0:year>
+           2012
+           <ns0:month>
+              10
+              <ns0:day>
+                 1
+              </ns0:day>
+            </ns0:month>
+         </ns0:year>
+        <ns0:year>
+           2013:2020
+           <ns0:month>
+              1 4 7 10
+              <ns0:day>
+                 1
+              </ns0:day>
+            </ns0:month>
+         </ns0:year>
+         
+      </ns0:schedule>
+   </ns0:models>
+  <ns0:evaluationTests>
+      N L CL M S LW RP RD RT RTT
+
+      <ns0:schedule>
+        <ns0:year>
+           2012
+           <ns0:month>
+              10:12
+              <ns0:day>
+                 14 28
+              </ns0:day>
+            </ns0:month>
+        </ns0:year>
+        <ns0:year>
+            2013:2020
+            <ns0:month>
+               *
+               <ns0:day>
+                 14 28 
+               </ns0:day>
+            </ns0:month>
+         </ns0:year>
+      </ns0:schedule>
+   </ns0:evaluationTests>
+</ns0:ForecastGroup>

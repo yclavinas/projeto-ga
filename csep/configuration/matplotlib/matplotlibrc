@@ -1,0 +1,15 @@
+figure.figsize : 8,6          # 8, 6
+font.size : 14
+font.family : sans-serif      # sans-serif
+font.sans-serif : Helvetica
+axes.linewidth : 1.4          # 1.0
+axes.titlesize : 14           # title() command
+axes.labelsize : 14           # axis labels
+xtick.labelsize : 14
+xtick.major.size : 6          # 4
+xtick.major.pad : 8           # 8
+ytick.labelsize : 14          # numbers on axis
+ytick.major.size : 6          # 4
+ytick.major.pad :  8          # 8
+
+

@@ -1,0 +1,439 @@
+This file contains information about CSEP releases. It covers releases since CSEP
+Version 1.0.0.
+
+=================================================================================
+Trac project management web-site: http://northridge.usc.edu/trac/csep/wiki 
+
+The latest release is CSEP Version 13.4.0.
+
+CSEP 13.4.0 (April 8, 2013)
+----------------------------------------------------------------------------------
+This is the list of problem reports from CSEP's bug tracking system that are fixed 
+in the 13.4.0 release.
+
+#304 Add forecast group to evaluate USGS forecasts
+#305 Polygon's vertex and side inclusion flags should be used to identify forecast's polygon a target event belongs to
+#306 Don't preserve OneDayModelInputCatalog data products within testing framework
+#307 Remove STEP Matlab model for CA testing region from SCEC testing center
+#295 Diagnostics tests should be applied to time-dependent forecasts
+#249 Diagnostics tests should support empty observation catalog
+
+
+CSEP 13.1.0 (January 17, 2013)
+----------------------------------------------------------------------------------
+This is the list of problem reports from CSEP's bug tracking system that are fixed 
+in the 13.1.0 release.
+
+#301 Install Agnes Helmstetter and Max Werner's Md3 configuraion of five-year CONAN model for California
+#300 Install Agnes Helmstetter and Max Werner's Md2 configuraion of five-year CONAN model for California
+#299 Install Agnes Helmstetter and Max Werner's Md3 configuraion of one-year CONAN model for California
+#298 Install Agnes Helmstetter and Max Werner's Md2 configuraion of one-year CONAN model for California
+#297 Install David Rhoades's five-year hybrid JANUS model for California
+#296 Install David Rhoades's one-year hybrid JANUS model for California
+#294 Apply RELM evaluation tests to polygon-based forecasts
+
+
+CSEP 12.10.0 (October 30, 2012)
+----------------------------------------------------------------------------------
+This is the list of problem reports from CSEP's bug tracking system that are fixed 
+in the 12.10.0 release.
+
+#293 Install Matt Gerstenberger and David Rhoades's one-day hybrid SE2 model for California
+#292 Install David Rhoades's three-month hybrid JANUS model for California
+#291 Install David Rhoades's one-day hybrid JANUS model for California
+#290 Install David Rhoades's one-day ETAS model for California
+#289 Install Anges Helmstetter and Max Werner's three-month CONAN model for California
+#288 Install Anges Helmstetter and Max Werner's one-day hybrid ETAS_K3_AVERAGE model for California
+#287 Install Anges Helmstetter and Max Werner's one-day K3 model for California
+#286 'inf' value is introduced into T statistical test result if forecast is providing rate of zero for observed event 
+#283 Support hybrid models based on existing models and/or forecasts within testing center
+#47 Install Anges Helmstetter and Max Werner's one-day ETAS model for California
+
+
+CSEP 12.7.0 (July 9, 2012)
+----------------------------------------------------------------------------------
+This is the list of problem reports from CSEP's bug tracking system that are fixed 
+in the 12.7.0 release.
+
+#282 Install ETAS V1.1 one-day model for California as submitted by Jiancang Zhuang
+#280 Failure to export raw catalog data from SVN when link to raw archived catalog 
+     is detected through existing observation catalog file
+#281 Cumulative catalog, required by T and W evaluation tests, should be optional
+     to allow for reprocessing of older test dates with evaluation tests not 
+     requiring cumulative catalog
+
+
+CSEP 12.4.0 (April 2, 2012)
+----------------------------------------------------------------------------------
+This is the list of problem reports from CSEP's bug tracking system that are fixed 
+in the 12.4.0 release.
+
+#142 Consider catalog repository
+#277 Failure to dowload one of existing CMT *ndk final calalogs results in 
+     earlier date used for preliminary catalog
+#276 Reprocess NWPacific one-year forecasts groups due to reduced magnitude for
+     2011-09-16 event
+
+
+CSEP 12.1.0 (January 3, 2012)
+----------------------------------------------------------------------------------
+This is the list of problem reports from CSEP's bug tracking system that are fixed 
+in the 12.1.0 release.
+
+#267 Install Margaret Boettcher's one-day model for Oceanic Transform Faults testing region
+#265 Observation catalog should be filtered against masked forecast for M and S evaluation tests
+#273 Introduce new Oceanic Transform Faults testing region
+#271 Install 2 EAS models by David Rhoades for California testing region
+#272 Add support for polygon-based forecasts
+#270 Optimize read of large forecasts files for T and W evaluation tests
+#269 Install SHIFT_GSRM model by Peter Bird for Global testing region
+#268 Allow range of values to be specified within <schedule> element of XML format configuration files
+#266 Re-processing should accept existing input catalog to re-generate forecasts (to support NZ Canterbury re-processing) 
+
+
+CSEP 11.7.0 (July 5, 2011)
+----------------------------------------------------------------------------------
+This is the list of problem reports from CSEP's bug tracking system that are fixed 
+in the 11.7.0 release.
+
+#264 Re-process missing CA STEPJAVA one-day forecasts for 2010/10: 22, 25 2010/11: 2
+#263 Re-process missing CA KJSS one-day forecasts for 2010/7: 5, 17, 
+     2010/8: 5, 7, 18, 19, 2010/09: 3, 9, 10, 21, 2010/10: 22, 2010/11: 2
+#262 Upgrade numpy to 1.4.1 and scipy to 0.7.2 versions - latest available for FC14
+#261 Use VirtualMachine images to distribute CSEP software
+#257 Make summary plots for RELM evaluation tests results look like the ones in 'RELM report for 2,5years'
+#260 Re-process CA one-day models for 2011/03/30 through 2011/4/4 due to /tmp space problems
+#258 Add support for two types of PearsonResiduals evaluation test output - "P.residual" or "raw.residual"
+#248 Implement W statistical test introduced by David Rhoades in Python
+#247 Implement T statistical test introduced by David Rhoades in Python
+#259 Re-process CA forecasts groups for 2011-05-12 due to ANSS web site problems
+#219 Upgrade Python to V2.7
+#218 Upgrade matplotlib package used for plotting
+#256 Remove '-fromXML' from forecasts names when plotting tests results
+#255 Error condition caused by forecast's extra cells should be down graded to a warning condition
+#254 Re-process 4/30/2011-5/4/2011 for CA one-day and RELM forecasts groups due to 100% use of /tmp
+#253 Re-process 2011-03-24 test date for CA forecasts groups due to ANSS catalog unavailability
+#241 Re-process CA forecasts groups for 2010-08-23, 2010-08-24 test dates due to ANSS raid issues
+
+
+CSEP 11.1.0 (January 20, 2011)
+----------------------------------------------------------------------------------
+This is the list of problem reports from CSEP's bug tracking system that are fixed 
+in the 11.1.0 release.
+
+#246 Allow to specify strings to be excluded from error patterns
+#227 Install diagnostics evaluation tests by Rick Schoenberg and Robert Clements
+#244 Replace 'nan' with 'NaN' when writing numpy array to the file
+#245 Allow to specify configuration file with new geographical regions
+
+
+CSEP 10.10.0 (October 11, 2010)
+----------------------------------------------------------------------------------
+This is the list of problem reports from CSEP's bug tracking system that are fixed 
+in the 10.10.0 release.
+
+#208 Install Java version of STEP one-day model (by Matt) for California
+#239 Change publishing option for all Dispatcher configuration files to use new storage
+#240 Install a fix for Matlab version of STEP model
+#238 Introduce RELM C(onditional)L test by Max Werner
+#51  Adopt original Fortran declustering code (instead of Matlab version of it)
+#237 Install LatestNearest one-day alarm model by Alvaro for SW Pacific testing region
+#236 Install LatestNearest one-day alarm model by Alvaro for NW Pacific testing region
+#235 Install LatestNearest one-day alarm model by Alvaro for Global testing region
+#234 Install LatestNearest one-day alarm model by Alvaro for California testing region
+#232 Empty catalog passed to CSEPGeneric.Catalog.modifications() to generate 
+     catalog uncertainties raises 'IndexError: index out of bounds' exception
+#231 Re-process 2010-06-12, 2010-06-13 for CA forecasts groups using ANSS 
+     catalog with start date of 1985-01-01
+#230 Row-order iteration is used on column-order cell array of modification 
+     catalogs generated in Python
+#229 Re-process 2010-06-03, 2010-06-04 and 2010-06-05 test dates due to 
+     scec.usc.edu web server crash
+
+
+CSEP 10.7.0 (July 1, 2010)
+----------------------------------------------------------------------------------
+This is the list of problem reports from CSEP's bug tracking system that are fixed 
+in the 10.7.0 release.
+#224 Introduce "all-models" uncertainty plot for L, S and M RELM tests
+#220 Re-implement Matlab codes to prepare catalogs in Python
+#223 Store random seed values within archive
+#225 Reduce precision for values displayed in all-models summaries
+#215 Simplify miniCSEP advertised functionality 
+
+
+CSEP 10.4.0 (April 1, 2010)
+----------------------------------------------------------------------------------
+This is the list of problem reports from CSEP's bug tracking system that are fixed 
+in the 10.4.0 release.
+
+#211 Add support for new web application to view CSEP results
+#74  Post catalogs and scaled down forecasts used by evaluation tests
+#209 Add per event and sum of true log-likelihoods to L, S and M RELM evaluation
+     tests results
+#185 Generate summary tables per each evaluation test
+#207 Inconsistent number of events for 2009-10-03, 2009-11-03, 2009-12-03 
+     observation catalogs of RELM-Mainshock group
+#178 Add a sanity check for number of observed events in cumulative result
+#206 New RELM evaluation test results are appended to the test results from 
+     "failed" run
+#205 Possibility of including the same month CMT events from final and 
+     preliminary catalogs
+
+
+CSEP 10.1.0 (January 4, 2010)
+----------------------------------------------------------------------------------
+This is the list of problem reports from CSEP's bug tracking system that are fixed 
+in the 10.1.0 release.
+
+#197 Start testing of KJSS one-year model for Global testing region
+#191 Create European YUM distribution
+#177 XML format of forecast should still be passed through master XML template
+#194 Eliminate use of decimal.Decimal module from CSEPXMLGeneric.py conversion utilities
+#195 XML format of the EAST forecast provides wrong value for defaultMagBinDimension
+#196 CMT catalog is not available at http://www.ldeo.columbia.edu/~gcmt/projects/CMT
+#198 EAST model incorrectly reads forecastStartDate from input parameter file
+#192 Install Alvaro Gonzalez one-day alarm-based models for Western Pacific testing regions
+#193 Install Alvaro Gonzalez one-day alarm-based models for Global testing region
+#190 Isolate source code of installed forecasts models to testing region sub-directory
+#189 Install download counter for CSEP packages
+
+CSEP 9.10.1 (November 2, 2009)
+----------------------------------------------------------------------------------
+This is the list of problem reports from CSEP's bug tracking system that are fixed 
+in the 9.10.1 release.
+
+#166 Create Trac page with instructions for new model developers
+#183 Exception is raised if the same month is specified in XML format schedule 
+     element multiple times
+#187 Negative centroid time offset relative to 00:00 seconds in CMT raw catalog 
+     results in invalid time
+#188 OneDayModelPostProcess for CMT catalog might include events from the day 
+     following the test date if any are available     
+#174 Re-process 2009/05/14-16 test dates that use CMT catalog due to the ticket #173
+#186 Re-process Western Pacific forecasts for one-year-models-V9.1 and 
+     one-year-alarm-models (due to the fix for Trac ticket #175)
+#184 Introduce Makefile rule to create 'mini-CSEP' distribution
+#181 Re-store ability to re-process one-day forecasts with existing observation catalogs
+#123 Re-process RELM Mainshock groups (due to the fix for ticket #110)
+
+CSEP 9.10.0 (October 1, 2009)
+----------------------------------------------------------------------------------
+This is the list of problem reports from CSEP's bug tracking system that are fixed 
+in the 9.10.0 release.
+
+#179 Display mathematical symbols in plots instead of their word notations
+#171 Cumulative results still use '<' value instead of '<=' in probability function
+#169 Create mini-CSEP distribution
+#176 Spawned simultaneously Dispatchers use the same run-time directory
+#175 Change configuration files for SW and NW Pacific forecasts groups to use local copies of observation catalogs
+#173 Check for downloaded raw catalog file not being empty
+#170 Replace use of xml.dom.minidom by cElementTree module in plotting functions
+#59  Add encryption to the email account password used by Dispatcher
+#172 Install Alvaro Gonzalez models for California
+#168 Re-implement RELM evaluation M-test in Python
+#167 Re-implement RELM evaluation S-test in Python
+#67  Re-implement RELM evaluation R-test in Python
+#66  Re-implement RELM evaluation L-test in Python
+#158 Re-implement RELM evaluation N-test in Python
+#140 CMT scalar magnitude moment is pre-processed to the value with 2 
+     significant digits while it's provided with 3 significant digits in raw catalog
+#160 correct N-test and resulting plots to use two quantile scores
+
+CSEP 9.7.0 (July 1, 2009)
+----------------------------------------------------------------------------------
+This is the list of problem reports from CSEP's bug tracking system that are fixed 
+in the 9.7.0 release.
+
+#159 Add ability to re-process file-based forecasts over various time periods in
+     batch mode
+#162 Date XX-XX-XXXX-fromXML pattern should be stripped in cumulative plot label
+#155 Include S and M evaluation tests into forecasts groups test suite
+#164 Fix for Trac ticket #109 introduced incorrect forecast name parsing for 
+     R-test results
+#136 Install Yan's model (using CMT catalog) for Global testing region
+#163 Don't create deep copy of staged raw catalog data
+#161 Stalled CSEP processes on new csep-op server
+#157 show() function generates blocking pop up windows with plots
+#148 Introduce acceptance tests for web viewer of testing center results
+#154 Re-process alarm-based tests that were processed with V9.4.0
+     (due to the fix for ticket #150)
+#156 BatchProcessing reports successful status even though Dispatcher processes fail
+#153 Re-process R-tests that involve TripleS forecast model 
+     (due to the fix for ticket #147)
+
+CSEP 9.4.2 (May 27, 2009)
+----------------------------------------------------------------------------------
+This is the list of problem reports from CSEP's bug tracking system that are fixed 
+in the 9.4.2 release.
+
+#152 Re-processing with --disableExistingDataStaging option fails if links to 
+     the existing observation catalog file exist
+
+CSEP 9.4.1 (May 20, 2009)
+----------------------------------------------------------------------------------
+This is the list of problem reports from CSEP's bug tracking system that are fixed 
+in the 9.4.1 release.
+
+#151 GMT fatal errors don't cause acceptance test failure
+#146 Avoid overwriting of modules by testing region distribution
+#150 Alarm-based tests are missing test identifier within filename
+#147 Assumption in R-test simulation violated
+#149 Install Peter Shebalin's EAST three-month model for California
+
+CSEP 9.4.0 (April 1, 2009)
+----------------------------------------------------------------------------------
+This is the list of problem reports from CSEP's bug tracking system that are fixed 
+in the 9.4.0 release.
+
+#109 Get rid of Matlab '_' to '-' conversion in models names for result test filename
+#141 Use RPM distribution of CSEP packages
+#144 Increase 'STOP' parameters for catalog conversion used by KJSS Western Pacific
+#133 Allow specification of uncertainties to create modified catalogs
+#139 Fix operator for Matlab probability() function
+#130 StorageAPI should be able to stage existing raw ANSS catalog data for re-processing of test date
+#134 Capture timestamp within name for the log file
+#137 Install corrected version of EEPAS model (David Rhoades)
+#115 Introduce S ("space") evaluation test
+#119 Introduce M ("magnitude") evaluation test
+#126 Make plotting functionality of evaluation test classes as ''classmethod''s
+#135 Confidence bounds for modified catalogs should be changed from 90% to 95%
+
+CSEP 9.1.1 (January 29, 2009)
+----------------------------------------------------------------------------------
+This is the list of problem reports from CSEP's bug tracking system that are fixed 
+in the 9.1.1 release.
+
+#124 Preserve catalog with supplemental independence probabilities for 
+     RELM Mainshock forecasts groups
+#125 Plot labels for daily R-test results should be flipped
+#128 N-test delta should be computed as poisscdf(N, lambda)
+#127 ebel.mainshock and ebel.mainshock.corrected R-Test charts not displaying
+
+CSEP 9.1.0 (January 5, 2009)
+----------------------------------------------------------------------------------
+This is the list of problem reports from CSEP's bug tracking system that are fixed 
+in the 9.1.0 release.
+
+#114 Cutting catalog to geographical region eliminates valid events if their 
+     longitude or latitude values fall on the area cell borders
+#99  Maps of forecasts with very small rates values should be made more detailed     
+#111 Install Kagan-Jackson Smooth Seismisity Model for California
+#122 Install DBM model for global testing region
+#117 Switch from wget to Python's urllib for ANSSDataSource.py data retrieval
+#116 Introduce grobal testing region to the SCEC testing center
+#121 r-test results flipped
+#120 Install Jeremy's TripleS forecast model for Global testing region
+#113 ANSS events with missing depth value have their time set to 00:00:00 by Matlab import routine
+#118 Java heap size should be explicitly set for alarm-based tests
+#92  Automate Double Branching (one-year) Model for Western Pacific Regions
+#110 RELM Mainshock forecasts groups should use declustered catalog for evaluation tests
+#38  Generate CSEP Testing Center Technical report
+
+
+CSEP 8.10.0 (October 1, 2008)
+----------------------------------------------------------------------------------
+This is the list of problem reports from CSEP's bug tracking system that are fixed 
+in the 8.10.0 release.
+
+#108 Install 5-year alarm and rate based TripleS forecast for California
+#103 Introduce alarm-based evaluation tests
+#104 Install alarm-based version of TripleS model for Western Pacific testing regions
+#105 Sub-divide Dispatcher run-time directories and log files to avoid too many entries under the same top-level directory
+#89  Automate TODAY to UTC adjustment in Yan's forecasts
+#101 Observation calalog used for map generation should be cut to the beginning of the testing period
+
+
+CSEP 8.7.1 (August 7, 2008)
+----------------------------------------------------------------------------------
+This is the list of problem reports from CSEP's bug tracking system that are fixed 
+in the 8.7.1 release.
+
+#98 Re-processing of the test date doesn't stage existing modifications catalogs
+#93 Change of CMT web-site directory structure causes extra files being downloaded
+#97 Reduce disk usage by removing originally downloaded and pre-processed catalogs files
+#96 Cumulative R-test result plot should switch curves labels
+#95 Should not scan forecast directory for staged files at construction time
+#94 Use CSEPStorage functionality to stage archived XML format forecast file if it exists
+
+
+CSEP 8.7.0 (July 1, 2008)
+----------------------------------------------------------------------------------
+This is the list of problem reports from CSEP's bug tracking system that are fixed 
+in the 8.7.0 release.
+
+#15 Example data formats
+#60 Investigate increasing of the Matlab recursive limit for STEP one-day model
+#3  Install Yan's one-day model on motion.usc.edu
+#4  Set up Yan's model one-day test scenario
+#90 Install Jeremy's Triple_S one-year forecast model
+#83 Catalog filtering should be specific to the data source
+#14 Distribution of codes
+#84 N-test for dates that were not processed with CSEP V8.4.0 should be re-processed
+#85 Test dates that contributed to extra R-test cumulative file as a result of ticket #81 should be reprocessed
+#87 Forecasts maps are not displayed for three-month group
+#40 Archive yum updates and develop policy for updating csep_operational
+#91 ASCII forecasts that don't provide header information are missing first 7 entries during evaluation
+
+
+CSEP 8.4.1 (May 5, 2008)
+----------------------------------------------------------------------------------
+This is the list of problem reports from CSEP's bug tracking system that are fixed 
+in the 8.4.1 release.
+ 
+#88 Map for 3 month models not being displayed
+#40 Archive yum updates and develop policy for updating csep_operational
+#42 Setup matlab stand alone license manager
+#86 Delete old result files on publishing web-site if evaluation test is re-run for the test date
+#79 Forecasts maps don't display events with magnitude values less than 5.0
+#80 Switch from Python ElementTree package used for XML parsing to cElementTree
+#81 list->set->list conversion for the list of forecasts files causes two sets of cumulative files for R-test
+#82 Cumulative R-test plot is missing on the results web-page.
+#63 Test dates that were processed with V1.0 should be reprocessed with V8.1
+#78 Introduce BatchProcessing module to reprocess test dates
+#49 Look at possibility of making dispatcher runs completely independent.
+
+
+CSEP 8.4.0 (April 1, 2008)
+----------------------------------------------------------------------------------
+This is the list of problem reports from CSEP's bug tracking system that are fixed
+in the 8.4.0 release.
+
+
+#36 Re-implement RELM evaluation N-test without the use of random numbers
+#71 Introduce storageAPI to query file system for already existing data product 
+#72 Simplify Matlab implementation of simulation catalogs
+#75 Report uncaught exceptions generated by Dispatcher run as failure
+#50 Display image of the forecast on result web-page 
+#73 Simplify Matlab implementation of R-test
+#64 Add CMT authorized data source
+#65 Create metadata file for each newly generated forecast file
+#41 Setup a copy of all daily results needed for reproducibility to USC HPCC account
+#69 Don't invoke archive and ssh commands for result publishing if no evaluation tests have been invoked
+#55 Post warning notice about ANSS events used by SCEC testing center V1.0
+#62 File IO approach used by Python random number generator doubles up the processing time
+#61 getCatalog_Import.m cannot import over 1 million of catalog events
+
+
+CSEP 8.1.0 (January 2, 2008)
+----------------------------------------------------------------------------------
+
+This is the list of problem reports from CSEP's bug tracking system that are fixed
+in the 8.1.0 release.
+
+#70 Don't store random numbers to files - store seed value only 
+#46 Setup test web site that is populated by csep_development
+#39 Install and configure wiki based on current CSEP organizational outline
+#48 Setup email list to send dispatcher success or failure notices.
+#54 Create 'make' targets specific to the code distribution
+#34 Install 3-months EEPAS forecast model (David Rhoades)
+#57 Add ability to re-process failed test days 	Toolkit
+#56 Sign position for ANSS latitude field is omitted by pre-processing routine
+#53 Filter ANSS catalogs for events only
+#37 Move CruiseControl to csep-devel, and reconfigure CSEP nightly cronjob to exercise the same source code
+#35 Download raw input ANSS catalog beginning 01/01/1932
+#33 Introduce 'trunk' directory to the Subversion
+#31 Add Dispatcher's start and end time to the email notification
+#32 Add labels for R-test plots
+
+

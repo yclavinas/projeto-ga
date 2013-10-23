@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Dispatcher xmlns="http://www.scec.org/xml-ns/csep/0.1">
+   <directory>/home/csep/operations/dispatcher/runs</directory>
+
+   <email smtphost="localhost"
+          from="liukis@usc.edu"
+          subjectPrefix="California models (not filtered ANSS catalog 1932-01-01) with default experiments settings">
+       maechlin@usc.edu liukis@usc.edu
+   </email>
+
+   <catalogDataSource minMagnitude="-10.0" startDate="1932-1-1">ANSS</catalogDataSource>
+
+   <!-- One-day rate-based models -->
+   <forecastGroup>/home/csep/operations/SCEC-natural-laboratory/one-day-models-Md2-V12.10</forecastGroup>
+   
+   <!-- Three-months rate-based models -->
+   <forecastGroup>/home/csep/operations/SCEC-natural-laboratory/three-months-models-Md2-V12.10</forecastGroup>
+
+   <!-- One-year rate-based models -->
+   <forecastGroup>/home/csep/operations/SCEC-natural-laboratory/one-year-models-Md2-V13.1</forecastGroup>
+
+   <!-- Five-year rate-based models -->
+   <forecastGroup>/home/csep/operations/SCEC-natural-laboratory/five-year-models-Md2-V13.1</forecastGroup>
+
+</Dispatcher>

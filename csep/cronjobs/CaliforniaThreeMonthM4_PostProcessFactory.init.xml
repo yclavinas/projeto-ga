@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<postProcessFactory xmlns="http://www.scec.org/xml-ns/csep/0.1">
+
+   <module>
+      ThreeMonthsModelPostProcess.ThreeMonthsModelPostProcess
+
+      <MinMagnitude type="float">3.95</MinMagnitude>
+      <ForecastTemplate type="csepfile">CENTERCODE/data/templates/csep-forecast-template-M4.xml</ForecastTemplate>
+   </module>   
+
+</postProcessFactory>

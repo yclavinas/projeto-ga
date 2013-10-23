@@ -1,0 +1,24 @@
+<?xml version='1.0' encoding='UTF-8'?>
+
+<!-- add namespace specification later on -->
+<xs:schema 
+        elementFormDefault="qualified" 
+        xmlns:xs="http://www.w3.org/2001/XMLSchema"
+        version="1.0">
+
+	 <!-- Include other schemas -->
+	 <xs:include schemaLocation="catalog.xsd"/>
+	 <xs:include schemaLocation="forecast.xsd"/>
+
+
+    <xs:element name="RELMTest">
+        <xs:complexType>
+            <xs:sequence>
+					 <xs:element name="Catalog" type="CatalogType" minOccurs="0" maxOccurs="unbounded"/>
+					 <xs:element name="DeclusteredCatalog" type="DeclusteredCatalogType" minOccurs="0"/>
+					 <xs:element name="Forecast" type="ForecastType" minOccurs="0" maxOccurs="2"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+</xs:schema>

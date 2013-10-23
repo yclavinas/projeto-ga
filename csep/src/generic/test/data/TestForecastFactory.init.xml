@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<forecastFactory xmlns="http://www.scec.org/xml-ns/csep/0.1">
+
+   <geographicalRegion configDir='CENTERCODE/src/generic/test/data/unitTest/geographicalRegionsInitFile'>California</geographicalRegion>
+
+   <path>user/fooTestPath1:user/fooTestPath2</path>
+   
+   <module>BogusForecastModel1.BogusForecastModel1</module>   
+   <module>BogusForecastModel2.BogusForecastModel2</module>
+   <module>BogusForecastModel3.BogusForecastModel3</module>   
+   
+</forecastFactory>

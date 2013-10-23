@@ -1,0 +1,67 @@
+<?xml version='1.0' encoding='UTF-8'?>
+
+<!-- add namespace specification later on -->
+<xs:schema 
+
+        elementFormDefault="qualified" 
+        xmlns:xs="http://www.w3.org/2001/XMLSchema"
+        version="1.0">
+
+    <xs:complexType name="RangeType">
+        <xs:annotation>
+            <xs:documentation>Data type that defines a range for the variable</xs:documentation>
+        </xs:annotation>
+        <xs:all>
+            <xs:element name="Minimum" type="xs:decimal"></xs:element>
+            <xs:element name="Maximum" type="xs:decimal"></xs:element>
+        </xs:all>
+		  <xs:attribute name="units" type="xs:string" use="optional"/>
+    </xs:complexType>
+
+    <xs:complexType name="CellType">
+        <xs:annotation>
+            <xs:documentation>Data type that defines a physical location</xs:documentation>
+        </xs:annotation>
+        <xs:all>
+            <xs:element name="LongitudeRange" type="RangeType"></xs:element>
+            <xs:element name="LatitudeRange" type="RangeType"></xs:element>
+            <xs:element name="DepthRange" type="RangeType"></xs:element>
+        </xs:all>
+    </xs:complexType>
+
+    <xs:complexType name="BinType">
+        <xs:annotation>
+            <xs:documentation>Data type that defines event bin: locaton and magnitude</xs:documentation>
+        </xs:annotation>
+        <xs:all>
+            <xs:element name="Cell" type="CellType"></xs:element>
+            <xs:element name="MagnitudeRange" type="RangeType"></xs:element>
+        </xs:all>
+    </xs:complexType>
+
+    <xs:complexType name="ForecastBinType">
+        <xs:annotation>
+            <xs:documentation>Forecast bin: locaton, magnitude, rate, and mask bit</xs:documentation>
+        </xs:annotation>
+        <xs:all>
+            <xs:element name="Bin" type="BinType"></xs:element>
+            <xs:element name="Rate" type="xs:decimal"></xs:element>
+            <xs:element name="MaskBit" type="xs:integer"></xs:element>
+ 				<xs:element name="NumberOfEvents" minOccurs="0" type="xs:integer"/>
+        </xs:all>
+    </xs:complexType>
+
+    <xs:complexType name="ForecastType">
+        <xs:annotation>
+            <xs:documentation>Forecast type</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element maxOccurs="unbounded" name="ForecastBin" type="ForecastBinType"></xs:element>
+        </xs:sequence>
+        <xs:attribute default="2006-01-01T00:00:00" name="startDateTime" type="xs:dateTime"></xs:attribute>
+        <xs:attribute default="2006-01-01T00:00:00" name="endDateTime" type="xs:dateTime"></xs:attribute>
+        <xs:attribute name="duration" type="xs:decimal" use="required"></xs:attribute>
+        <xs:attribute name="name" type="xs:string" use="required"></xs:attribute>
+    </xs:complexType>
+
+</xs:schema>

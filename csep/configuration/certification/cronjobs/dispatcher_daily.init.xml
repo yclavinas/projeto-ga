@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Dispatcher xmlns="http://www.scec.org/xml-ns/csep/0.1">
+   <directory>/home/csep/operations/dispatcher/runs</directory>
+
+   <email smtphost="email.usc.edu"
+          from="liukis@usc.edu"
+          subjectPrefix="California">
+       maechlin@usc.edu liukis@usc.edu
+   </email>
+
+   <!-- One day models -->
+   <forecastGroup>/home/csep/operations/SCEC-natural-laboratory/one-day-models</forecastGroup>
+   <forecastGroup>/home/csep/operations/SCEC-natural-laboratory/one-day-models-V9.1</forecastGroup>
+   <forecastGroup>/home/csep/operations/SCEC-natural-laboratory/one-day-models-optimized</forecastGroup>
+
+</Dispatcher>

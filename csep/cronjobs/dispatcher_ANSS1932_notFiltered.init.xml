@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Dispatcher xmlns="http://www.scec.org/xml-ns/csep/0.1">
+   <directory>/home/csep/operations/dispatcher/runs</directory>
+
+   <email smtphost="localhost"
+          from="liukis@usc.edu"
+          subjectPrefix="California one-day and three-month alarm models (ANSS: 1932-01-01, M>=-10)">
+       csep-dispatcher@intensity.usc.edu
+   </email>
+
+   <catalogDataSource minMagnitude="-10.0" startDate="1932-1-1">ANSS</catalogDataSource>
+
+   <postProcessFactoryConfigFile>CENTERCODE/cronjobs/CaliforniaThreeMonthM4_PostProcessFactory.init.xml</postProcessFactoryConfigFile>
+
+   <!-- One-day models -->
+   <forecastGroup>/home/csep/operations/SCEC-natural-laboratory/one-day-alarm-models-V9.10</forecastGroup>
+   <forecastGroup>/home/csep/operations/SCEC-natural-laboratory/one-day-alarm-models-V10.10</forecastGroup>
+   
+   <!-- Three-months models -->
+   <forecastGroup>/home/csep/operations/SCEC-natural-laboratory/three-months-alarm-models-V9.7</forecastGroup>
+   <forecastGroup>/home/csep/operations/SCEC-natural-laboratory/three-months-alarm-models-V9.10</forecastGroup>
+
+</Dispatcher>

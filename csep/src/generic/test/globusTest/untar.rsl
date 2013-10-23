@@ -1,0 +1,5 @@
+& (rsl_substitution = (TOPDIR "/home/mliukis/globusStage") )
+  (directory = $(TOPDIR))
+  (executable = $(GLOBUSRUN_GASS_URL)/home/mliukis/CSEP/src/LongtermForecast/test/untar.csh) 
+  (arguments = $(TOPDIR)#"/stage.tar")
+  (count = 1)

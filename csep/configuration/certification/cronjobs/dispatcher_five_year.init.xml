@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Dispatcher xmlns="http://www.scec.org/xml-ns/csep/0.1">
+   <directory>/home/csep/operations/dispatcher/runs</directory>
+
+   <email smtphost="email.usc.edu"
+          from="liukis@usc.edu"
+          subjectPrefix="California Five-Year Models">
+       maechlin@usc.edu liukis@usc.edu
+   </email>
+
+   <catalogDataSource minMagnitude="2.95" startDate="1932-1-1">ANSS</catalogDataSource>
+
+   <!-- Five-year models -->
+   <forecastGroup>/home/csep/operations/SCEC-natural-laboratory/five-year-rate-models</forecastGroup>
+   <forecastGroup>/home/csep/operations/SCEC-natural-laboratory/five-year-alarm-models</forecastGroup>
+   
+   <!-- New entries for five-year models -->   
+   <forecastGroup>/home/csep/operations/SCEC-natural-laboratory/five-year-rate-models-V9.1</forecastGroup>
+
+</Dispatcher>

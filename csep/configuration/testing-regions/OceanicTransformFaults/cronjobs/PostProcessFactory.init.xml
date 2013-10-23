@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<postProcessFactory xmlns="http://www.scec.org/xml-ns/csep/0.1">
+
+   <module>
+      OneDayModelPostProcess.OneDayModelPostProcess
+
+      <MinMagnitude type="float">5.95</MinMagnitude>
+      <MaxDepth type="float">30.0</MaxDepth>
+      <ForecastTemplate type="csepfile">CENTERCODE/data/templates/oceanic_transform_faults.forecast.xml</ForecastTemplate>
+   </module>   
+   
+</postProcessFactory>

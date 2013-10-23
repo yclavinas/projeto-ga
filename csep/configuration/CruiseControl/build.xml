@@ -1,0 +1,39 @@
+<project name="buildCSEP" default="ccbuild" >
+   
+   <!-- Read environment variables in -->
+   <property environment="env"/>
+   <property name="pythonpath" value="${env.PYTHONPATH}"/>
+
+   <!-- Value for CENTERCODE environment variable -->
+   <!-- property name="centercode" value="${cruise.home}/${project.name}/checkout" / --> 
+   <!-- property name="srccode" value="${centercode}/src" / --> 
+
+
+   <!-- Update source code from SVN repository -->
+   <target name="update" description="Update source code from SVN repository.">
+      <exec executable="svn" failonerror="true">
+         <arg line="update"/>
+      </exec>
+   </target>
+
+   <!-- Build binaries -->
+   <target name="build" depends="update" description="Build binaries for the CSEP."> 
+      <exec executable="make" failonerror="true"/>
+   </target>
+
+   <!-- Install binaries -->
+   <target name="install" depends="build" description="Install CSEP binaries.">
+      <exec executable="make" failonerror="true">
+	 <arg line="install"/>
+      </exec>
+   </target>
+
+   <!-- Run unit and acceptance tests -->
+   <target name="ccbuild" depends="install, build, update" description="Run unit and acceptance tests for the CSEP.">
+      <exec executable="make" failonerror="true">
+         <arg line="check"/>
+      </exec>
+   </target>
+
+</project>
+

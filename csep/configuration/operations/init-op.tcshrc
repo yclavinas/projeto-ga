@@ -1,0 +1,38 @@
+### This file should be copied to the csep user account home directory as
+### .tcshrc file.
+
+setenv MPICH2 /usr/local/mpich2/mpich-gcc
+setenv ETAS_R_PACKAGE /usr/local/R-project
+
+setenv PATH /opt/intel/fc/9.0/bin:/usr/java/default/bin:"$MPICH2"/bin:/usr/local/R/2.11.1/bin:/home/csep/local/bin:/usr/local/bin:"$PATH"
+setenv LD_LIBRARY_PATH /opt/intel/fc/9.0/lib
+setenv XML_FORTRAN /usr/local/xml-fortran/lib
+
+### Matlab specific env to get shell commands working in Matlab through X11
+setenv MATLAB_SHELL /bin/sh
+
+
+### Subversion environment
+setenv SVN_EDITOR emacs
+setenv SVN http://intensity.usc.edu/svn/csep
+
+setenv EDITOR /usr/bin/emacs
+
+### CSEP environment
+# Path to the top level CSEP directory for operations
+setenv CSEP /home/csep/operations
+setenv CSEP_RESULTS_DIR /home/csep/buildCSEP/resultsForRelease
+
+# Variables required by GMT map generation
+setenv NETCDFHOME /usr/local/netCDF
+setenv GMTHOME /usr/local/GMT4.3.1/bin
+setenv IMAGEMAGICKHOME /usr/bin
+
+# Variables required by CSEP software
+setenv CENTERCODE /usr/local/csep
+setenv CSEP_SRC $CENTERCODE/src
+setenv PYTHONPATH $CSEP_SRC/generic:$CSEP_SRC/SCECModels:$CSEP_SRC/SCECModels/California:$CSEP_SRC/SCECModels/WesternPacific:$CSEP_SRC/SCECModels/Global:$CSEP_SRC/SCECModels/postProcessing:$CSEP_SRC/generic/test:$CSEP_SRC/generic/test/unitTest
+
+### Aliases
+alias rmtmp "find . -name '*~' -exec rm -rf {} \; -print"
+alias pytmp "find . -name '*.pyc' -exec rm -rf {} \; -print"

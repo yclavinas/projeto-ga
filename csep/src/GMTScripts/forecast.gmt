@@ -1,0 +1,222 @@
+#!/bin/bash
+
+# Generates a map of a California forecast and overlays earthquake catalog,
+# state boundary, and fault lines. This script is part of the CSEP
+# Testing Center software
+#
+# Copyright (C) 2008 by Danijel Schorlemmer
+#
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the
+# Free Software Foundation, Inc.,
+# 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+
+function PrintHelp()
+{
+  echo "Creates a forecast map of southern California"
+  echo "Usage: forecast.gmt [OPTIONS]"
+  echo "  Select data"
+  echo "    -f           Forecast file"
+  echo "    -e           Earthquake catalog file"
+  echo "    -d           Data file directory (faults, California boundary, etc.)"
+  echo "  Directory options"
+  echo "    -o           Output file (default: forecast.png)"
+  echo "    -s           directory for scratch files (default: .)"
+  echo "  Plot options"
+  echo "    -l           Add longitude/latitude labels"
+  echo "    -m           Plot only masked cells (default: plot all cells)"
+  echo "    -p <layers>  Plot layers"
+  echo "                   b: California border"
+  echo "                   e: events"
+  echo "                   f: faults"
+  echo "    -r           Resolution of output image (default 144 per inch)"
+  echo "    -v           Maximum colorbar value (default: largest forecast found in forecast file)"
+  echo "  Switches"
+  echo "    -g           No garbage collection"
+  echo "    -V           Verbose mode"
+  echo "  Special options"
+  echo "    -h           Print this message and exit"
+  return
+}
+
+# Set defaults
+garbage_collection=1
+final_PNG="forecast.png"
+SKR="./"
+DATA="./datafiles/"
+forecast_data="."
+earthquake_data="."
+colorbar_maximum=-1 # -1 is default value for obtaining the largest forecast in any cell
+masked_only=0
+resolution=144
+add_labels=0
+verbose_mode=0
+
+# Parse options
+while getopts "d:e:Ef:ghlmo:p:r:s:v:V" flag
+do
+  case $flag in
+    d ) DATA=$OPTARG;;
+    e ) earthquake_data=$OPTARG;;
+    E ) delete_eps=1;;
+    f ) forecast_data=$OPTARG;;
+    g ) garbage_collection=0;;
+    h ) PrintHelp; exit;;
+    l ) add_labels=1;;
+    m ) masked_only=1;;
+    o ) final_PNG=$OPTARG;;
+    p ) plot_layers=$OPTARG;;
+    r ) resolution=$OPTARG;;
+    s ) SKR=$OPTARG;;
+    v ) colorbar_maximum=$OPTARG;;
+    V ) verbose_mode=1;;
+  esac
+done
+
+# Check if forecast file is given by the user
+if [ $forecast_data == "." ]; then
+  echo "ERROR: Forecast file not specified."
+  echo "Exiting."
+  exit
+fi
+
+# Set directories
+SKR="$SKR/$$"
+if [ ! -e $SKR ]; then
+  mkdir $SKR
+fi
+
+# Set filenames
+output="$SKR/map.eps"
+final_EPS="forecast.eps"
+faults="$DATA/CA_faults.all.dat"
+california="$DATA/CA_boundary.dat"
+testing_grid="$DATA/testing.grid.dat"
+forecast_prepared="$SKR/forecast.gawk"
+forecast_grid="$SKR/forecast.grd"
+colormap_pov="$DATA/csep.forecast.pov"
+colormap="$SKR/colormap.cpt"
+
+# Set defaults
+area="-R-125.95/-112.55/30.95/43.55"
+default="$area -JM6i"
+if [ $verbose_mode -eq 1 ]; then
+  default="-V $default"
+fi
+gmtset PLOT_DEGREE_FORMAT = -dddF
+gmtset ANNOT_FONT_SIZE = 16p
+
+# Prepare data file (and remove mask=0 cells if chosen by the user)
+if [ $masked_only -eq 1 ]; then
+  gawk '$4==1 {printf("%g\t%g\t%s\n", $1, $2, $3)}' $forecast_data > $forecast_prepared
+else
+  gawk '{printf("%g\t%g\t%s\n", $1, $2, $3)}' $forecast_data > $forecast_prepared
+fi
+
+# Determine maximum value of colorbar if not set by the user
+if [ $colorbar_maximum == -1 ]; then
+  # Compute number of bins of forecast
+  numberbins=`wc -l $forecast_prepared | gawk '{print $1}'`
+  # Compute top 1st percentile bin number and value of it
+  toppercentilebin=`expr $numberbins / 100`
+  colorbar_maximum=`gawk '{print $3}' $forecast_prepared | sort -r -g | sed -n "${toppercentilebin} p"`
+#  colorbar_maximum=`minmax -C $forecast_prepared | gawk '{print $6}'`
+fi
+
+# Create colormap
+pov2cpt.py --min=0 --max=$colorbar_maximum --flip --integer --extend --output=$colormap $colormap_pov
+
+# Create basemap
+if [ $add_labels -eq 1 ]; then
+  psbasemap $default -Ba2f1/a2f1WeSn -P -K > $output
+else
+  psbasemap $default -Ba2f1/a2f1wesn -P -K > $output
+fi
+
+# Plot on-land area in gray
+pscoast $default -G224 -Dh -S232/251/255 -O -K >> $output
+
+# Plot data
+xyz2grd $forecast_prepared $area -G$forecast_grid -I0.1/0.1
+grdimage $forecast_grid $default -C$colormap -Sn -Q -O -K >> $output
+
+# Plot coastlines
+pscoast $default -Dh -W2 -O -K >> $output
+
+# Plot various layers (events, stations, contours, authorative region)
+number_layers=`expr length $plot_layers - 1`
+for i in `seq 0 $number_layers`
+do
+  case ${plot_layers:$i:1} in
+    b ) psxy $california $default -A -MS -: -W2 -O -K >> $output;;
+    e ) gawk '{printf("%g\t%g\t%g\n", $1, $2, (($3-4)*15)+20)}' $earthquake_data | psxy $default -Ssp -W13/0/0/0 -O -K >> $output
+        gawk '{printf("%g\t%g\t%g\n", $1, $2, (($3-4)*15)+20)}' $earthquake_data | psxy $default -Ssp -W9/255/255/255 -O -K >> $output;;
+    f ) psxy $faults $default -M -W2 -O -K >> $output;;
+  esac
+done
+
+# Legend
+# Plot box
+echo -e "-112 43.60\n-118 43.60\n -118 39.7\n-112 39.7\n-112 43.6" | psxy $default -A -G255 -W5/0/0/0 -O -K >> $output 
+
+# Magnitude 8
+echo "-116.355 40.8 80" | psxy $default -Ssp -G255 -W13/0/0/0 -O -K >> $output
+echo "-116.355 40.8 80" | psxy $default -Ssp -W9/255/255/255 -O -K >> $output
+echo "-116.355 40.45 12 0 21 CM 8" | pstext $default -S0.5p -P -O -K >> $output
+
+# Magnitude 7
+echo "-116.355 41.3 65" | psxy $default -Ssp -G255 -W13/0/0/0 -O -K >> $output
+echo "-116.355 41.3 65" | psxy $default -Ssp -W9/255/255/255 -O -K >> $output
+echo "-116.355 41.08 12 0 21 CM 7" | pstext $default -S0.5p -P -O -K >> $output
+
+# Magnitude 6
+echo "-116.355 41.8 50" | psxy $default -Ssp -G255 -W13/0/0/0 -O -K >> $output
+echo "-116.355 41.8 50" | psxy $default -Ssp -W9/255/255/255 -O -K >> $output
+echo "-116.355 41.66 12 0 21 CM 6" | pstext $default -S0.5p -P -O -K >> $output
+
+# Magnitude 5
+echo "-116.355 42.2 35" | psxy $default -Ssp -G255 -W13/0/0/0 -O -K >> $output
+echo "-116.355 42.2 35" | psxy $default -Ssp -W9/255/255/255 -O -K >> $output
+echo "-116.355 42.13 12 0 21 CM 5" | pstext $default -S0.5p -P -O -K >> $output
+
+# Magnitude 4
+echo "-116.355 42.5 20" | psxy $default -Ssp -G255 -W13/0/0/0 -O -K >> $output
+echo "-116.355 42.5 20" | psxy $default -Ssp -W9/255/255/255 -O -K >> $output
+echo "-116.355 42.5 12 0 21 CM 4" | pstext $default -S0.5p -P -O -K >> $output
+
+# Caption
+echo "-115.35 43.25 16 0 21 CM Magnitude       Rate @~l" | pstext $default -S0.5p -P -O -K >> $output
+
+# Compute tickmark step size for colorbar
+colorbar_step=`echo -e "from math import *\nprint 10**floor(log10($colorbar_maximum))" | python`
+
+# Colorbar
+gmtset ANNOT_FONT_SIZE = 12p
+psscale -D5.1i/5.8i/1.6i/0.2i -C$colormap -Ba$colorbar_step -O >> $output
+
+# Clean EPS
+if [ $verbose_mode -eq 1 ]; then
+  echo "Cleaning up eps ..."
+fi
+eps2eps $output $final_EPS
+
+# Generate thumbnail
+if [ $verbose_mode -eq 1 ]; then
+  echo "Generating png ..."
+fi
+convert -density $resolution $final_EPS $final_PNG
+
+# Garbage collection
+if [ $garbage_collection -eq 1 ]; then
+  rm -R $SKR
+fi

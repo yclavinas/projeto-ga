@@ -1,0 +1,39 @@
+<ns0:ForecastGroup name="Alarm-based one-year models for SW Pacific testing center" xmlns:ns0="http://www.scec.org/xml-ns/csep/0.1">
+  <ns0:forecastDir>forecasts</ns0:forecastDir>
+  <ns0:resultDir>results</ns0:resultDir>
+  <ns0:catalogDir>observations</ns0:catalogDir>
+  <ns0:postProcessing>OneYearModel</ns0:postProcessing>
+  <ns0:startDate>2008-05-09 00:00:00</ns0:startDate>
+  <ns0:endDate>2009-05-09 00:00:00</ns0:endDate>
+  <ns0:models>
+     Triple_S
+
+     <ns0:inputs>type=AlarmBased</ns0:inputs>
+     <ns0:schedule>
+        <ns0:year>
+           *
+           <ns0:month>
+              8
+              <ns0:day>
+                 19
+              </ns0:day>
+            </ns0:month>
+         </ns0:year>
+      </ns0:schedule>
+  </ns0:models>
+   
+  <ns0:evaluationTests>
+      ROC
+      <ns0:schedule>
+        <ns0:year>
+           *
+           <ns0:month>
+              *
+              <ns0:day>
+                 1 14 28
+              </ns0:day>
+            </ns0:month>
+         </ns0:year>
+      </ns0:schedule>
+   </ns0:evaluationTests>
+</ns0:ForecastGroup>

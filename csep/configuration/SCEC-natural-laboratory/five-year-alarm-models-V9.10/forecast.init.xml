@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ForecastGroup xmlns="http://www.scec.org/xml-ns/csep/0.1" 
+               name="Five-year alarm-based models for California introduced in CSEP V9.10.0">
+
+   <forecastDir>forecasts</forecastDir>   
+   <catalogDir>observations</catalogDir>
+   <postProcessing>RELMAftershock</postProcessing>
+   <startDate>2009-10-01 00:00:00</startDate>
+   <endDate>2014-10-01 00:00:00</endDate>
+   
+   <models>
+      Triple_S_FiveYear GonzalezUniform_FiveYear
+
+      <inputs>type=AlarmBased|</inputs>
+      <schedule>
+        <year>
+           2009 2014 2019 2024
+           <month>
+              10
+              <day>
+                 1
+              </day>  
+           </month>
+        </year>
+     </schedule>
+   </models>
+
+   <evaluationTests>
+     ROC MASS
+     <schedule>
+        <year>
+           2009
+           <month>
+              10 11 12
+              <day>4</day>  
+           </month>
+        </year>
+        <year>
+           2010 2011 2012 2013 2014 2015 2016 2017 2018 2019 2020 2021 2022 2023 2024
+           <month>
+              *
+              <day>4</day>  
+           </month>
+        </year>
+     </schedule>
+   </evaluationTests>
+
+</ForecastGroup>

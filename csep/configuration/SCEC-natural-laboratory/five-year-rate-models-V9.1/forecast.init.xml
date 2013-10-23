@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ForecastGroup xmlns="http://www.scec.org/xml-ns/csep/0.1" 
+               name="Five-year rate-based models for California introduced in CSEP V9.1">
+
+   <forecastDir>forecasts</forecastDir>   
+   <catalogDir>/home/csep/operations/SCEC-natural-laboratory/five-year-rate-models/observations</catalogDir>
+   <postProcessing>RELMAftershock</postProcessing>
+   <startDate>2008-05-16 00:00:00</startDate>
+   <endDate>2008-08-16 00:00:00</endDate>
+   
+   <models>
+      Triple_S_FiveYear KJSSFiveYearCalifornia
+
+      <inputs>type=RateBased|</inputs>
+      <schedule>
+        <year>
+           2009 2014 2019 2024 2029 2034
+           <month>
+              1
+              <day>
+                 1
+              </day>  
+           </month>
+        </year>
+     </schedule>
+   </models>
+
+   <evaluationTests>
+     N L CL M S R ROC MASS LW RP RD RT RTT T W
+     <schedule>
+        <year>
+           *
+           <month>
+              *
+              <day>4</day>  
+           </month>
+        </year>
+     </schedule>
+   </evaluationTests>
+
+</ForecastGroup>

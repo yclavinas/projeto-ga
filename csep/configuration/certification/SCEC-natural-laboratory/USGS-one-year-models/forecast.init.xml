@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ForecastGroup xmlns="http://www.scec.org/xml-ns/csep/0.1"
+               name="USGS forecasts with entry date of 2008-01-01"
+               comment="USGS forecasts submitted to the testing center for evaluation">
+   <postProcessing>RELMMainshock</postProcessing>
+   <startDate>2008-01-01 00:00:00</startDate>
+   <endDate>2009-01-01 00:00:00</endDate>
+   
+   <resultDir>results</resultDir>
+   <catalogDir>catalogs</catalogDir>
+
+   <evaluationTests>
+     N L CL M S R ROC MASS LW RP RD RT RTT T W
+     <schedule>
+        <year>
+           2013:2063
+           <month>
+              *
+              <day>6</day>
+           </month>
+        </year>
+     </schedule>
+
+   </evaluationTests>
+</ForecastGroup>

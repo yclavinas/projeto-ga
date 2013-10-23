@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<batch xmlns="http://www.scec.org/xml-ns/csep/0.1">
+   
+   <directory>batch_runs</directory>
+   
+   <!-- Common to all processes command-line options -->
+   <commandLineOptions enableMagnitudeDistributionPlot=""/>
+                       
+
+   <!-- Generate XML format of California forecast and corresponding ASCII and Matlab files based on that XML file -->
+   <process executable="src/generic/Forecast.py"
+            forecast="CENTERCODE/src/generic/test/data/genericDistribution/ebel.aftershock.dat"
+            testDir="magnitudeDistributionPlot"
+            logFile="logs/testForecastMagnitudePlot">
+   </process>
+
+</batch>

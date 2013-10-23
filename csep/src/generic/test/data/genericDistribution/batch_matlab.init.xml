@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<batch xmlns="http://www.scec.org/xml-ns/csep/0.1">
+   
+   <directory>batch_runs</directory>
+   
+   <!-- Common to all processes command-line options -->
+   <commandLineOptions disableRawDataDownload=""
+                   	   disableRawDataPreProcess=""/>
+                       
+
+   <!-- Invoke RELM N-test for Matlab format of the forecast -->
+   <process executable="src/generic/EvaluationTest.py"
+            disableCatalogGeneration=""
+            forecasts="testForecasts"
+            testDir="NTestForecast"
+            postProcessing="RELMAftershock"
+            tests="N"
+            logFile="logs/testMatlabForecastNTest">
+     <schedule>
+        <year>
+            2009
+            <month>
+                7
+                <day>1</day>
+            </month>
+        </year>
+     </schedule>         
+   </process>
+
+   <!-- Invoke RELM L-test for Matlab format of the forecast -->
+   <process executable="src/generic/EvaluationTest.py"
+            disableCatalogGeneration=""
+            forecasts="testForecasts"
+            testDir="LTestForecast"
+            postProcessing="RELMAftershock"
+            tests="L"
+            numTestSimulations="10"
+            logFile="logs/testMatlabForecastLTest">
+     <schedule>
+        <year>
+            2009
+            <month>
+                7
+                <day>2</day>
+            </month>
+        </year>
+     </schedule>         
+   </process>
+
+   <!-- Invoke RELM R-test for Matlab format of the forecast -->
+   <process executable="src/generic/EvaluationTest.py"
+            disableCatalogGeneration=""
+            forecasts="testForecasts"
+            testDir="RTestForecast"
+            postProcessing="RELMAftershock"
+            tests="R"
+            numTestSimulations="5"
+            logFile="logs/testMatlabForecastRTest">
+     <schedule>
+        <year>
+            2009
+            <month>
+                7
+                <day>3</day>
+            </month>
+        </year>
+     </schedule>         
+   </process>
+
+   <!-- Invoke RELM M-test for Matlab format of the forecast -->
+   <process executable="src/generic/EvaluationTest.py"
+            disableCatalogGeneration=""
+            forecasts="testForecasts"
+            testDir="MTestForecast"
+            postProcessing="RELMAftershock"
+            tests="M"
+            numTestSimulations="5"
+            logFile="logs/testMatlabForecastMTest">
+     <schedule>
+        <year>
+            2009
+            <month>
+                7
+                <day>4</day>
+            </month>
+        </year>
+     </schedule>         
+   </process>
+
+   <!-- Invoke RELM S-test for Matlab format of the forecast -->
+   <process executable="src/generic/EvaluationTest.py"
+            disableCatalogGeneration=""
+            forecasts="testForecasts"
+            testDir="STestForecast"
+            postProcessing="RELMAftershock"
+            tests="S"
+            numTestSimulations="5"
+            logFile="logs/testMatlabForecastSTest">
+     <schedule>
+        <year>
+            2009
+            <month>
+                7
+                <day>5</day>
+            </month>
+        </year>
+     </schedule>         
+   </process>
+
+</batch>

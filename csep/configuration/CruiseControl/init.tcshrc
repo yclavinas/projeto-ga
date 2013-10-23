@@ -1,0 +1,40 @@
+setenv MPICH2 /usr/local/mpich2/1.0.3
+setenv ETAS_R_PACKAGE /usr/local/R/2.5.0
+setenv PATH /usr/java/default/bin:/usr/usc/intel/9.0/bin:"$MPICH2"/bin:/home/csep/local/bin:"$PATH"
+setenv LD_LIBRARY_PATH /usr/usc/intel/9.0/lib
+setenv XML_FORTRAN /usr/local/xml-fortran/lib
+
+setenv MATLAB_SHELL /bin/sh
+
+
+### Subversion environment
+setenv SVN_EDITOR emacs
+
+### CruiseControl environment
+setenv JAVA_HOME /usr/java/default
+
+### CSEP environment
+setenv CSEP /usr/usc/cruise/projects/CSEP/checkout
+
+# Use SVN repository to archive all downloaded raw data from authorized data sources
+setenv ANSS_SVN http://source.usc.edu/svn/ANSS
+setenv CMT_SVN http://source.usc.edu/svn/CMT
+
+setenv ANSS_ARCHIVE_DIR /usr/usc/cruise/dataArchive/ANSS/trunk
+setenv CMT_ARCHIVE_DIR /usr/usc/cruise/dataArchive/CMT/trunk
+
+setenv CSEP_SRC $CSEP/src
+setenv CENTERCODE $CSEP
+setenv PYTHONPATH $CSEP_SRC/generic:$CSEP_SRC/SCECModels:$CSEP_SRC/SCECModels/California:$CSEP_SRC/SCECModels/WesternPacific:$CSEP_SRC/SCECModels/Global:$CSEP_SRC/SCECModels/OceanicTransformFaults:$CSEP_SRC/SCECModels/postProcessing:$CSEP_SRC/generic/test:$CSEP_SRC/generic/test/unitTest:$HOME/local-install/lib/python:$HOME/local-install/lib/python2.5/site-packages
+
+
+### Aliases
+alias rmtmp "find . -name '*~' -exec rm -rf {} \; -print"
+alias pytmp "find . -name '*.pyc' -exec rm -rf {} \; -print"
+
+# Variables for GMT map generation
+setenv NETCDFHOME /usr
+setenv GMTHOME /usr/bin
+setenv IMAGEMAGICKHOME /usr/bin
+
+

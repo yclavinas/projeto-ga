@@ -1,0 +1,40 @@
+<ns0:ForecastGroup name="Three months models" xmlns:ns0="http://www.scec.org/xml-ns/csep/0.1">
+  <ns0:forecastDir>forecasts</ns0:forecastDir>
+  <ns0:resultDir>results</ns0:resultDir>
+  <ns0:catalogDir>observations</ns0:catalogDir>
+  <ns0:postProcessing>ThreeMonthsModel</ns0:postProcessing>
+  <ns0:startDate>2008-01-01 00:00:00</ns0:startDate>
+  <ns0:endDate>2008-04-01 00:00:00</ns0:endDate>
+  <ns0:entryDate>2008-01-01 00:00:00</ns0:entryDate>
+    
+  <ns0:models>
+      EEPAS-0S EEPAS-1F EEPAS-0R EEPAS-1R
+
+      <ns0:schedule>
+        <ns0:year>
+           2008 2009 2010 2011 2012 2013 2014 2015 2016 2017 2018 2019 2020
+           <ns0:month>
+              1 4 7 10
+              <ns0:day>
+                 1
+              </ns0:day>
+            </ns0:month>
+         </ns0:year>
+      </ns0:schedule>
+   </ns0:models>
+  <ns0:evaluationTests>
+      N L CL M S R LW RP RD RT RTT T W
+
+      <ns0:schedule>
+        <ns0:year>
+            2008 2009 2010 2011 2012 2013 2014 2015 2016 2017 2018 2019 2020
+            <ns0:month>
+               *
+               <ns0:day>
+                 14 28
+               </ns0:day>
+            </ns0:month>
+         </ns0:year>
+      </ns0:schedule>
+   </ns0:evaluationTests>
+</ns0:ForecastGroup>

@@ -1,0 +1,67 @@
+<ns0:ForecastGroup name="One-day models introduced in CSEP V12.10.0 due to submission of ETAS_HW, K3 models by Agnes Helmstetter and Max Werner "
+                   xmlns:ns0="http://www.scec.org/xml-ns/csep/0.1">
+  <ns0:forecastDir>forecasts</ns0:forecastDir>
+  <ns0:resultDir>results</ns0:resultDir>
+  <ns0:catalogDir>observations</ns0:catalogDir>
+  <ns0:postProcessing>OneDayModel</ns0:postProcessing>
+  <ns0:entryDate>2012-08-01 00:00:00</ns0:entryDate>
+  
+  <ns0:models>
+      ETAS_HW K3 ETAS_DROneDay JANUSOneDay SE2OneDay
+      
+      <ns0:inputs>Md=2|Md=2|Md=2|Md=3|STEPDir=/home/csep/operations/SCEC-natural-laboratory/one-day-models/forecasts</ns0:inputs>
+      
+      <!-- Helmstetter/Werner hybrid model: average(ETAS_HW, K3) -->
+      <ns0:hybridModel name="ETAS_HW_K3_AVERAGE_Md2">
+         <ns0:component>
+             <ns0:group weights="[0.5, 0.5]">ETAS_HW K3</ns0:group>
+         </ns0:component>
+      </ns0:hybridModel>      
+
+      <ns0:schedule>
+        <ns0:year>
+           2012
+           <ns0:month>
+              8:12
+              <ns0:day>
+                 *
+              </ns0:day>
+            </ns0:month>
+         </ns0:year>
+        <ns0:year>
+           2013:2020
+           <ns0:month>
+              *
+              <ns0:day>
+                 *
+              </ns0:day>
+            </ns0:month>
+         </ns0:year>
+      </ns0:schedule>
+   </ns0:models>
+ 
+   <ns0:evaluationTests>
+      N L CL M S R LW RP RT RTT T W
+      
+      <ns0:schedule>
+        <ns0:year>
+           2012
+           <ns0:month>
+              8:12
+              <ns0:day>
+                 *
+              </ns0:day>
+            </ns0:month>
+         </ns0:year>
+        <ns0:year>
+           2013:2020
+           <ns0:month>
+              *
+              <ns0:day>
+                 *
+              </ns0:day>
+            </ns0:month>
+         </ns0:year>
+      </ns0:schedule>      
+   </ns0:evaluationTests>
+</ns0:ForecastGroup>

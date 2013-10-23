@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ForecastGroup xmlns="http://www.scec.org/xml-ns/csep/0.1" 
+               name="One-day models">
+
+   <forecastDir>forecasts</forecastDir>   
+   <resultDir>results</resultDir>   
+   <catalogDir>observations</catalogDir>
+
+   <postProcessing>OneDayModel</postProcessing>
+   <entryDate>2007-08-01 00:00:00</entryDate>
+     
+   <models>
+      ETAS
+
+      <schedule>
+        <year>
+           *
+           <month>
+              *
+              <day>
+                 *
+              </day>  
+           </month>
+        </year>
+     </schedule>
+   </models>
+
+   <evaluationTests>
+      N L CL M S LW RP RD RT RTT
+   </evaluationTests>
+   
+</ForecastGroup>
