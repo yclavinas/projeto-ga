@@ -20,9 +20,6 @@ for line in f:
 	if i == 100000:
 		break
 	
-print(i)
-print(j)
-
 ##########################################
 
 # j-1 e a quant de observacoes de cada grupo
@@ -31,6 +28,7 @@ print(j)
 quant_por_grupo = j
 total_obs = i
 
+#calculo da prob(abilidade)
 prob = (float(quant_por_grupo)/float(total_obs));
 print("%.10f" % prob)
 
