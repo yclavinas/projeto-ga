@@ -1,4 +1,4 @@
-Matrix = [[1 for x in range(5)] for x in range(5)] 
+
 
 for i in range(5):
 	print('\n')

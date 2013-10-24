@@ -1,18 +1,20 @@
-from vector_fun import cria_vector
-from calculo_grupos import calc_grupo
+#nao tratei lamba = 0, por no momento nao termos o caso -> implementacoes futuras
+import math
+from data_loglike import *
 
-#abertura do arquivo
+#entra com tamanho do vetor de obs, tamanho do agrupamento e nome do arq e seu mode de abertura
+observations, expetations, total_obs, quant_por_grupo =coletar_data(77398, 7,"jma_cat_2000_2012_Mth2.5_formatted.dat", 'r')
 
-#chamar funcao para criar o vetor com tamanho max escolhido e a partir do dado lido no arq 
-vector, i = cria_vector(77398, "jma_cat_2000_2012_Mth2.5_formatted.dat", 'r')
-	
-#calcula a quantidade de grupo por modulo de um outro numero escolhido
-quant_por_grupo = [None]*7
-quant_por_grupo = calc_grupo(vector, 7)
 
-total_obs = i
 
-#calculo da prob(abilidade) precisa ser definido
-prob = (float(quant_por_grupo)/float(total_obs));
-print("%.10f" % prob)
+k = long(0)
 
+#uso log 10 mesmo? estou usando os dados corretos para o calculo?
+
+log_likelihood = [None]*7
+
+for i in range(7):
+	k = i % 7
+	log_likelihood[k] = (-expetations[k]) + (quant_por_grupo[i]*math.log10(expetations[k])) - (math.log10(quant_por_grupo[i]))
+
+print(log_likelihood)
