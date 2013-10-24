@@ -13,6 +13,9 @@ quant_por_grupo = calc_grupo(vector, 7)
 total_obs = i
 
 #calculo da prob(abilidade) precisa ser definido
-prob = (float(quant_por_grupo)/float(total_obs));
-print("%.10f" % prob)
+
+prob = [None]*7
+for l in xrange(7):
+	prob[l] = (float(quant_por_grupo[l])/float(total_obs));
+	print("%.10f" % prob[l])
 
