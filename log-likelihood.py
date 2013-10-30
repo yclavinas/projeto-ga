@@ -3,16 +3,22 @@ import sys
 import math
 from coletar_data import *
 from fatorial import *
+from log_criacao import *
 
 #77398
 #7
+#jma_cat_2000_2012_Mth2.5_formatted
+#testes_7.3.igual
+#testes_7.diferentes.dat
 
 tamanho_vetor = int(sys.argv[1])
 agrupamento = int(sys.argv[2])
 
+arq_entrada = "testes_7.diferentes.dat"
+
 #entra com tamanho do vetor de obs, tamanho do agrupamento e nome do arq e seu mode de abertura
 observations, expetations, total_obs, quant_por_grupo =coletar_data(tamanho_vetor, agrupamento,
-	"jma_cat_2000_2012_Mth2.5_formatted.dat", 'r')
+	arq_entrada, 'r')
 
 k = long(0)
 
@@ -21,21 +27,22 @@ k = long(0)
 log_likelihood = [None]*agrupamento
 
 
-#deve ter um para todos 1o sete e 2o serem do mesmo grupo
-#faltou o ultimo passo w! produto dos indv bin likelihood
-#falta o joint
+#calcula o log_likelihood
 for i in range(agrupamento):
 	k = i % agrupamento
 	log_likelihood[k] = -expetations[k] + (quant_por_grupo[i]*math.log10(expetations[k])) - (math.log10(fat(quant_por_grupo[i])))
 
 print "log_likelihood:"
 print(log_likelihood)
+print '\n'
 
+#calcula o joint_log_likelihood
 joint_log_likelihood = sum(log_likelihood)
 
 print "Joint log_likelihood:"
 print(joint_log_likelihood)
+print '\n'
 
+#cria um arquivo de log, imprimindo os dados de execucao
 
-
-#fazer o calculo do bin com long e lat! 0 3 1 2 3 1 2
+log_criacao(expetations, total_obs, quant_por_grupo, log_likelihood, joint_log_likelihood, arq_entrada, agrupamento)
