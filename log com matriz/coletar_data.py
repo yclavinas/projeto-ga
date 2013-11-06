@@ -1,42 +1,17 @@
-#para ficar mais facil, colocar as funcoes definir o obj com o nome da funcao
-def coletar_data(tamanho_vetor, agrupamento, nome, t_abertura):
+from cria_matriz import *
 
-	from cria_vector import *
-	from calculo_grupos import calc_grupo
-
-	#abertura do arquivo
+def coletar_data(nome, t_abertura, var_coord, bins_long, bins_lat, menor_lat, menor_long):	
 
 	#chamar funcao para criar o vetor com tamanho max escolhido e a partir do dado lido no arq 
-	if (nome == 'testes_7.diferentes.dat'):
-		vector, i = cria_vector_desbalanceado(tamanho_vetor, nome, t_abertura)
-	else:
-		vector, i = cria_vector(tamanho_vetor, nome, t_abertura)
-		
-	#calcula a quantidade de grupo por modulo de um outro numero escolhido
-	quant_por_grupo = [None]*agrupamento
-	quant_por_grupo = calc_grupo(vector, agrupamento)
-
-	# print quant_por_grupo
-	# raw_input("Quantidade por grupo.")
-	# print '\n'
+	# ja tem que ter os dados lidos e calcula a quantidade por grupo
+	matriz, quant_por_grupo, i = cria_matriz(bins_long, bins_lat, nome, t_abertura, menor_lat, menor_long, var_coord)
 
 	#fazer calculo de total de observacoes
 	total_obs = i
-	
-	# print total_obs
-	# raw_input("Total de observacoes.")
-	# print '\n'
 
-	#calculo da prob(abilidade) precisa ser definido
+	expetations =  [bins_long*[0] for j in range(bins_lat)] 
+	for i in range(bins_lat):
+		for j in range(bins_long):
+			expetations[i][j] = (float(quant_por_grupo[i][j])/float(total_obs));
 
-	prob = [None]*agrupamento
-	for l in xrange(agrupamento):
-		print "quant_por_grupo, total_obs"
-		print quant_por_grupo[l], total_obs
-		prob[l] = (float(quant_por_grupo[l])/float(total_obs));
-		
-	# 	print("%.10f" % prob[l])
-	# 	raw_input("Probabilidade."+str(l))
-	# print '\n'
-
-	return vector, prob, total_obs, quant_por_grupo
+	return matriz, expetations, total_obs, quant_por_grupo

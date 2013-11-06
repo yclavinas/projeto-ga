@@ -1,6 +1,6 @@
 def abre_arq(nome, t_abertura):
 	f = open(nome, t_abertura)
-	print(f)
+	#print(f)
 	return(f)
 
 def calc_lat(nome, t_abertura):
@@ -22,10 +22,6 @@ def calc_lat(nome, t_abertura):
 	    data = str.split(line) 
 	    if(data[1] < menor_lat):
 	    	menor_lat = data[1]
-	  
-	raw_input("maior_lat")
-	print maior_lat
-	raw_input("menor_lat")
-	print menor_lat
+
 	f.close()
-return maior_lat, menor_lat
+	return maior_lat, menor_lat
