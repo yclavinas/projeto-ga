@@ -9,7 +9,7 @@ def coletar_data(nome, t_abertura, var_coord, bins_long, bins_lat, menor_lat, me
 	#fazer calculo de total de observacoes
 	total_obs = i
 
-	expetations =  [bins_long*[0] for j in range(bins_lat)] 
+	expetations =  [bins_long*[0] for j in range(bins_lat-1)] 
 	for i in range(bins_lat):
 		for j in range(bins_long):
 			expetations[i][j] = (float(quant_por_grupo[i][j])/float(total_obs));

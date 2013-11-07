@@ -1,6 +1,8 @@
 from cria_matriz import abre_arq
 
 def log_criacao(matriz, expetations, total_obs, quant_por_grupo, log_likelihood, joint_log_likelihood, arq_entrada, var_coord):
+	data = str.split(arq_entrada)
+
 	arq_saida = "log_" + arq_entrada
 	f = abre_arq(arq_saida, 'a')
 

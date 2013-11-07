@@ -34,20 +34,5 @@ def calc_grupo_coord(line, menor_lat, menor_long, var_coord):
 	qual_bin_long = dif_long / var_coord
 
 	return qual_bin_lat, qual_bin_long
-############################################################################
-#para ficar mais facil, colocar as funcoes definir o obj com o nome da funcao
-def calculo_prob(matriz, agrupamento, quant_por_grupo):
-	
 
-	#calculo da prob(abilidade) precisa ser definido
-
-	prob = [None]*agrupamento
-	for l in xrange(agrupamento):
-		# print "quant_por_grupo, total_obs"
-		# print quant_por_grupo[l], total_obs
-		prob[l] = (float(quant_por_grupo[l])/float(total_obs));
-		
-		# print("%.10f" % prob[l])
-		# raw_input("Probabilidade."+str(l))
-	print '\n'
 

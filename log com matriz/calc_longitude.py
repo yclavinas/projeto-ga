@@ -6,7 +6,7 @@ def abre_arq(nome, t_abertura):
 
 def calc_long(nome, t_abertura):
 	#abre arq
-	f = abre_arq("jma_cat_2000_2012_Mth2.5_formatted.dat", 'r')
+	f = abre_arq(nome, t_abertura)
 	#x=400, y = 77398
 
 	menor_long = str(60.3052)
