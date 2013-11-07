@@ -1,3 +1,3 @@
-import random 
-for i in range(10):
-	print random.randint(1, 10)
+i = 0
+print quantile_score+str(i)
+raw_input()

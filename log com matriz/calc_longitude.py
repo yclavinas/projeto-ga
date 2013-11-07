@@ -1,12 +1,5 @@
-
-def abre_arq(nome, t_abertura):
-	f = open(nome, t_abertura)
-	#print(f)
-	return(f)
-
 def calc_long(nome, t_abertura):
-	#abre arq
-	f = abre_arq(nome, t_abertura)
+	f = open(nome, t_abertura)
 	#x=400, y = 77398
 
 	menor_long = str(60.3052)

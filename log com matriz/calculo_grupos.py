@@ -21,7 +21,6 @@ def calc_grupo_coord(line, menor_lat, menor_long, var_coord):
 
 	i = long(0)
 	
-	#aux = [0]*agrupamento
 	aux2 = str.split(str(line))
 	
 	obs_menor_long = float(aux2[0])
