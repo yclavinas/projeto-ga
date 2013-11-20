@@ -1,11 +1,6 @@
-def abre_arq(nome, t_abertura):
-	f = open(nome, t_abertura)
-	print(f)
-	return(f)
-
 def calc_lat(nome, t_abertura):
 	#abre arq
-	f = abre_arq("jma_cat_2000_2012_Mth2.5_formatted.dat", 'r')
+	f = open(nome, t_abertura)
 	#x=400, y = 77398
 
 	menor_lat = str(60.3052)
@@ -23,9 +18,6 @@ def calc_lat(nome, t_abertura):
 	    if(data[1] < menor_lat):
 	    	menor_lat = data[1]
 	  
-	raw_input("maior_lat")
-	print maior_lat
-	raw_input("menor_lat")
-	print menor_lat
 	f.close()
-return maior_lat, menor_lat
+
+	return maior_lat, menor_lat

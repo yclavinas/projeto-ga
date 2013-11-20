@@ -1,64 +1,28 @@
-def abre_arq(nome, t_abertura):
+def cria_vector(total_size, nome, t_abertura, menor_lat, menor_long, var_coord):
+
+	from calculo_grupos import calc_grupo_coord
+	import random
+
+	# random.seed()
+
+	#abre arq
 	f = open(nome, t_abertura)
-	print(f)
-	return(f)
-
-def cria_vector(tamanho_vetor, nome, t_abertura):
-
-	#abre arq
-	f = abre_arq(nome, t_abertura)
 	#tamanho_vetor=400, y = 77398
 
-	i = long(0)
+	N = long(0)
+	total_obs = long(0)
 
-	vector = [None]*tamanho_vetor
-	#construcao do vector, comeca com um nome terremoto+i e o conteudo da linha
+	vector = [None]*(total_size)
+	vector_quantidade = [0]*(total_size)
+
 	for line in f:
-		vector[i] = "terremoto" + str(i), line
-		i += 1
-		if(i == tamanho_vetor):
-			break
+		r = random.uniform(0,1)
+		if (r > 0.005):
+			x_long, y_lat = calc_grupo_coord(line, menor_lat, menor_long, var_coord)
+			vector[int(x_long*y_lat)] = line
+			vector_quantidade[int(x_long*y_lat)] += 1
+			N += 1
+		total_obs += 1
 	f.close()
 	
-	# print vector
-	# raw_input("Vetor criado.")
-	# print "\n"
-
-	return vector, i
-
-
-	#k = i % tamanho_vetor para fazer grupos
-
-def cria_vector_desbalanceado(tamanho_vetor, nome, t_abertura):
-	#abre arq
-	f = abre_arq(nome, t_abertura)
-	#tamanho_vetor=400, y = 77398
-
-	i = long(0)
-	j = long(1)
-	k = long(0)
-
-	vector = [None]*tamanho_vetor
-	#construcao do vector, comeca com um nome terremoto+i e o conteudo da linha
-	for line in f:
-		vector[i] = "terremoto" + str(i), line
-		if(j > 20):
-			i = i + 1
-		elif (j < 20):
-			i+=7
-		elif (j == 20):
-			i = 0
-		j+=1
-		if(i == tamanho_vetor):
-			break
-		k += 1
-	f.close()
-	
-	# print vector
-	# raw_input("Vetor criado.")
-	# print "\n"
-
-	return vector, k
-
-
-
+	return vector, vector_quantidade, N, total_obs
