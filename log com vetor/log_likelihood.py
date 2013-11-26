@@ -3,7 +3,7 @@ from fatorial import fat
 from decimal import *
 #from log_criacao import log_criacao
 
-def log_likelihood(total_size, quant_por_grupo , expectation):
+def log_likelihood(total_size, quant_por_grupo , expectation, total_obs):
 
 	log_likelihood =  [0]*(total_size)
 	joint_log_likelihood = long(0)
@@ -16,8 +16,11 @@ def log_likelihood(total_size, quant_por_grupo , expectation):
 				log_likelihood[i] = Decimal('-Infinity')
 				descarta_Modelo = True
 		else:
-			log_likelihood[i] = -expectation[i] + (quant_por_grupo[i]*math.log10(expectation[i])) - (math.log10(fat(quant_por_grupo[i])))
-
+			#quant_por_grupo[i] = quant_por_grupo[i]/total_obs
+			print quant_por_grupo[i]
+			print total_obs
+			normalizado =  quant_por_grupo[i]*1000/total_obs
+			log_likelihood[i] = -expectation[i] + (normalizado*math.log10(expectation[i])) - (math.log10(fat(normalizado)))
 
 	#calcula o joint_log_likelihood
 	joint_log_likelihood = sum(log_likelihood)

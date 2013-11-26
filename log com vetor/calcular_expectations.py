@@ -1,5 +1,5 @@
 #para ficar mais facil, colocar as funcoes definir o obj com o nome da funcao
-def calcular_expectations(modified_quant_por_grupo, total_size, menor_lat, menor_long, N):
+def calcular_expectations(modified_quant_por_grupo, total_size, N):
 
 	expectations = [None] * (total_size)
 

@@ -23,12 +23,14 @@ bins_lat = int(bins_lat)
 bins_long = int(bins_long)
 total_size = bins_long * bins_lat
 
+print "inicio da criacao do vetor modificado"
 #3. Modifica-lo para introduzir incertezas S vezes, gerando um vetor de tamanho S de omega~(modificado). 
 random.seed()
-s = random.randint(0, 10)
+s = random.randint(0, 100)
 
 modified_vetor = [None] * s
 modified_quant_por_grupo = [0] * s
+normalized_mod_quant_grupo = [0] * s
 N = [0]*s
 
 for i in range(s):
@@ -42,12 +44,14 @@ joint_log_likelihood = [0] * s
 descata_modelo = [0] * s
 
 for i in range(s):
-	expectations[i] = calcular_expectations(modified_quant_por_grupo[i], total_size, menor_lat, menor_long, N[i])
-	joint_log_likelihood[i], descata_modelo[i] = log_likelihood(total_size, modified_quant_por_grupo[i], expectations[i])
+	expectations[i] = calcular_expectations(modified_quant_por_grupo[i], total_size, N[i])
+
+	joint_log_likelihood[i], descata_modelo[i] = log_likelihood(total_size, modified_quant_por_grupo[i], expectations[i], total_obs)
 
 ##fim coleta e insercao de incertezas
 
 print "Inicio simulacao" 
+raw_input()
 ##simulacao
 expectations_simulacao = [0] * s
 joint_log_likelihood_simulacao = [0] * s
@@ -56,11 +60,18 @@ simulacao_quant_por_grupo = [0] * s
 
 multiplicador = (total_obs/s)/total_size
 for i in range(s):
-	expectations_simulacao[i], simulacao_quant_por_grupo[i] = criar_random(total_size, N[i], multiplicador)
-	joint_log_likelihood_simulacao[i], descata_modelo_simulacao[i] = log_likelihood(total_size, 
-		simulacao_quant_por_grupo[i], expectations_simulacao[i])
+	expectations_simulacao[i], simulacao_quant_por_grupo[i] = criar_random(total_size, N[i], multiplicador, total_obs)
 	
-print joint_log_likelihood, joint_log_likelihood_simulacao
+	joint_log_likelihood_simulacao[i], descata_modelo_simulacao[i] = log_likelihood(total_size, 
+		simulacao_quant_por_grupo[i], expectations_simulacao[i], total_obs)
+
+print 'joint_log_likelihood'	
+print joint_log_likelihood
+print 'joint_log_likelihood_simulacao'
+print joint_log_likelihood_simulacao
 
 #Fazer o calculo do L-test
-L_test(joint_log_likelihood, joint_log_likelihood_simulacao, s)
+joint_L_test = L_test(joint_log_likelihood, joint_log_likelihood_simulacao, s)
+
+print 'joint_L_test'
+print joint_L_test

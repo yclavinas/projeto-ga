@@ -17,12 +17,12 @@ def cria_vector(total_size, nome, t_abertura, menor_lat, menor_long, var_coord):
 
 	for line in f:
 		r = random.uniform(0,1)
-		if (r > 0.005):
+		if (r > 0.01):
 			x_long, y_lat = calc_grupo_coord(line, menor_lat, menor_long, var_coord)
 			vector[int(x_long*y_lat)] = line
 			vector_quantidade[int(x_long*y_lat)] += 1
 			N += 1
 		total_obs += 1
 	f.close()
-	
+
 	return vector, vector_quantidade, N, total_obs
