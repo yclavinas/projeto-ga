@@ -11,7 +11,8 @@ from cria_random import criar_random
 
 
 var_coord = 0.5
-arq_entrada = 'jma_cat_2000_2012_Mth2.5_formatted.dat'
+# arq_entrada = 'jma_cat_2000_2012_Mth2.5_formatted.dat'
+arq_entrada = '../filtro_terremotos.txt'
 
 #1. Pegar as observacoes e criar o vetor Omega
 #2. Calcular a expectativa das observacoes incertas, vetor de lambdas
@@ -51,7 +52,6 @@ for i in range(s):
 ##fim coleta e insercao de incertezas
 
 print "Inicio simulacao" 
-raw_input()
 ##simulacao
 expectations_simulacao = [0] * s
 joint_log_likelihood_simulacao = [0] * s

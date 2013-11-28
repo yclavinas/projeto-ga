@@ -1,5 +1,5 @@
-from cria_matriz import *
-from criar_random import *
+from cria_matriz import cria_matriz
+from criar_random import criar_random
 
 def coletar_data(nome, t_abertura, var_coord, bins_long, bins_lat, menor_lat, menor_long):	
 

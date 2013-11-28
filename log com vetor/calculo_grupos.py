@@ -23,8 +23,8 @@ def calc_grupo_coord(line, menor_lat, menor_long, var_coord):
 	
 	aux2 = str.split(str(line))
 	
-	obs_menor_long = float(aux2[0])
-	obs_menor_lat = float(aux2[1])
+	obs_menor_long = float(aux2[7])
+	obs_menor_lat = float(aux2[6])
 	
 	dif_lat = obs_menor_lat - menor_lat
 	dif_long = obs_menor_long - menor_long

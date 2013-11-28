@@ -42,10 +42,11 @@ toolbox.register("mutate", tools.mutFlipBit, indpb=0.05)
 toolbox.register("select", tools.selTournament, tournsize=3)
 
 def main():
-    random.seed(64)
+
     
     pop = toolbox.population(n=300)
     hof = tools.HallOfFame(1)
+    # hof = tools.ParetoFront()
     stats = tools.Statistics(lambda ind: ind.fitness.values)
     stats.register("avg", tools.mean)
     stats.register("std", tools.std)

@@ -7,5 +7,5 @@ def criar_random(total_size, N, multiplicador, total_obs):
 
 	for l in xrange(total_size):
 		expectations_simulacao[l] = random.random()
-		simulacao_quant_por_grupo[l] = int(expectations_simulacao[l] * (total_obs/10000))
+		simulacao_quant_por_grupo[l] = int(expectations_simulacao[l] * (total_obs/1000))
 	return expectations_simulacao, simulacao_quant_por_grupo

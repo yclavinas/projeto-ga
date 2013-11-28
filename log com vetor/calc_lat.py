@@ -8,15 +8,15 @@ def calc_lat(nome, t_abertura):
 
 	for line in f:
 	    data = str.split(line)
-	    if(data[1] > maior_lat):
-	    	maior_lat = data[1]
+	    if(data[6] > maior_lat):
+	    	maior_lat = data[6]
 
 	f.seek(0,0)
 
 	for line in f:
 	    data = str.split(line) 
-	    if(data[1] < menor_lat):
-	    	menor_lat = data[1]
+	    if(data[6] < menor_lat):
+	    	menor_lat = data[6]
 	  
 	f.close()
 

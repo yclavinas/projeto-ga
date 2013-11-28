@@ -16,10 +16,9 @@ def log_likelihood(total_size, quant_por_grupo , expectation, total_obs):
 				log_likelihood[i] = Decimal('-Infinity')
 				descarta_Modelo = True
 		else:
-			#quant_por_grupo[i] = quant_por_grupo[i]/total_obs
-			print quant_por_grupo[i]
-			print total_obs
-			normalizado =  quant_por_grupo[i]*1000/total_obs
+			normalizado =  quant_por_grupo[i]/total_obs
+			# if(normalizado == 0):
+			# 	normalizado = 0.000001
 			log_likelihood[i] = -expectation[i] + (normalizado*math.log10(expectation[i])) - (math.log10(fat(normalizado)))
 
 	#calcula o joint_log_likelihood
