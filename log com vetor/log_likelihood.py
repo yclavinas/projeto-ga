@@ -3,7 +3,7 @@ from fatorial import fat
 from decimal import *
 #from log_criacao import log_criacao
 
-def log_likelihood(total_size, quant_por_grupo , expectation, total_obs):
+def log_likelihood(total_size, quant_por_grupo, expectation):
 
 	log_likelihood =  [0]*(total_size)
 	joint_log_likelihood = long(0)
@@ -16,10 +16,12 @@ def log_likelihood(total_size, quant_por_grupo , expectation, total_obs):
 				log_likelihood[i] = Decimal('-Infinity')
 				descarta_Modelo = True
 		else:
-			normalizado =  quant_por_grupo[i]/total_obs
+			 # normalizado =  quant_por_grupo[i]/total_obs 
+
+
 			# if(normalizado == 0):
 			# 	normalizado = 0.000001
-			log_likelihood[i] = -expectation[i] + (normalizado*math.log10(expectation[i])) - (math.log10(fat(normalizado)))
+			log_likelihood[i] = -expectation[i] + (quant_por_grupo[i]*math.log10(expectation[i])) - (math.log10(fat(quant_por_grupo[i])))
 
 	#calcula o joint_log_likelihood
 	joint_log_likelihood = sum(log_likelihood)
@@ -27,3 +29,43 @@ def log_likelihood(total_size, quant_por_grupo , expectation, total_obs):
 	#log_criacao(expectation, total_obs, quant_por_grupo, log_likelihood, joint_log_likelihood, arq_entrada, total_size)
 
 	return joint_log_likelihood, descarta_Modelo
+
+def dados_observados_R():
+
+	import random
+	from calculo_grupos import calc_coordenadas
+	from calcular_expectations import calcular_expectations
+	from modificarObservacoes import modificarObservacoes
+	from cria_vector import cria_vector
+	from L_test import L_test	
+	from cria_random import criar_random
+
+	##inicio coleta e insercao de incertezas
+	var_coord = 0.5
+
+	arq_entrada = '../filtro_terremoto_terra.txt'
+
+	#1. Pegar as observacoes e criar o vetor Omega
+	#2. Calcular a expectativa das observacoes incertas, vetor de lambdas
+	menor_lat, menor_long, bins_lat, bins_long = calc_coordenadas(var_coord, arq_entrada, 'r')
+
+	menor_lat = float(menor_lat)
+	menor_long = float(menor_long)
+	bins_lat = int(bins_lat)
+	bins_long = int(bins_long)
+	total_size = bins_long * bins_lat
+
+	print "inicio da criacao do vetor modificado"
+
+	#3.b) sem modificacao
+	modified_vetor, quant_por_grupo, N, total_obs = cria_vector(total_size, arq_entrada, 'r', 
+		menor_lat, menor_long, var_coord)
+
+	expectations = calcular_expectations(quant_por_grupo, total_size, N)
+
+
+	joint_log_likelihood, descarta_modelo = log_likelihood(total_size, quant_por_grupo, expectations)
+
+	return joint_log_likelihood, total_size, total_obs
+
+

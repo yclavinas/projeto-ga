@@ -12,7 +12,7 @@ from cria_random import criar_random
 
 var_coord = 0.5
 # arq_entrada = 'jma_cat_2000_2012_Mth2.5_formatted.dat'
-arq_entrada = '../filtro_terremotos.txt'
+arq_entrada = '../filtro_terremoto_terra.txt'
 
 #1. Pegar as observacoes e criar o vetor Omega
 #2. Calcular a expectativa das observacoes incertas, vetor de lambdas
@@ -73,5 +73,5 @@ print joint_log_likelihood_simulacao
 #Fazer o calculo do L-test
 joint_L_test = L_test(joint_log_likelihood, joint_log_likelihood_simulacao, s)
 
-print 'joint_L_test'
+print 'L_test'
 print joint_L_test
