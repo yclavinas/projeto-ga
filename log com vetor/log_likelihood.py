@@ -41,7 +41,7 @@ def dados_observados_R():
 	from cria_random import criar_random
 
 	##inicio coleta e insercao de incertezas
-	var_coord = 0.5
+	var_coord = 0.5		
 
 	arq_entrada = '../filtro_terremoto_terra.txt'
 

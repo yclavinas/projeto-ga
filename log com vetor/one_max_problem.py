@@ -13,25 +13,38 @@
 #    You should have received a copy of the GNU Lesser General Public
 #    License along with DEAP. If not, see <http://www.gnu.org/licenses/>.
 
+import array
 import random
 
+from deap import algorithms
 from deap import base
 from deap import creator
 from deap import tools
 
+from log_likelihood import *
+from L_test import *
+
+joint_log_likelihood, total_size, total_obs = dados_observados_R()
+
 creator.create("FitnessMax", base.Fitness, weights=(1.0,))
-creator.create("Individual", list, fitness=creator.FitnessMax)
+creator.create("Individual", array.array, typecode='d', fitness=creator.FitnessMax)
 
 toolbox = base.Toolbox()
 # Attribute generator
-toolbox.register("attr_bool", random.randint, 0, 1)
+toolbox.register("attr_float", random.random)
 # Structure initializers
-toolbox.register("individual", tools.initRepeat, creator.Individual, 
-    toolbox.attr_bool, 100)
+toolbox.register("individual", tools.initRepeat, creator.Individual, toolbox.attr_float, total_size)
 toolbox.register("population", tools.initRepeat, list, toolbox.individual)
 
 def evalOneMax(individual):
-    return sum(individual),
+    quant_por_grupo = [0] * len(individual)
+    for i in range(len(individual)):
+        quant_por_grupo[i] = int(individual[i] * (total_obs/1000))
+
+    log_likelihood_ind = log_likelihood(total_size, quant_por_grupo, individual)
+
+    L_test = L_test_semS(joint_log_likelihood, log_likelihood_ind[0])
+    return L_test,
 
 # Operator registering
 toolbox.register("evaluate", evalOneMax)
@@ -101,8 +114,21 @@ def main():
     
     print("-- End of (successful) evolution --")
     
-    best_ind = tools.selBest(pop, 1)[0]
-    print("Best individual is %s, %s" % (best_ind, best_ind.fitness.values))
+    # best_ind = tools.selBest(pop, 1)[0]
+    # print("Best individual is %s, %s" % (best_ind, best_ind.fitness.values))
+
+    melhor_log_likelihood = 0
+
+    quant_por_grupo = [0] * len(pop[0])
+    for i in range(len(pop[0])):
+        quant_por_grupo[i] = int(pop[0][i] * (total_obs/1000))
+        log_likelihood_ind = log_likelihood(total_size, quant_por_grupo, pop[0])
+        if (log_likelihood_ind > melhor_log_likelihood):
+            melhor_log_likelihood = log_likelihood_ind
+            best = pop[0]
+
+    L_test_best = L_test_semS(joint_log_likelihood, melhor_log_likelihood[0])
+    print L_test_best
 
 if __name__ == "__main__":
     main()
