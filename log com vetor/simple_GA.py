@@ -44,11 +44,15 @@ toolbox.register("mutate", tools.mutFlipBit)
 toolbox.register("select", tools.selDoubleTournament, parsimony_size = 2, fitness_first = True)
 # toolbox.register("select", tools.selTournament, tournsize=3)
 # fitness_size
+
+arq_saida = "saida_final.txt"
+f = open(arq_saida, 'w')
+
 def main():
     random.seed(64)
     
     pop = toolbox.population(n=300)
-    CXPB, MUTPB, NGEN = 0.5, 0.2, 1
+    CXPB, MUTPB, NGEN = 0.5, 0.2, 4
     
     print("Start of evolution")
     
@@ -115,7 +119,11 @@ def main():
         log_likelihood_ind = log_likelihood(total_size, quant_por_grupo, selBest)
 
         L_test_best_evolucao = L_test_semS(joint_log_likelihood, log_likelihood_ind[0])
-        print 'L_test_best da pop[%d]: ' %     g , L_test_best_evolucao
+        s = 'Best L_test of the pop[%d]: ' %     g + str(L_test_best_evolucao)
+        print s
+
+        f.write(s)
+        f.write('\n\n')
 
         pop[:] = offspring
 
@@ -143,8 +151,6 @@ def main():
     print "L_test da melhor"
     print L_test_best_evolucao
 
-    arq_saida = "saida_final.txt"
-    f = open(arq_saida, 'w')
     f.write("Best L-test value: ")
     f.write(str(L_test_best_evolucao))
     f.write('\n\n')
