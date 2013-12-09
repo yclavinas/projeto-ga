@@ -10,7 +10,7 @@ from cria_random import criar_random
 ##inicio coleta e insercao de incertezas
 
 
-var_coord = 0.5
+var_coord = 2.5
 # arq_entrada = 'jma_cat_2000_2012_Mth2.5_formatted.dat'
 arq_entrada = '../filtro_terremoto_terra.txt'
 
@@ -46,7 +46,6 @@ descata_modelo = [0] * s
 
 for i in range(s):
 	expectations[i] = calcular_expectations(modified_quant_por_grupo[i], total_size, N[i])
-
 	joint_log_likelihood[i], descata_modelo[i] = log_likelihood(total_size, modified_quant_por_grupo[i], expectations[i], total_obs)
 
 ##fim coleta e insercao de incertezas

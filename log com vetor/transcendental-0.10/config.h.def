@@ -1,0 +1,4 @@
+/* Default config.h file.
+ * To create this file specific for your system, use 'python setup.py config'
+ */
+#define UNK 1

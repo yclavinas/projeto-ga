@@ -16,12 +16,7 @@ def log_likelihood(total_size, quant_por_grupo, expectation):
 				log_likelihood[i] = Decimal('-Infinity')
 				descarta_Modelo = True
 		else:
-			 # normalizado =  quant_por_grupo[i]/total_obs 
-
-
-			# if(normalizado == 0):
-			# 	normalizado = 0.000001
-			log_likelihood[i] = -expectation[i] + (quant_por_grupo[i]*math.log10(expectation[i])) - (math.log10(fat(quant_por_grupo[i])))
+				log_likelihood[i] = -expectation[i] + (quant_por_grupo[i]*math.log10(expectation[i])) - (math.log10(fat(quant_por_grupo[i])))
 
 	#calcula o joint_log_likelihood
 	joint_log_likelihood = sum(log_likelihood)
@@ -30,18 +25,17 @@ def log_likelihood(total_size, quant_por_grupo, expectation):
 
 	return joint_log_likelihood, descarta_Modelo
 
-def dados_observados_R():
+def dados_observados_R(var_coord):
 
 	import random
 	from calculo_grupos import calc_coordenadas
 	from calcular_expectations import calcular_expectations
 	from modificarObservacoes import modificarObservacoes
 	from cria_vector import cria_vector
-	from L_test import L_test	
 	from cria_random import criar_random
 
 	##inicio coleta e insercao de incertezas
-	var_coord = 0.5		
+		
 
 	arq_entrada = '../filtro_terremoto_terra.txt'
 
@@ -58,7 +52,7 @@ def dados_observados_R():
 	print "inicio da criacao do vetor modificado"
 
 	#3.b) sem modificacao
-	modified_vetor, quant_por_grupo, N, total_obs = cria_vector(total_size, arq_entrada, 'r', 
+	modified_vetor, quant_por_grupo, N, total_obs, vector_latlong = cria_vector(total_size, arq_entrada, 'r', 
 		menor_lat, menor_long, var_coord)
 
 	expectations = calcular_expectations(quant_por_grupo, total_size, N)
@@ -66,6 +60,6 @@ def dados_observados_R():
 
 	joint_log_likelihood, descarta_modelo = log_likelihood(total_size, quant_por_grupo, expectations)
 
-	return joint_log_likelihood, total_size, total_obs
+	return joint_log_likelihood, total_size, total_obs, menor_lat, menor_long, vector_latlong, expectations
 
 

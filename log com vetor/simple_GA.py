@@ -1,18 +1,3 @@
-#    This file is part of DEAP.
-#
-#    DEAP is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU Lesser General Public License as
-#    published by the Free Software Foundation, either version 3 of
-#    the License, or (at your option) any later version.
-#
-#    DEAP is distributed in the hope that it will be useful,
-#    but WITHOUT ANY WARRANTY; without even the implied warranty of
-#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-#    GNU Lesser General Public License for more details.
-#
-#    You should have received a copy of the GNU Lesser General Public
-#    License along with DEAP. If not, see <http://www.gnu.org/licenses/>.
-
 import array
 import random
 
@@ -23,8 +8,13 @@ from deap import tools
 
 from log_likelihood import *
 from L_test import *
+import math
+from calculo_grupos import calc_qual_coord, calc_coordenadas
 
-joint_log_likelihood, total_size, total_obs = dados_observados_R()
+var_coord = 0.8
+
+joint_log_likelihood, total_size, total_obs, menor_lat, menor_long, vector_latlong, expectations = dados_observados_R(var_coord)
+
 
 creator.create("FitnessMax", base.Fitness, weights=(1.0,))
 creator.create("Individual", array.array, typecode='d', fitness=creator.FitnessMax)
@@ -39,6 +29,7 @@ toolbox.register("population", tools.initRepeat, list, toolbox.individual)
 def evalOneMax(individual):
     quant_por_grupo = [0] * len(individual)
     for i in range(len(individual)):
+        individual[i] = math.fabs(individual[i])
         quant_por_grupo[i] = int(individual[i] * (total_obs/1000))
 
     log_likelihood_ind = log_likelihood(total_size, quant_por_grupo, individual)
@@ -48,15 +39,16 @@ def evalOneMax(individual):
 
 # Operator registering
 toolbox.register("evaluate", evalOneMax)
-toolbox.register("mate", tools.cxTwoPoints)
-toolbox.register("mutate", tools.mutFlipBit, indpb=0.05)
-toolbox.register("select", tools.selTournament, tournsize=3)
-
+toolbox.register("mate", tools.cxBlend, alpha = 0.6)
+toolbox.register("mutate", tools.mutFlipBit)
+toolbox.register("select", tools.selDoubleTournament, parsimony_size = 2, fitness_first = True)
+# toolbox.register("select", tools.selTournament, tournsize=3)
+# fitness_size
 def main():
     random.seed(64)
     
     pop = toolbox.population(n=300)
-    CXPB, MUTPB, NGEN = 0.5, 0.2, 40
+    CXPB, MUTPB, NGEN = 0.5, 0.2, 1
     
     print("Start of evolution")
     
@@ -72,36 +64,11 @@ def main():
         print("-- Generation %i --" % g)
         
         # Select the next generation individuals
-        offspring = toolbox.select(pop, len(pop))
+        offspring = toolbox.select(pop, len(pop), len(pop))
         # Clone the selected individuals
         offspring = list(map(toolbox.clone, offspring))
-    
-        # Apply crossover and mutation on the offspring
-        for child1, child2 in zip(offspring[::2], offspring[1::2]):
-            if random.random() < CXPB:
-                toolbox.mate(child1, child2)
-                del child1.fitness.values
-                del child2.fitness.values
 
-        for mutant in offspring:
-            if random.random() < MUTPB:
-                toolbox.mutate(mutant)
-                del mutant.fitness.values
-    
-        # Evaluate the individuals with an invalid fitness
-        invalid_ind = [ind for ind in offspring if not ind.fitness.valid]
-        fitnesses = map(toolbox.evaluate, invalid_ind)
-        for ind, fit in zip(invalid_ind, fitnesses):
-            ind.fitness.values = fit
-        
-        print("  Evaluated %i individuals" % len(invalid_ind))
-        
-        # The population is entirely replaced by the offspring
-        pop[:] = offspring
-        
-        # Gather all the fitnesses in one list and print the stats
         fits = [ind.fitness.values[0] for ind in pop]
-        
         length = len(pop)
         mean = sum(fits) / length
         sum2 = sum(x*x for x in fits)
@@ -112,23 +79,94 @@ def main():
         print("  Avg %s" % mean)
         print("  Std %s" % std)
     
+        # Apply crossover and mutation on the offspring
+        for child1, child2 in zip(offspring[::2], offspring[1::2]):
+            if random.random() < CXPB:
+                toolbox.mate(child1, child2)
+                del child1.fitness.values
+                del child2.fitness.values
+        for mutant in offspring:
+            if random.random() < MUTPB:
+                if(std < 20.00):##tenho que estudar isso!!!
+                    indpb=0.05
+                elif(std < 200.00):
+                    indpb=0.15
+                else:
+                    indpb=0.45
+                toolbox.mutate(mutant, indpb)
+                del mutant.fitness.values
+    
+        # Evaluate the individuals with an invalid fitness
+        invalid_ind = [ind for ind in offspring if not ind.fitness.valid]
+        fitnesses = map(toolbox.evaluate, invalid_ind)
+        for ind, fit in zip(invalid_ind, fitnesses):
+            ind.fitness.values = fit
+        
+        print("  Evaluated %i individuals" % len(invalid_ind))
+        
+        # The population is entirely replaced by the offspring, but the last pop best_ind
+
+        
+        selBest = tools.selBest(pop, 1)[0]
+        # selBest = toolbox.select(pop, 1, len(pop))[0]
+        quant_por_grupo = [0] * len(selBest)
+        for j in range(len(selBest)):
+            quant_por_grupo[j] = int(selBest[j] * (total_obs/1000))
+        log_likelihood_ind = log_likelihood(total_size, quant_por_grupo, selBest)
+
+        L_test_best_evolucao = L_test_semS(joint_log_likelihood, log_likelihood_ind[0])
+        print 'L_test_best da pop[%d]: ' %     g , L_test_best_evolucao
+
+        pop[:] = offspring
+
+        for i in range(len(pop)):
+            quant_por_grupo = [0] * len(pop[i])
+            for j in range(len(pop[i])):
+                quant_por_grupo[j] = int(pop[i][j] * (total_obs/1000))
+            log_likelihood_ind = log_likelihood(total_size, quant_por_grupo, pop[i])
+            L_test_subs = L_test_semS(joint_log_likelihood, log_likelihood_ind[0])
+            if(L_test_subs < L_test_best_evolucao):
+               pop[0] = selBest 
+               break
+        
+
+        # Gather all the fitnesses in one list and print the stats
+        
+
+    
     print("-- End of (successful) evolution --")
+    
     
     # best_ind = tools.selBest(pop, 1)[0]
     # print("Best individual is %s, %s" % (best_ind, best_ind.fitness.values))
 
-    melhor_log_likelihood = 0
+    print "L_test da melhor"
+    print L_test_best_evolucao
 
-    quant_por_grupo = [0] * len(pop[0])
-    for i in range(len(pop[0])):
-        quant_por_grupo[i] = int(pop[0][i] * (total_obs/1000))
-        log_likelihood_ind = log_likelihood(total_size, quant_por_grupo, pop[0])
-        if (log_likelihood_ind > melhor_log_likelihood):
-            melhor_log_likelihood = log_likelihood_ind
-            best = pop[0]
+    arq_saida = "saida_final.txt"
+    f = open(arq_saida, 'w')
+    f.write("Best L-test value: ")
+    f.write(str(L_test_best_evolucao))
+    f.write('\n\n')
+    #mostrar o melhor
+    for i in range(len(selBest)):
 
-    L_test_best = L_test_semS(joint_log_likelihood, melhor_log_likelihood[0])
-    print L_test_best
+        if(vector_latlong[i] == None):
+            print 'para tal lat  e long fora dos dados'
+            s = str('Latitude and longitude not available, model output: ' + str(selBest[i]))
+            f.write(s)
+            f.write('\n')
+        else:
+            print 'para tal lat  e long %s' % vector_latlong[i]
+            s = str('Latitude and longitude: ' + str(vector_latlong[i]) + '; model output: ' + str(selBest[i]))
+            f.write(s)
+            f.write('\n')
+        
+        print "tal modelo",  
+        print selBest[i]
+        
+
+    f.close()
 
 if __name__ == "__main__":
-    main()
+    main()  

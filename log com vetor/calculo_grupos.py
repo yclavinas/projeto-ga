@@ -12,20 +12,13 @@ def calc_coordenadas(var_coord, name, t_abertura):
 	bins_lat = espaco_lat/var_coord 
 	bins_long = espaco_long/var_coord
 
-	bins_lat = round(bins_lat + 1)
-	bins_long = round(bins_long + 1)
+	bins_lat = round(bins_lat)
+	bins_long = round(bins_long)
 
 	return menor_lat, menor_long, bins_lat, bins_long
 
-def calc_grupo_coord(line, menor_lat, menor_long, var_coord):
+def calc_grupo_coord(obs_menor_long, obs_menor_lat, menor_lat, menor_long, var_coord):
 
-	i = long(0)
-	
-	aux2 = str.split(str(line))
-	
-	obs_menor_long = float(aux2[7])
-	obs_menor_lat = float(aux2[6])
-	
 	dif_lat = obs_menor_lat - menor_lat
 	dif_long = obs_menor_long - menor_long
 
@@ -33,3 +26,7 @@ def calc_grupo_coord(line, menor_lat, menor_long, var_coord):
 	qual_bin_long = dif_long / var_coord
 
 	return qual_bin_lat, qual_bin_long
+
+
+def calc_qual_coord(menor_long, menor_lat, var_coord):
+	return ( menor_lat+(var_coord*x_lat), menor_long*(var_coord*i))
