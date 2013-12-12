@@ -11,7 +11,7 @@ from L_test import *
 import math
 from calculo_grupos import calc_qual_coord, calc_coordenadas
 
-var_coord = 0.8
+var_coord = 0.1
 
 joint_log_likelihood, total_size, total_obs, menor_lat, menor_long, vector_latlong, expectations = dados_observados_R(var_coord)
 
@@ -49,10 +49,10 @@ arq_saida = "saida_final.txt"
 f = open(arq_saida, 'w')
 
 def main():
-    random.seed(64)
+    # random.seed(64)
     
     pop = toolbox.population(n=300)
-    CXPB, MUTPB, NGEN = 0.5, 0.2, 4
+    CXPB, MUTPB, NGEN = 0.5, 0.2, 40
     
     print("Start of evolution")
     
