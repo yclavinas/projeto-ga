@@ -19,7 +19,7 @@ from deap import creator
 from deap import tools
 from deap import algorithms
 
-creator.create("FitnessMin", base.Fitness, weights=(1.0,))
+creator.create("FitnessMin", base.Fitness, weights=(-1.0,))
 
 
 toolbox = base.Toolbox()
