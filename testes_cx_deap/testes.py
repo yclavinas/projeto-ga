@@ -19,7 +19,7 @@ from deap import creator
 from deap import tools
 from deap import algorithms
 
-creator.create("FitnessMin", base.Fitness, weights=(1.0,))
+creator.create("FitnessMax", base.Fitness, weights=(1.0,))
 
 
 toolbox = base.Toolbox()
@@ -91,7 +91,7 @@ toolbox = base.Toolbox()
 
 ###--Para funcoes compostas do cec--###
 
-creator.create("Individual", list, fitness=creator.FitnessMin)
+creator.create("Individual", list, fitness=creator.FitnessMax)
 
 LIMIT_INF, LIMIT_SUP = -100, 100
 toolbox.register("attr_float", random.uniform, LIMIT_INF, LIMIT_SUP)
@@ -116,24 +116,29 @@ y=linspace(ylim[0],ylim[1],h+1)
 
 
 def evalOneMax(individual):
+    # print len(individual)
+    # print individual[9]
+    # exit(0)
+    # x = individual
+    # npdat=zeros(n*m)
+    # dat = (ct.c_double * len(npdat))()
+    # for i,val in enumerate(npdat):
+    #     dat[i] = x
+
+    # npf=zeros(m)
+    # f = (ct.c_double * len(npf))()
+    # for i,val in enumerate(npf):
+    #     f[i] = val 
+
+    # r1=tf.test_func(dat,f,ct.c_int(n),ct.c_int(m),ct.c_int(k))
+
+    # for pt in f:
+    #     f6 = pt,
     saida = 0
-    for y in range(len(individual)):
-        x = individual[y]
-        npdat=zeros(n*m)
-        dat = (ct.c_double * len(npdat))()
-        for i,val in enumerate(npdat):
-            dat[i] = x
-
-        npf=zeros(m)
-        f = (ct.c_double * len(npf))()
-        for i,val in enumerate(npf):
-            f[i] = val 
-
-        r1=tf.test_func(dat,f,ct.c_int(n),ct.c_int(m),ct.c_int(k))
-
-        for pt in f:
-            f6 = pt,
-        saida = saida + f6[0]
+    for i in range(len(individual)):
+        x = individual[i]
+        f6 = x*x;
+        saida = saida + f6
     return saida,
 
 
@@ -200,7 +205,7 @@ def main():
     for g in range(NGEN):
     
     # while (evaluations < 4000):
-    # print("-- Generation %i --" % g)
+        # print("-- Generation %i --" % g)
         
         # Select the next generation individuals
         offspring = toolbox.select(pop, len(pop))
@@ -260,37 +265,7 @@ def main():
         break
     
     best_ind = tools.selBest(pop, 1)[0]
-    # print("Best individual is: %s with fitness value:  \n\n" % best_ind)
-
-    # valor1, valor2 = 0, 0
-    # for i in range(len(parte1)):
-    #     # parte1[i] = individual[i]
-    #     valor1 = valor1 + int((math.pow(2,i))*(best_ind[21-i]))
-    # for i in range(len(parte1)):
-    #     # parte2[i] = individual[i+22]
-    #     valor2 = valor2 + int((math.pow(2,i))*(best_ind[43-i]))
-
-    # valor1 = valor1 * 0.00004768372718899898
-    # valor2 = valor2 * 0.00004768372718899898
-    
-    # valor1 = valor1 - 100
-    # valor2 = valor2 - 100
-
-    # x = valor1
-    # y = valor2
-
-    # print("Best individual is: %s with fitness value: %s \n\n" % ((x,y), best_ind.fitness.values[0]))
-
-    # f = open(sys.argv[1], "a")
-    # flock(f, LOCK_EX | LOCK_NB)
-    # f.write(str((best_ind[0],best_ind[1])))
-    # f.write(' ')
-    # f.write(str((best_ind.fitness.values[0])))
-    # f.write('\n')
-    # flock(f, LOCK_UN)
+    print best_ind
     f.close()
-    # print '\n'
-    # for i in range(len(pop)):
-    #     print sum(pop[i])
 if __name__ == "__main__":
     main()
