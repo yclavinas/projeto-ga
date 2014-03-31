@@ -23,7 +23,7 @@ def log_likelihood(total_size, quant_por_grupo, expectation):
 
 	#log_criacao(expectation, total_obs, quant_por_grupo, log_likelihood, joint_log_likelihood, arq_entrada, total_size)
 
-	return joint_log_likelihood, descarta_Modelo
+	return log_likelihood, (joint_log_likelihood, descarta_Modelo)
 
 def dados_observados_R(var_coord):
 

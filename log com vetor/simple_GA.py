@@ -1,5 +1,7 @@
 import array
 import random
+import sys
+
 
 from deap import algorithms
 from deap import base
@@ -9,7 +11,10 @@ from deap import tools
 from log_likelihood import *
 from L_test import *
 import math
+import time
 from calculo_grupos import calc_qual_coord, calc_coordenadas
+
+
 
 var_coord = 0.1
 
@@ -32,43 +37,50 @@ def evalOneMax(individual):
         individual[i] = math.fabs(individual[i])
         quant_por_grupo[i] = int(individual[i] * (total_obs/1000))
 
-    log_likelihood_ind = log_likelihood(total_size, quant_por_grupo, individual)
+    log_likelihood_ind, log_likelihood_total = log_likelihood(total_size, quant_por_grupo, individual)
 
-    L_test = L_test_semS(joint_log_likelihood, log_likelihood_ind[0])
+    L_test = L_test_sem_correct(joint_log_likelihood, log_likelihood_total[0], log_likelihood_ind)
     return L_test,
 
 # Operator registering
 toolbox.register("evaluate", evalOneMax)
-toolbox.register("mate", tools.cxBlend, alpha = 0.6)
+if((sys.argv[2]) == "blend"):
+    toolbox.register("mate", tools.cxBlend, alpha = 0.5)
+elif((sys.argv[2]) == "twopoints"):
+    toolbox.register("mate", tools.cxTwoPoints)
 toolbox.register("mutate", tools.mutFlipBit)
-toolbox.register("select", tools.selDoubleTournament, parsimony_size = 2, fitness_first = True)
-# toolbox.register("select", tools.selTournament, tournsize=3)
+# toolbox.register("select", tools.selDoubleTournament, parsimony_size = 2, fitness_first = True)
+toolbox.register("select", tools.selTournament, tournsize = 3)
 # fitness_size
 
-arq_saida = "saida_final.txt"
-f = open(arq_saida, 'w')
+
+f = open(sys.argv[1], "a")
 
 def main():
     # random.seed(64)
+
     
-    pop = toolbox.population(n=300)
-    CXPB, MUTPB, NGEN = 0.5, 0.2, 40
+
+    pop = toolbox.population(n=500)
+    CXPB, MUTPB, NGEN = 0.5, 0.2, 100
     
-    print("Start of evolution")
+    # print("Start of evolution")
     
     # Evaluate the entire population
     fitnesses = list(map(toolbox.evaluate, pop))
     for ind, fit in zip(pop, fitnesses):
         ind.fitness.values = fit
     
-    print("  Evaluated %i individuals" % len(pop))
+    # print("  Evaluated %i individuals" % len(pop))
     
     # Begin the evolution
+    inicio = (time.clock())
+    antigo = inicio
     for g in range(NGEN):
         print("-- Generation %i --" % g)
         
         # Select the next generation individuals
-        offspring = toolbox.select(pop, len(pop), len(pop))
+        offspring = toolbox.select(pop, len(pop))
         # Clone the selected individuals
         offspring = list(map(toolbox.clone, offspring))
 
@@ -78,10 +90,10 @@ def main():
         sum2 = sum(x*x for x in fits)
         std = abs(sum2 / length - mean**2)**0.5
         
-        print("  Min %s" % min(fits))
-        print("  Max %s" % max(fits))
-        print("  Avg %s" % mean)
-        print("  Std %s" % std)
+        # print("  Min %s" % min(fits))
+        # print("  Max %s" % max(fits))
+        # print("  Avg %s" % mean)
+        # print("  Std %s" % std)
     
         # Apply crossover and mutation on the offspring
         for child1, child2 in zip(offspring[::2], offspring[1::2]):
@@ -91,13 +103,13 @@ def main():
                 del child2.fitness.values
         for mutant in offspring:
             if random.random() < MUTPB:
-                if(std < 20.00):##tenho que estudar isso!!!
-                    indpb=0.05
-                elif(std < 200.00):
-                    indpb=0.15
-                else:
-                    indpb=0.45
-                toolbox.mutate(mutant, indpb)
+                # if(std < 20.00):##tenho que estudar isso!!!
+                #     indpb=0.05
+                # elif(std < 200.00):
+                #     indpb=0.15
+                # else:
+                #     indpb=0.45
+                toolbox.mutate(mutant, indpb=0.05)
                 del mutant.fitness.values
     
         # Evaluate the individuals with an invalid fitness
@@ -106,72 +118,93 @@ def main():
         for ind, fit in zip(invalid_ind, fitnesses):
             ind.fitness.values = fit
         
-        print("  Evaluated %i individuals" % len(invalid_ind))
+        # print("  Evaluated %i individuals" % len(invalid_ind))
         
         # The population is entirely replaced by the offspring, but the last pop best_ind
 
+        # f.write(s)
+        # f.write('\n\n')
+        best_ind = tools.selBest(pop, 1)[0]
+        worst_ind = tools.selWorst(offspring, 1)[0]
         
-        selBest = tools.selBest(pop, 1)[0]
-        # selBest = toolbox.select(pop, 1, len(pop))[0]
-        quant_por_grupo = [0] * len(selBest)
-        for j in range(len(selBest)):
-            quant_por_grupo[j] = int(selBest[j] * (total_obs/1000))
-        log_likelihood_ind = log_likelihood(total_size, quant_por_grupo, selBest)
+        for i in range(len(offspring)):
+            if (offspring[i] == worst_ind):
+                offspring[i] = best_ind
+                break
 
-        L_test_best_evolucao = L_test_semS(joint_log_likelihood, log_likelihood_ind[0])
-        s = 'Best L_test of the pop[%d]: ' %     g + str(L_test_best_evolucao)
-        print s
-
-        f.write(s)
-        f.write('\n\n')
-
-        pop[:] = offspring
-
-        for i in range(len(pop)):
-            quant_por_grupo = [0] * len(pop[i])
-            for j in range(len(pop[i])):
-                quant_por_grupo[j] = int(pop[i][j] * (total_obs/1000))
-            log_likelihood_ind = log_likelihood(total_size, quant_por_grupo, pop[i])
-            L_test_subs = L_test_semS(joint_log_likelihood, log_likelihood_ind[0])
-            if(L_test_subs < L_test_best_evolucao):
-               pop[0] = selBest 
-               break
-        
+        pop[:] = offspring        
 
         # Gather all the fitnesses in one list and print the stats
-        
+        # meio = (time.clock())
 
+        # print(meio - inicio)
+        fim = (time.clock())
+        
+        f.write(str(max(fits)))
+        f.write('\t')
+        f.write(str(fim - antigo))
+        antigo = fim
+        f.write('\n')
+        # print g
+        # if(g == 0):
+        #     print "etrnou 0"
+        #     f.write("Best L-test value 1a: ")
+        #     f.write(str(max(fits)))
+        #     f.write('\n')
+        #     fim = (time.clock())
+        #     f.write("Tempo total de execucao 1a em segundos:")
+        #     f.write(str(fim - inicio))
+        #     f.write('\n')
+        # if(g == 19):
+        #     print "etrnou 19"
+        #     fim = (time.clock())    
+        #     f.write("Tempo total de execucao 20a em segundos:")
+        #     f.write(str(fim - inicio))
+        #     f.write('\n')
+        # if(g == 39):
+        #     print "etrnou 39"
+        #     f.write("Best L-test value 40a: ")
+        #     f.write(str(max(fits)))
+        #     f.write('\n')
+        #     fim = (time.clock())    
+        #     f.write("Tempo total de execucao da 40a em segundos:")
+        #     f.write(str(fim - inicio))
+        #     f.write('\n\n')
+        #     f.write('\n\n')
     
-    print("-- End of (successful) evolution --")
+    # print("-- End of (successful) evolution --")
     
     
     # best_ind = tools.selBest(pop, 1)[0]
     # print("Best individual is %s, %s" % (best_ind, best_ind.fitness.values))
 
-    print "L_test da melhor"
-    print L_test_best_evolucao
+    # print "L_test da melhor"
+    # print L_test_best_evolucao
 
-    f.write("Best L-test value: ")
-    f.write(str(L_test_best_evolucao))
-    f.write('\n\n')
-    #mostrar o melhor
-    for i in range(len(selBest)):
+    # f.write("Best L-test value: ")
+    # f.write(str(L_test_best_evolucao))
+    # f.write('\n\n')
+    # #mostrar o melhor
+    # for i in range(len(selBest)):
 
-        if(vector_latlong[i] == None):
-            print 'para tal lat  e long fora dos dados'
-            s = str('Latitude and longitude not available, model output: ' + str(selBest[i]))
-            f.write(s)
-            f.write('\n')
-        else:
-            print 'para tal lat  e long %s' % vector_latlong[i]
-            s = str('Latitude and longitude: ' + str(vector_latlong[i]) + '; model output: ' + str(selBest[i]))
-            f.write(s)
-            f.write('\n')
-        
-        print "tal modelo",  
-        print selBest[i]
+    #     if(vector_latlong[i] == None):
+    #         # print 'para tal lat  e long fora dos dados'
+    #         s = str('Latitude and longitude not available, model output: ' + str(selBest[i]))
+    #         f.write(s)
+    #         f.write('\n')
+    #     else:
+    #         # print 'para tal lat  e long %s' % vector_latlong[i]
+    #         s = str('Latitude and longitude: ' + str(vector_latlong[i]) + '; model output: ' + str(selBest[i]))
+    #         f.write(s)
+    #         f.write('\n')
         
 
+    #     print "tal modelo",  
+    #     print selBest[i]
+    
+    f.write('\n')
+    f.write('\n')
+    f.write('\n')
     f.close()
 
 if __name__ == "__main__":

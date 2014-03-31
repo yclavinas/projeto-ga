@@ -15,8 +15,19 @@ def L_test(joint_log_likelihood, joint_log_likelihood_simulacao, s):
 	# return ((sum(joint_L_test))/s)
 
 def L_test_semS(joint_log_likelihood, joint_log_likelihood_simulacao):
-	
 	L_test = (math.fabs(joint_log_likelihood_simulacao - joint_log_likelihood))/(math.fabs(joint_log_likelihood_simulacao))
 
+	return (L_test)
+
+def L_test_sem_correct(joint_log_likelihood, joint_log_likelihood_simulacao, joint_log_likelihood_ind):
+
+	soma = 0
+	for i in range(len(joint_log_likelihood_ind)):
+		if (joint_log_likelihood_ind[i] <= joint_log_likelihood):
+			soma = joint_log_likelihood_ind[i] + soma
+	# print type(soma), type(sum(joint_log_likelihood))
+	L_test = soma/sum(joint_log_likelihood)
+	# print L_test
+	# exit(0)
 	return (L_test)
 

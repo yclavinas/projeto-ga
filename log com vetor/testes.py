@@ -1,124 +1,52 @@
-import array
-import random
+import os, time
 
-from deap import algorithms
-from deap import base
-from deap import creator
-from deap import tools
+NUM_PROCESSES = 10
 
-from log_likelihood import *
-from L_test import *
-import math
+def timeConsumingFunction():
+    x = 1
+    for n in xrange(1000000):
+        x += 1
 
-joint_log_likelihood, total_size, total_obs = dados_observados_R()
+childrenBlend = []
 
-creator.create("FitnessMax", base.Fitness, weights=(1.0,))
-creator.create("Individual", array.array, typecode='d', fitness=creator.FitnessMax)
+j = 0
+t = time.time()
+for process in range(NUM_PROCESSES):
+    pid = os.fork() 
 
-toolbox = base.Toolbox()
-# Attribute generator
-toolbox.register("attr_float", random.random)
-# Structure initializers
-toolbox.register("individual", tools.initRepeat, creator.Individual, toolbox.attr_float, total_size)
-toolbox.register("population", tools.initRepeat, list, toolbox.individual)
+    if pid:
+        childrenBlend.append(pid)
+    else:
+        # timeConsumingFunction()
+        # os.execl('Documents/UnB/Ga/projeto-ga/log com vetor/simple_GA.py', 1)
+        # args = ("test","abc")
+        # os.execvp('Users/yclavinas/Documents/UnB/Ga/projeto-ga/log com vetor/simple_GA.py', args)
+        # os.execvp('simple_GA.py', args)
+        os.execlp('python', 'python', 'simple_GA.py', "saida_final_cxBlend"+str(j)+".txt", "blend") # overlay program
+        assert False, 'error starting program'   
+        os._exit(0)
+    j += 1
+for i, childBlend in enumerate(childrenBlend):
+    os.waitpid(childBlend, 0)
 
-def evalOneMax(individual):
-    quant_por_grupo = [0] * len(individual)
-    for i in range(len(individual)):
-        quant_por_grupo[i] = int(individual[i] * (total_obs/1000))
+childrentwopoints = []
+j = 0
+t = time.time()
+for process in range(NUM_PROCESSES):
+    pid = os.fork() 
 
-    log_likelihood_ind = log_likelihood(total_size, quant_por_grupo, individual)
-    L_test = L_test_semS(joint_log_likelihood, log_likelihood_ind[0])
-    
-    return L_test,
+    if pid:
+        childrentwopoints.append(pid)
+    else:
+        # timeConsumingFunction()
+        # os.execl('Documents/UnB/Ga/projeto-ga/log com vetor/simple_GA.py', 1)
+        # args = ("test","abc")
+        # os.execvp('Users/yclavinas/Documents/UnB/Ga/projeto-ga/log com vetor/simple_GA.py', args)
+        # os.execvp('simple_GA.py', args)
+        os.execlp('python', 'python', 'simple_GA.py', "saida_final_twopoints"+str(j)+".txt", "twopoints") # overlay program
+        assert False, 'error starting program'   
+        os._exit(0)
+    j += 1
+for i, childtwopoints in enumerate(childrentwopoints):
+    os.waitpid(childtwopoints, 0)
 
-# Operator registering
-toolbox.register("evaluate", evalOneMax)
-toolbox.register("mate", tools.cxTwoPoints)
-# toolbox.register("mate", tools.cxBlend, alpha = 0.15)
-toolbox.register("mutate", tools.mutFlipBit, indpb=0.05)
-toolbox.register("select", tools.selTournament, tournsize=3)
-
-def main():
-    random.seed(64)
-    
-    pop = toolbox.population(n=300)
-    CXPB, MUTPB, NGEN = 0.5, 0.2, 40
-    
-    print("Start of evolution")
-    
-    # Evaluate the entire population
-    fitnesses = list(map(toolbox.evaluate, pop))
-    for ind, fit in zip(pop, fitnesses):
-        ind.fitness.values = fit
-    
-    print("  Evaluated %i individuals" % len(pop))
-    
-    # Begin the evolution
-    for g in range(NGEN):
-        print("-- Generation %i --" % g)
-        
-        # Select the next generation individuals
-        offspring = toolbox.select(pop, len(pop))
-        # Clone the selected individuals
-        offspring = list(map(toolbox.clone, offspring))
-    
-        # Apply crossover and mutation on the offspring
-        for child1, child2 in zip(offspring[::2], offspring[1::2]):
-            if random.random() < CXPB:
-                toolbox.mate(child1, child2)
-                del child1.fitness.values
-                del child2.fitness.values
-        for mutant in offspring:
-            if random.random() < MUTPB:
-                toolbox.mutate(mutant)
-                del mutant.fitness.values
-    
-        # Evaluate the individuals with an invalid fitness
-        invalid_ind = [ind for ind in offspring if not ind.fitness.valid]
-        fitnesses = map(toolbox.evaluate, invalid_ind)
-        for ind, fit in zip(invalid_ind, fitnesses):
-            ind.fitness.values = fit
-        
-        print("  Evaluated %i individuals" % len(invalid_ind))
-        
-        # The population is entirely replaced by the offspring
-        pop[:] = offspring
-        
-        # Gather all the fitnesses in one list and print the stats
-        fits = [ind.fitness.values[0] for ind in pop]
-        
-        length = len(pop)
-        mean = sum(fits) / length
-        sum2 = sum(x*x for x in fits)
-        std = abs(sum2 / length - mean**2)**0.5
-        
-        print("  Min %s" % min(fits))
-        print("  Max %s" % max(fits))
-        print("  Avg %s" % mean)
-        print("  Std %s" % std)
-    
-    print("-- End of (successful) evolution --")
-    
-    # best_ind = tools.selBest(pop, 1)[0]
-    # print("Best individual is %s, %s" % (best_ind, best_ind.fitness.values))
-
-    melhor_log_likelihood = 0
-
-    quant_por_grupo = [0] * len(pop[0])
-    for i in range(len(pop[0])):
-        quant_por_grupo[i] = int(pop[0][i] * (total_obs/1000))
-        log_likelihood_ind = log_likelihood(total_size, quant_por_grupo, pop[0])
-        if (log_likelihood_ind > melhor_log_likelihood):
-            melhor_log_likelihood = log_likelihood_ind
-            best = pop[0]
-
-    L_test_best = L_test_semS(joint_log_likelihood, melhor_log_likelihood[0])
-    print L_test_best
-
-if __name__ == "__main__":
-    main()  
-
-
-if __name__ == "__main__":
-    main()
