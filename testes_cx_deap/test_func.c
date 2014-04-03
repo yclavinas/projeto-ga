@@ -827,8 +827,8 @@ void escaffer6_func (double *x, double *f, int nx, double *Os,double *Mr,int r_f
 void cf01 (double *x, double *f, int nx, double *Os,double *Mr,int r_flag) /* Composition Function 1 */
 {
 	// cf01(&x[i*nx],&f[i],nx,OShift,M,1);
-	printf("Entrou!");
-	exit(0);
+	// printf("Entrou!");
+	// exit(0);
 	int i,cf_num=5;
 	double fit[5];
 	double delta[5] = {10, 20, 30, 40, 50};

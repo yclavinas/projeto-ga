@@ -96,7 +96,7 @@ creator.create("Individual", list, fitness=creator.FitnessMin)
 LIMIT_INF, LIMIT_SUP = -100, 100
 toolbox.register("attr_float", random.uniform, LIMIT_INF, LIMIT_SUP)
 # Structure initializers
-toolbox.register("individual", tools.initRepeat, creator.Individual, toolbox.attr_float, n = 10)
+toolbox.register("individual", tools.initRepeat, creator.Individual, toolbox.attr_float, 10)
 toolbox.register("population", tools.initRepeat, list, toolbox.individual)
 
 tf = cdll.LoadLibrary('./test_func.so')
@@ -105,8 +105,7 @@ tf.test_func.argtypes=[ct.POINTER(ct.c_double),ct.POINTER(ct.c_double),ct.c_int,
 
 tf.test_func.restype=None
 
-n=10; m=2; 
-h=180
+n=5; m=100; h=100
 xlim=[-27.,-17.]; ylim=[7.,17.];
 xwidth=xlim[1]-xlim[0]; ywidth=ylim[1]-ylim[0];
 dx=xwidth/(m-1.); dy=ywidth/(h-1.);
@@ -133,12 +132,7 @@ def evalOneMax(individual):
 
         for pt in f:
             f6 = pt,
-        saida = saida + f6[0]
-    return saida,
-
-
-# print(sys.argv[2], sys.argv[3], sys.argv[4])
-# exit(0)
+    return sum(f6),
 
 # Operator registering
 toolbox.register("evaluate", evalOneMax)
@@ -182,9 +176,9 @@ elif(int(sys.argv[4]) == 27):
 
 
 def main():
-    # random.seed(64)
     
     pop = toolbox.population(n=100)
+
     CXPB, MUTPB, NGEN = 0.65, 0.08, 100
     # print("Start of evolution")
     # Evaluate the entire population
@@ -243,9 +237,6 @@ def main():
 
         j = j + 1
 
-    # for i in range(len(pop)):         
-    #     print (pop, 1)[0][i].fitness.values
-
     while True:
         try:            
             f = open(sys.argv[1], "a")
@@ -259,7 +250,8 @@ def main():
             continue
         break
     
-    best_ind = tools.selBest(pop, 1)[0]
+    # best_ind = tools.selBest(pop, 1)[0]
+    # print (best_ind.fitness.values)
     # print("Best individual is: %s with fitness value:  \n\n" % best_ind)
 
     # valor1, valor2 = 0, 0
@@ -280,17 +272,6 @@ def main():
     # y = valor2
 
     # print("Best individual is: %s with fitness value: %s \n\n" % ((x,y), best_ind.fitness.values[0]))
-
-    # f = open(sys.argv[1], "a")
-    # flock(f, LOCK_EX | LOCK_NB)
-    # f.write(str((best_ind[0],best_ind[1])))
-    # f.write(' ')
-    # f.write(str((best_ind.fitness.values[0])))
-    # f.write('\n')
-    # flock(f, LOCK_UN)
     f.close()
-    # print '\n'
-    # for i in range(len(pop)):
-    #     print sum(pop[i])
 if __name__ == "__main__":
     main()
