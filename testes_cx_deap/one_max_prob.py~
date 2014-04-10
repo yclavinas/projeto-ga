@@ -10,8 +10,7 @@ from numpy import pi, zeros, linspace
 from ctypes import cdll
 import ctypes as ct
 
-k = int(sys.argv[5])
-# print k
+k = 22
 # print 'now function ',k
 
 from deap import base
@@ -19,7 +18,7 @@ from deap import creator
 from deap import tools
 from deap import algorithms
 
-creator.create("FitnessMin", base.Fitness, weights=(-1.0,))
+creator.create("FitnessMax", base.Fitness, weights=(1.0,))
 
 
 toolbox = base.Toolbox()
@@ -91,12 +90,12 @@ toolbox = base.Toolbox()
 
 ###--Para funcoes compostas do cec--###
 
-creator.create("Individual", list, fitness=creator.FitnessMin)
+creator.create("Individual", list, fitness=creator.FitnessMax)
 
 LIMIT_INF, LIMIT_SUP = -100, 100
 toolbox.register("attr_float", random.uniform, LIMIT_INF, LIMIT_SUP)
 # Structure initializers
-toolbox.register("individual", tools.initRepeat, creator.Individual, toolbox.attr_float, 10)
+toolbox.register("individual", tools.initRepeat, creator.Individual, toolbox.attr_float, n = 20)
 toolbox.register("population", tools.initRepeat, list, toolbox.individual)
 
 tf = cdll.LoadLibrary('./test_func.so')
@@ -105,7 +104,7 @@ tf.test_func.argtypes=[ct.POINTER(ct.c_double),ct.POINTER(ct.c_double),ct.c_int,
 
 tf.test_func.restype=None
 
-n=5; m=100; h=180
+n=10; m=2; h=180
 xlim=[-27.,-17.]; ylim=[7.,17.];
 xwidth=xlim[1]-xlim[0]; ywidth=ylim[1]-ylim[0];
 dx=xwidth/(m-1.); dy=ywidth/(h-1.);
@@ -115,70 +114,52 @@ y=linspace(ylim[0],ylim[1],h+1)
 
 
 def evalOneMax(individual):
-    saida = 0
-    for y in range(len(individual)):
-        x = individual[y]
-        npdat=zeros(n*m)
-        dat = (ct.c_double * len(npdat))()
-        for i,val in enumerate(npdat):
-            dat[i] = x
+    x = individual[0]
+    npdat=zeros(n*m)
+    dat = (ct.c_double * len(npdat))()
+    for i,val in enumerate(npdat):
+        dat[i] = x
 
-        npf=zeros(m)
-        f = (ct.c_double * len(npf))()
-        for i,val in enumerate(npf):
-            f[i] = val 
+    npf=zeros(m)
+    f = (ct.c_double * len(npf))()
+    for i,val in enumerate(npf):
+        f[i] = val 
 
-        r1=tf.test_func(dat,f,ct.c_int(n),ct.c_int(m),ct.c_int(k))
+    r1=tf.test_func(dat,f,ct.c_int(n),ct.c_int(m),ct.c_int(k))
 
-        for pt in f:
-            f6 = pt,
-    return sum(f6),
+    for pt in f:
+        f6 = pt,
+    return f6
 
 # Operator registering
 toolbox.register("evaluate", evalOneMax)
-if(int(sys.argv[2]) == 0):
-    toolbox.register("mate", tools.cxOnePoint)
-elif(int(sys.argv[2]) == 1):
-    toolbox.register("mate", tools.cxTwoPoint)
-elif(int(sys.argv[2]) == 2):
-    toolbox.register("mate", tools.cxUniform, indpb=0.05)
-elif(int(sys.argv[2]) == 3):
+toolbox.register("mate", tools.cxOnePoint)
+# toolbox.register("mate", tools.cxTwoPoints)
+# toolbox.register("mate", tools.cxUniform, indpb=0.05)
 # toolbox.register("mate", tools.cxPartialyMatched) #int
 # toolbox.register("mate", tools.cxOrdered) #int
 # toolbox.register("mate", tools.cxUniformPartialyMatched, indpb=0.05) #int
-    toolbox.register("mate", tools.cxBlend, alpha = 0.5)#float
-elif(int(sys.argv[2]) == 4):
-    toolbox.register("mate", tools.cxSimulatedBinary, eta = 1)#float
-elif(int(sys.argv[2]) == 5):
-    toolbox.register("mate", tools.cxSimulatedBinaryBounded, eta = 1, low = -1, up = 1)#float
+# toolbox.register("mate", tools.cxBlend, alpha = 0.5)#float
+# toolbox.register("mate", tools.cxSimulatedBinary, eta = 1)#float
+# toolbox.register("mate", tools.cxSimulatedBinaryBounded, eta = 1, low = -1, up = 1)#float
 # toolbox.register("mate", tools.cxMessyOnePoint)
-
-if(int(sys.argv[3]) == 10):
-    toolbox.register("mutate", tools.mutFlipBit, indpb=0.01)
-elif(int(sys.argv[3]) == 11):
-    toolbox.register("mutate", tools.mutShuffleIndexes, indpb=0.5)
-elif(int(sys.argv[3]) == 12):
-    # toolbox.register("mutate", tools.mutUniformInt, indpb=0.5, low=0, up=1)#int
-    toolbox.register("mutate", tools.mutPolynomialBounded,indpb=0.5, eta = 1, low = -1, up = 1)#float
-
-if(int(sys.argv[4]) == 23):
-    toolbox.register("select", tools.selTournament, tournsize=3)
-elif(int(sys.argv[4]) == 24):
-    toolbox.register("select", tools.selRoulette)
-elif(int(sys.argv[4]) == 25):
+# toolbox.register("mutate", tools.mutFlipBit, indpb=0.01)
+toolbox.register("mutate", tools.mutShuffleIndexes, indpb=0.5)
+# toolbox.register("mutate", tools.mutUniformInt, indpb=0.5, low=0, up=1)#int
+# toolbox.register("mutate", tools.mutPolynomialBounded,indpb=0.5, eta = 1, low = -1, up = 1)#float
+# toolbox.register("select", tools.selTournament, tournsize=3)
+# toolbox.register("select", tools.selRoulette)
 # toolbox.register("select", tools.selNSGA2)#multi
 # toolbox.register("select", tools.selSPEA2)#multi
-    toolbox.register("select", tools.selRandom)
-elif(int(sys.argv[4]) == 26):
-    toolbox.register("select", tools.selBest)
-elif(int(sys.argv[4]) == 27):
-    toolbox.register("select", tools.selWorst)
+# toolbox.register("select", tools.selRandom)
+toolbox.register("select", tools.selBest)
+# toolbox.register("select", tools.selWorst)
 
 
 def main():
+    random.seed(64)
     
     pop = toolbox.population(n=100)
-
     CXPB, MUTPB, NGEN = 0.65, 0.08, 100
     # print("Start of evolution")
     # Evaluate the entire population
@@ -194,7 +175,7 @@ def main():
     for g in range(NGEN):
     
     # while (evaluations < 4000):
-    # print("-- Generation %i --" % g)
+        # print("-- Generation %i --" % g)
         
         # Select the next generation individuals
         offspring = toolbox.select(pop, len(pop))
@@ -221,18 +202,24 @@ def main():
         
         # print("  Evaluated %i individuals" % len(invalid_ind))
         # The population is entirely replaced by the offspring
+        best_ind = tools.selBest(pop, 1)[0]
+        worst_ind = tools.selWorst(offspring, 1)[0]
 
-        pop[:] = toolbox.population(n=100)
-        fitnesses = list(map(toolbox.evaluate, pop))
-        for ind, fit in zip(pop, fitnesses):
-            ind.fitness.values = fit
-        pop[99] = tools.selBest(pop, 1)[0]
+        for i in range(len(offspring)):
+            if (offspring[i] == worst_ind):
+                offspring[i] = best_ind
+                break
+
+        pop[:] = offspring 
         # Gather all the fitnesses in one list and print the stats
         fits = [ind.fitness.values[0] for ind in pop]
         length = len(pop)
         mean = sum(fits) / length
 
         j = j + 1
+
+    # for i in range(len(pop)):         
+    #     print (pop, 1)[0][i].fitness.values
 
     while True:
         try:            
@@ -247,8 +234,7 @@ def main():
             continue
         break
     
-    # best_ind = tools.selBest(pop, 1)[0]
-    # print (best_ind.fitness.values)
+    best_ind = tools.selBest(pop, 1)[0]
     # print("Best individual is: %s with fitness value:  \n\n" % best_ind)
 
     # valor1, valor2 = 0, 0
@@ -269,6 +255,17 @@ def main():
     # y = valor2
 
     # print("Best individual is: %s with fitness value: %s \n\n" % ((x,y), best_ind.fitness.values[0]))
+
+    # f = open(sys.argv[1], "a")
+    # flock(f, LOCK_EX | LOCK_NB)
+    # f.write(str((best_ind[0],best_ind[1])))
+    # f.write(' ')
+    # f.write(str((best_ind.fitness.values[0])))
+    # f.write('\n')
+    # flock(f, LOCK_UN)
     f.close()
+    # print '\n'
+    # for i in range(len(pop)):
+    #     print sum(pop[i])
 if __name__ == "__main__":
     main()

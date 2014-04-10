@@ -139,7 +139,7 @@ toolbox.register("evaluate", evalOneMax)
 if(int(sys.argv[2]) == 0):
     toolbox.register("mate", tools.cxOnePoint)
 elif(int(sys.argv[2]) == 1):
-    toolbox.register("mate", tools.cxTwoPoint)
+    toolbox.register("mate", tools.cxTwoPoints)
 elif(int(sys.argv[2]) == 2):
     toolbox.register("mate", tools.cxUniform, indpb=0.05)
 elif(int(sys.argv[2]) == 3):
@@ -221,12 +221,15 @@ def main():
         
         # print("  Evaluated %i individuals" % len(invalid_ind))
         # The population is entirely replaced by the offspring
+        best_ind = tools.selBest(pop, 1)[0]
+        worst_ind = tools.selWorst(offspring, 1)[0]
 
-        pop[:] = toolbox.population(n=100)
-        fitnesses = list(map(toolbox.evaluate, pop))
-        for ind, fit in zip(pop, fitnesses):
-            ind.fitness.values = fit
-        pop[99] = tools.selBest(pop, 1)[0]
+        for i in range(len(offspring)):
+            if (offspring[i] == worst_ind):
+                offspring[i] = best_ind
+                break
+
+        pop[:] = offspring 
         # Gather all the fitnesses in one list and print the stats
         fits = [ind.fitness.values[0] for ind in pop]
         length = len(pop)

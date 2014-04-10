@@ -104,7 +104,7 @@ tf.test_func.argtypes=[ct.POINTER(ct.c_double),ct.POINTER(ct.c_double),ct.c_int,
 
 tf.test_func.restype=None
 
-n=10; m=2; h=180
+n=5; m=100; h=180
 xlim=[-27.,-17.]; ylim=[7.,17.];
 xwidth=xlim[1]-xlim[0]; ywidth=ylim[1]-ylim[0];
 dx=xwidth/(m-1.); dy=ywidth/(h-1.);

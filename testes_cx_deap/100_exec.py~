@@ -1,0 +1,6 @@
+import os, time
+for w in range(3):	
+	k = 26 + w
+	print k
+
+	
