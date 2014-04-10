@@ -139,7 +139,7 @@ toolbox.register("evaluate", evalOneMax)
 if(int(sys.argv[2]) == 0):
     toolbox.register("mate", tools.cxOnePoint)
 elif(int(sys.argv[2]) == 1):
-    toolbox.register("mate", tools.cxTwoPoint)
+    toolbox.register("mate", tools.cxTwoPoints)
 elif(int(sys.argv[2]) == 2):
     toolbox.register("mate", tools.cxUniform, indpb=0.05)
 elif(int(sys.argv[2]) == 3):
