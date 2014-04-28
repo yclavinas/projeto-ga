@@ -25,7 +25,14 @@ def calc_grupo_coord(obs_menor_long, obs_menor_lat, menor_lat, menor_long, var_c
 	qual_bin_lat = dif_lat / var_coord
 	qual_bin_long = dif_long / var_coord
 
-	return qual_bin_lat, qual_bin_long
+	primeiro, segundo = 0.5, 1.5
+	modificador = divmod(primeiro, 0.5)
+	m = modificador[0]
+	index = divmod(segundo, 0.5)
+	i = index[0]
+	indice = i + (m * (dif_lat*dif_long/0.5))
+
+	return qual_bin_lat, qual_bin_long, int(indice)
 
 
 def calc_qual_coord(menor_long, menor_lat, var_coord):

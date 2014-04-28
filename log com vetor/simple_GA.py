@@ -34,20 +34,19 @@ toolbox.register("population", tools.initRepeat, list, toolbox.individual)
 def evalOneMax(individual):
     quant_por_grupo = [0] * len(individual)
     for i in range(len(individual)):
-        individual[i] = math.fabs(individual[i])
-        quant_por_grupo[i] = int(individual[i] * (total_obs/1000))
+        if(individual[i] < 0):
+            individual[i] = -individual[i]
+        quant_por_grupo[i] = int(individual[i] * total_obs)
 
-    log_likelihood_ind, log_likelihood_total = log_likelihood(total_size, quant_por_grupo, individual)
+    log_likelihood_ind, log_likelihood_total, descarta_modelo = log_likelihood(total_size, quant_por_grupo, individual)
 
-    L_test = L_test_sem_correct(joint_log_likelihood, log_likelihood_total[0], log_likelihood_ind)
+    L_test = L_test_sem_correct(joint_log_likelihood, log_likelihood_total, log_likelihood_ind)
+    # print L_test
     return L_test,
 
 # Operator registering
 toolbox.register("evaluate", evalOneMax)
-if((sys.argv[2]) == "blend"):
-    toolbox.register("mate", tools.cxBlend, alpha = 0.5)
-elif((sys.argv[2]) == "twopoints"):
-    toolbox.register("mate", tools.cxTwoPoints)
+toolbox.register("mate", tools.cxTwoPoints)
 toolbox.register("mutate", tools.mutFlipBit)
 # toolbox.register("select", tools.selDoubleTournament, parsimony_size = 2, fitness_first = True)
 toolbox.register("select", tools.selTournament, tournsize = 3)
@@ -57,9 +56,7 @@ toolbox.register("select", tools.selTournament, tournsize = 3)
 f = open(sys.argv[1], "a")
 
 def main():
-    # random.seed(64)
-
-    
+    random.seed(64)
 
     pop = toolbox.population(n=500)
     CXPB, MUTPB, NGEN = 0.5, 0.2, 100
@@ -70,8 +67,6 @@ def main():
     fitnesses = list(map(toolbox.evaluate, pop))
     for ind, fit in zip(pop, fitnesses):
         ind.fitness.values = fit
-    
-    # print("  Evaluated %i individuals" % len(pop))
     
     # Begin the evolution
     inicio = (time.clock())
@@ -89,12 +84,6 @@ def main():
         mean = sum(fits) / length
         sum2 = sum(x*x for x in fits)
         std = abs(sum2 / length - mean**2)**0.5
-        
-        # print("  Min %s" % min(fits))
-        # print("  Max %s" % max(fits))
-        # print("  Avg %s" % mean)
-        # print("  Std %s" % std)
-    
         # Apply crossover and mutation on the offspring
         for child1, child2 in zip(offspring[::2], offspring[1::2]):
             if random.random() < CXPB:
@@ -103,12 +92,6 @@ def main():
                 del child2.fitness.values
         for mutant in offspring:
             if random.random() < MUTPB:
-                # if(std < 20.00):##tenho que estudar isso!!!
-                #     indpb=0.05
-                # elif(std < 200.00):
-                #     indpb=0.15
-                # else:
-                #     indpb=0.45
                 toolbox.mutate(mutant, indpb=0.05)
                 del mutant.fitness.values
     
@@ -140,72 +123,14 @@ def main():
         # print(meio - inicio)
         fim = (time.clock())
         
-        f.write(str(max(fits)))
-        f.write('\t')
-        f.write(str(fim - antigo))
-        antigo = fim
-        f.write('\n')
-        # print g
-        # if(g == 0):
-        #     print "etrnou 0"
-        #     f.write("Best L-test value 1a: ")
-        #     f.write(str(max(fits)))
-        #     f.write('\n')
-        #     fim = (time.clock())
-        #     f.write("Tempo total de execucao 1a em segundos:")
-        #     f.write(str(fim - inicio))
-        #     f.write('\n')
-        # if(g == 19):
-        #     print "etrnou 19"
-        #     fim = (time.clock())    
-        #     f.write("Tempo total de execucao 20a em segundos:")
-        #     f.write(str(fim - inicio))
-        #     f.write('\n')
-        # if(g == 39):
-        #     print "etrnou 39"
-        #     f.write("Best L-test value 40a: ")
-        #     f.write(str(max(fits)))
-        #     f.write('\n')
-        #     fim = (time.clock())    
-        #     f.write("Tempo total de execucao da 40a em segundos:")
-        #     f.write(str(fim - inicio))
-        #     f.write('\n\n')
-        #     f.write('\n\n')
-    
-    # print("-- End of (successful) evolution --")
-    
-    
-    # best_ind = tools.selBest(pop, 1)[0]
-    # print("Best individual is %s, %s" % (best_ind, best_ind.fitness.values))
-
-    # print "L_test da melhor"
-    # print L_test_best_evolucao
-
-    # f.write("Best L-test value: ")
-    # f.write(str(L_test_best_evolucao))
-    # f.write('\n\n')
-    # #mostrar o melhor
-    # for i in range(len(selBest)):
-
-    #     if(vector_latlong[i] == None):
-    #         # print 'para tal lat  e long fora dos dados'
-    #         s = str('Latitude and longitude not available, model output: ' + str(selBest[i]))
-    #         f.write(s)
-    #         f.write('\n')
-    #     else:
-    #         # print 'para tal lat  e long %s' % vector_latlong[i]
-    #         s = str('Latitude and longitude: ' + str(vector_latlong[i]) + '; model output: ' + str(selBest[i]))
-    #         f.write(s)
-    #         f.write('\n')
-        
-
-    #     print "tal modelo",  
-    #     print selBest[i]
+    f.write(str(max(fits)))
     
     f.write('\n')
     f.write('\n')
     f.write('\n')
     f.close()
-
+    print best_ind.fitness.values, best_ind
+    print '\n'
+    print expectations
 if __name__ == "__main__":
     main()  
