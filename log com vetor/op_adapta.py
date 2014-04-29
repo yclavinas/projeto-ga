@@ -1,7 +1,7 @@
 import array
 import random
 import sys
-
+from fcntl import flock, LOCK_EX, LOCK_UN, LOCK_NB
 
 from deap import algorithms
 from deap import base
@@ -81,7 +81,7 @@ elif(int(sys.argv[4]) == 27):
 def main():
     # random.seed(64)
 
-    pop = toolbox.population(n=500)
+    pop = toolbox.population(n=10)
     CXPB, MUTPB, NGEN = 0.9, 0.1, 100
     
     print("Start of evolution")
@@ -105,16 +105,23 @@ def main():
         sum2 = sum(x*x for x in fits)
         std = abs(sum2 / length - mean**2)**0.5
         # Apply crossover and mutation on the offspring
-        for child1, child2 in zip(offspring[::2], offspring[1::2]):
-            if random.random() < CXPB:
-                toolbox.mate(child1, child2)
-                del child1.fitness.values
-                del child2.fitness.values
-        for mutant in offspring:
-            if random.random() < MUTPB:
-                toolbox.mutate(mutant, indpb=0.05)
-                del mutant.fitness.values
-    
+        m = 50
+        while (m > 0):
+            operator1 = 0
+            m = m - 1
+            for child1, child2 in zip(offspring[::50-m], offspring[1::50-m]):
+                if random.random() < CXPB:
+                    toolbox.mate(child1, child2)
+                    del child1.fitness.values
+                    del child2.fitness.values
+                    operator1 = 1
+                break
+            if(operator1 == 0):
+                for mutant in offspring:
+                    # if random.random() < MUTPB:
+                    toolbox.mutate(mutant, indpb=0.05)
+                    del mutant.fitness.values
+                    break
         # Evaluate the individuals with an invalid fitness
         invalid_ind = [ind for ind in offspring if not ind.fitness.valid]
         fitnesses = map(toolbox.evaluate, invalid_ind)
@@ -122,7 +129,6 @@ def main():
             ind.fitness.values = fit
         
         print("  Evaluated %i individuals" % len(invalid_ind))
-        
         # The population is entirely replaced by the offspring, but the last pop best_ind
 
         best_ind = tools.selBest(pop, 1)[0]
@@ -134,7 +140,7 @@ def main():
                 break
 
         pop[:] = offspring        
-
+        MUTPB, NGEN = MUTPB + 0.3, NGEN - 0.3
         
     while True:
         try:            

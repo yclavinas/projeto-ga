@@ -45,7 +45,7 @@ def dados_observados_R(var_coord):
 	menor_long = float(menor_long)
 	bins_lat = int(bins_lat)
 	bins_long = int(bins_long)
-	total_size = bins_long * bins_lat
+	total_size = 2025
 
 	print "inicio da criacao do vetor modificado"
 
