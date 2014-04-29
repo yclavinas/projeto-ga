@@ -44,44 +44,19 @@ def evalOneMax(individual):
 
 # Operator registering
 toolbox.register("evaluate", evalOneMax)
-if(int(sys.argv[2]) == 0):
-    toolbox.register("mate", tools.cxOnePoint)
-elif(int(sys.argv[2]) == 1):
-    toolbox.register("mate", tools.cxTwoPoints)
-elif(int(sys.argv[2]) == 2):
-    toolbox.register("mate", tools.cxUniform, indpb=0.05)
-elif(int(sys.argv[2]) == 3):
-    toolbox.register("mate", tools.cxBlend, alpha = 0.5)#float
-elif(int(sys.argv[2]) == 4):
-    toolbox.register("mate", tools.cxSimulatedBinary, eta = 1)#float
-elif(int(sys.argv[2]) == 5):
-    toolbox.register("mate", tools.cxSimulatedBinaryBounded, eta = 1, low = -1, up = 1)#float
 
-if(int(sys.argv[3]) == 10):
-    toolbox.register("mutate", tools.mutFlipBit, indpb=0.01)
-elif(int(sys.argv[3]) == 11):
-    toolbox.register("mutate", tools.mutShuffleIndexes, indpb=0.5)
-elif(int(sys.argv[3]) == 12):
-    # toolbox.register("mutate", tools.mutUniformInt, indpb=0.5, low=0, up=1)#int
-    toolbox.register("mutate", tools.mutPolynomialBounded,indpb=0.5, eta = 1, low = -1, up = 1)#float
+toolbox.register("mate", tools.cxTwoPoints)
 
-if(int(sys.argv[4]) == 23):
-    toolbox.register("select", tools.selTournament, tournsize=3)
-elif(int(sys.argv[4]) == 24):
-    toolbox.register("select", tools.selRoulette)
-elif(int(sys.argv[4]) == 25):
-    toolbox.register("select", tools.selRandom)
-elif(int(sys.argv[4]) == 26):
-    toolbox.register("select", tools.selBest)
-elif(int(sys.argv[4]) == 27):
-    toolbox.register("select", tools.selWorst)
+toolbox.register("mutate", tools.mutShuffleIndexes, indpb=0.5)
+
+toolbox.register("select", tools.selRoulette)
 
 
 
 def main():
     # random.seed(64)
 
-    pop = toolbox.population(n=10)
+    pop = toolbox.population(n=500)
     CXPB, MUTPB, NGEN = 0.9, 0.1, 100
     
     print("Start of evolution")
