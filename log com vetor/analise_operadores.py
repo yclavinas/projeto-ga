@@ -56,7 +56,7 @@ toolbox.register("select", tools.selRoulette)
 def main():
     # random.seed(64)
 
-    pop = toolbox.population(n=500)
+    pop = toolbox.population(n=50)
     CXPB, MUTPB, NGEN = 0.9, 0.1, 100
     
     print("Start of evolution")
