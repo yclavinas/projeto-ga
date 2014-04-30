@@ -174,6 +174,8 @@ for w in range(1):
 	for i in range(2):
 		NUM_PROCESSES = 25
 
+		childrenBlend = []
+
 		j = 0
 		t = time.time()
 		for process in range(NUM_PROCESSES):
