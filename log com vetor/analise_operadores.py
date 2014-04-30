@@ -56,7 +56,7 @@ toolbox.register("select", tools.selRoulette)
 def main():
     # random.seed(64)
 
-    pop = toolbox.population(n=50)
+    pop = toolbox.population(n=500)
     CXPB, MUTPB, NGEN = 0.9, 0.1, 100
     
     print("Start of evolution")
@@ -73,6 +73,7 @@ def main():
         offspring = toolbox.select(pop, len(pop))
         # Clone the selected individuals
         offspring = list(map(toolbox.clone, offspring))
+        selecao = list(map(toolbox.clone, offspring))
 
         fits = [ind.fitness.values[0] for ind in pop]
         length = len(pop)
@@ -84,18 +85,33 @@ def main():
         while (m > 0):
             operator1 = 0
             m = m - 1
-            for child1, child2 in zip(offspring[::50-m], offspring[1::50-m]):
+            for child1, child2 in zip(selecao[::2], selecao[1::2]):
                 if random.random() < CXPB:
                     toolbox.mate(child1, child2)
                     del child1.fitness.values
                     del child2.fitness.values
                     operator1 = 1
+                    i = 0
+                    while (i < len(selecao)):
+                        if (selecao[i] == child1):
+                            del selecao[i] 
+                            i = i - 1
+                        elif (selecao[i] == child2):
+                            del selecao[i] 
+                            i = i - 1
+                        i = i + 1
                 break
             if(operator1 == 0):
-                for mutant in offspring:
+                for mutant in selecao:
                     # if random.random() < MUTPB:
                     toolbox.mutate(mutant, indpb=0.05)
                     del mutant.fitness.values
+                    i = 0
+                    while (i < len(selecao)):
+                        if (selecao[i] == mutant):
+                            del selecao[i] 
+                            i = i - 1
+                        i = i + 1
                     break
         # Evaluate the individuals with an invalid fitness
         invalid_ind = [ind for ind in offspring if not ind.fitness.valid]
@@ -105,18 +121,17 @@ def main():
         
         print("  Evaluated %i individuals" % len(invalid_ind))
         # The population is entirely replaced by the offspring, but the last pop best_ind
-
-        best_ind = tools.selBest(pop, 1)[0]
-        worst_ind = tools.selWorst(offspring, 1)[0]
+        # best_ind = tools.selBest(pop, 1)[0]
+        # worst_ind = tools.selWorst(offspring, 1)[0]
         
-        for i in range(len(offspring)):
-            if (offspring[i] == worst_ind):
-                offspring[i] = best_ind
-                break
+        # for i in range(len(offspring)):
+        #     if (offspring[i] == worst_ind):
+        #         offspring[i] = best_ind
+        #         break
 
         pop[:] = offspring        
-        MUTPB, NGEN = MUTPB + 0.3, NGEN - 0.3
-        
+        CXPB, MUTPB = CXPB - (0.003), MUTPB + (0.003)
+        print MUTPB, CXPB
     while True:
         try:            
             f = open(sys.argv[1], "a")
