@@ -1,10 +1,15 @@
-Algorithm 1 Obtain a Poisson deviate from a [0, 1)
-value
-Parameters 0 ≤ x < 1, μ ≥ 0
-L ← exp (−μ), k ← 0, prob ← 1
-repeat
-increment k
-prob ← prob ∗ x
-until prob > L
-return k
+import math
 
+def poisson_press(x,mi):
+	if(mi <= 0):
+		return
+	elif(x >= 0):
+		if(x < 1):
+			l = math.exp(-mi)
+			k = 0
+			prob = 1
+			while(l < prob):
+				k = k + 1
+				prob = prob * x
+			return (k - 1)
+	return 0
