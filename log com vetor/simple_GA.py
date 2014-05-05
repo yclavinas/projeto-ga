@@ -40,7 +40,8 @@ def evalOneMax(individual):
     log_likelihood_ind, log_likelihood_total, descarta_modelo = log_likelihood(total_size, quant_por_grupo, individual)
 
     L_test = L_test_sem_correct(joint_log_likelihood, log_likelihood_total, log_likelihood_ind)
-    return L_test,
+    # return L_test,
+    return log_likelihood_total,
 
 # Operator registering
 toolbox.register("evaluate", evalOneMax)
@@ -58,12 +59,12 @@ elif(int(sys.argv[2]) == 5):
     toolbox.register("mate", tools.cxSimulatedBinaryBounded, eta = 1, low = -1, up = 1)#float
 
 if(int(sys.argv[3]) == 10):
-    toolbox.register("mutate", tools.mutFlipBit, indpb=0.01)
+    toolbox.register("mutate", tools.mutFlipBit, indpb=0.05)
 elif(int(sys.argv[3]) == 11):
-    toolbox.register("mutate", tools.mutShuffleIndexes, indpb=0.5)
+    toolbox.register("mutate", tools.mutShuffleIndexes, indpb=0.05)
 elif(int(sys.argv[3]) == 12):
     # toolbox.register("mutate", tools.mutUniformInt, indpb=0.5, low=0, up=1)#int
-    toolbox.register("mutate", tools.mutPolynomialBounded,indpb=0.5, eta = 1, low = -1, up = 1)#float
+    toolbox.register("mutate", tools.mutPolynomialBounded,indpb=0.05, eta = 1, low = -1, up = 1)#float
 
 if(int(sys.argv[4]) == 23):
     toolbox.register("select", tools.selTournament, tournsize=3)
