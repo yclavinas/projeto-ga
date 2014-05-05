@@ -47,7 +47,7 @@ toolbox.register("evaluate", evalOneMax)
 
 toolbox.register("mate", tools.cxTwoPoints)
 
-toolbox.register("mutate", tools.mutShuffleIndexes, indpb=0.5)
+toolbox.register("mutate", tools.mutShuffleIndexes, indpb=0.05)
 
 toolbox.register("select", tools.selRoulette)
 
@@ -131,7 +131,6 @@ def main():
 
         pop[:] = offspring        
         CXPB, MUTPB = CXPB - (0.003), MUTPB + (0.003)
-        print MUTPB, CXPB
     while True:
         try:            
             f = open(sys.argv[1], "a")
