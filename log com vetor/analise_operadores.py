@@ -57,13 +57,13 @@ def main():
     # random.seed(64)
 
     pop = toolbox.population(n=500)
-    CXPB, MUTPB, NGEN = 0.9, 0.1, 10
+    CXPB, MUTPB, NGEN = 0.9, 0.1, 100
     ano_int = 1997
     ano_str = str(ano_int)
     
     var_coord = 0.5
 
-    while(ano_int <= 2013):
+    while(ano_int <= 1997):
         print ano_int
         joint_log_likelihood, total_size, total_obs, menor_lat, menor_long, vector_latlong, expectations, N_ano, N = dados_observados_R(var_coord, ano_str)
         global mi
@@ -89,23 +89,25 @@ def main():
             sum2 = sum(x*x for x in fits)
             std = abs(sum2 / length - mean**2)**0.5
             # Apply crossover and mutation on the offspring
-            m = 50
-            while (m > 0):
+            m = 0
+            while (m < 50):
                 operator1 = 0
+                print 'm', m
+                ja_fez = 0
                 for child1, child2 in zip(offspring[::2], offspring[1::2]):
                     if random.random() < CXPB:
                         toolbox.mate(child1, child2)
                         del child1.fitness.values
                         del child2.fitness.values
                         operator1 = 1
-                        m -= 2
-                    break
+                        m += 2
                 if(operator1 == 0):
                     for mutant in offspring:
-                        if random.random() < MUTPB:
+                        # if random.random() < MUTPB:
                             toolbox.mutate(mutant, indpb=0.05)
                             del mutant.fitness.values
-                            m -= 1
+                            m += 1
+                            ja_fez = 1
             # Evaluate the individuals with an invalid fitness
             invalid_ind = [ind for ind in offspring if not ind.fitness.valid]
             fitnesses = map(toolbox.evaluate, invalid_ind)
@@ -113,10 +115,10 @@ def main():
                 ind.fitness.values = fit
             
             print("  Evaluated %i individuals" % len(invalid_ind))
-
+            print len(pop), len(offspring)
             pop[:] = offspring        
-            CXPB, MUTPB = CXPB - (0.003), MUTPB + (0.003   )
-            print MUTPB, CXPB
+            CXPB, MUTPB = CXPB - (0.003), MUTPB + (0.003)
+
         best_ind = tools.selBest(pop, 1)[0]
         for i in range(len(best_ind)):
             global quant_por_grupo
@@ -124,7 +126,7 @@ def main():
 
         while True:
             try:            
-                f = open(sys.argv[1], "a")
+                f = open(sys.argv[1], "w")
                 flock(f, LOCK_EX | LOCK_NB)
                 for i in range(len(pop)):            
                     f.write(str((pop, 1)[0][i].fitness.values))

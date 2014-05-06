@@ -11,5 +11,5 @@ def poisson_press(x,mi):
 			while(l < prob):
 				k = k + 1
 				prob = prob * x
-			return (k - 1)
-	return 0
+			return (k)
+	return 1
