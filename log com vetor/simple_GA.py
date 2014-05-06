@@ -90,7 +90,7 @@ def main():
     
     var_coord = 0.5
 
-    while(ano_int <= 1997):
+    while(ano_int <= 2013):
         joint_log_likelihood, total_size, total_obs, menor_lat, menor_long, vector_latlong, expectations, N_ano, N = dados_observados_R(var_coord, ano_str)
         global mi
         mi = float(N_ano)/float(N)
