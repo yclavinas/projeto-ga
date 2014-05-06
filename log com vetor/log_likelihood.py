@@ -1,6 +1,7 @@
 import math
 from fatorial import fat
 from decimal import *
+
 #from log_criacao import log_criacao
 
 def log_likelihood(total_size, quant_por_grupo, expectation):
@@ -23,7 +24,7 @@ def log_likelihood(total_size, quant_por_grupo, expectation):
 
 	return log_likelihood, joint_log_likelihood, descarta_Modelo
 
-def dados_observados_R(var_coord):
+def dados_observados_R(var_coord, ano_str):
 
 	import random
 	from calculo_grupos import calc_coordenadas
@@ -50,14 +51,13 @@ def dados_observados_R(var_coord):
 	print "inicio da criacao do vetor modificado"
 
 	#3.b) sem modificacao
-	modified_vetor, quant_por_grupo, N, total_obs, vector_latlong, total_size = cria_vector(total_size, arq_entrada, 'r', 
-		menor_lat, menor_long, var_coord)
+	modified_vetor, quant_por_grupo, N, total_obs, vector_latlong, total_size, N_ano = cria_vector(total_size, arq_entrada, 'r', 
+		menor_lat, menor_long, var_coord, ano_str)
 
 	expectations = calcular_expectations(quant_por_grupo, total_size, N)
 
-
 	joint_log_likelihood, joint_log_likelihood_NaoUso, descarta_Modelo = log_likelihood(total_size, quant_por_grupo, expectations)
 
-	return joint_log_likelihood, total_size, total_obs, menor_lat, menor_long, vector_latlong, expectations
+	return joint_log_likelihood, total_size, total_obs, menor_lat, menor_long, vector_latlong, expectations, N_ano, N
 
 
