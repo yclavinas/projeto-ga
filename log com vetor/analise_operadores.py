@@ -130,7 +130,7 @@ def main():
         #         break
 
         pop[:] = offspring        
-        CXPB, MUTPB = CXPB - (0.003), MUTPB + (0.003)
+        CXPB, MUTPB = CXPB - (0.003), MUTPB + (0.003    )
         print MUTPB, CXPB
     while True:
         try:            
