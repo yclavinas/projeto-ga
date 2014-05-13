@@ -92,30 +92,29 @@ def main():
             m = 0
             while (m < 50):
                 operator1 = 0
-                print 'm', m
                 ja_fez = 0
                 for child1, child2 in zip(offspring[::2], offspring[1::2]):
-                    if random.random() < CXPB:
+                    if random.random() < CXPB and ja_fez == 0:
                         toolbox.mate(child1, child2)
                         del child1.fitness.values
                         del child2.fitness.values
                         operator1 = 1
                         m += 2
-                if(operator1 == 0):
-                    for mutant in offspring:
-                        # if random.random() < MUTPB:
+                        ja_fez = 1
+                for mutant in offspring:
+                    if(operator1 == 0):
+                        if random.random() < MUTPB and ja_fez == 0:
                             toolbox.mutate(mutant, indpb=0.05)
                             del mutant.fitness.values
                             m += 1
                             ja_fez = 1
-            # Evaluate the individuals with an invalid fitness
+        # Evaluate the individuals with an invalid fitness
             invalid_ind = [ind for ind in offspring if not ind.fitness.valid]
             fitnesses = map(toolbox.evaluate, invalid_ind)
             for ind, fit in zip(invalid_ind, fitnesses):
                 ind.fitness.values = fit
             
             print("  Evaluated %i individuals" % len(invalid_ind))
-            print len(pop), len(offspring)
             pop[:] = offspring        
             CXPB, MUTPB = CXPB - (0.003), MUTPB + (0.003)
 
@@ -124,6 +123,7 @@ def main():
             global quant_por_grupo
             quant_por_grupo[i] = poisson_press(best_ind[i], mi)
 
+        print len(pop)
         while True:
             try:            
                 f = open(sys.argv[1], "w")

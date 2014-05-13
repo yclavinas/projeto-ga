@@ -83,7 +83,6 @@ elif(int(sys.argv[4]) == 27):
 def main():
     # random.seed(64)
 
-    pop = toolbox.population(n=500)
     CXPB, MUTPB, NGEN = 0.9, 0.1, 100
     ano_int = 1997
     ano_str = str(ano_int)
@@ -91,6 +90,7 @@ def main():
     var_coord = 0.5
 
     while(ano_int <= 2013):
+        pop = toolbox.population(n=100)
         joint_log_likelihood, total_size, total_obs, menor_lat, menor_long, vector_latlong, expectations, N_ano, N = dados_observados_R(var_coord, ano_str)
         global mi
         mi = float(N_ano)/float(N)
@@ -117,6 +117,7 @@ def main():
             std = abs(sum2 / length - mean**2)**0.5
             # Apply crossover and mutation on the offspring
             for child1, child2 in zip(offspring[::2], offspring[1::2]):
+                print len(offspring)
                 if random.random() < CXPB:
                     toolbox.mate(child1, child2)
                     del child1.fitness.values
