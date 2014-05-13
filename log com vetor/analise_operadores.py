@@ -56,8 +56,7 @@ toolbox.register("select", tools.selRoulette)
 def main():
     # random.seed(64)
 
-    pop = toolbox.population(n=500)
-    CXPB, MUTPB, NGEN = 0.9, 0.1, 100
+    CXPB, MUTPB, NGEN = 0.9, 0.1, 10
     ano_int = 1997
     ano_str = str(ano_int)
     
@@ -67,7 +66,7 @@ def main():
     mi = float(N_ano)/float(N)
     pop = toolbox.population(n=100)
 
-    while(ano_int <= 2013):
+    while(ano_int <= 1997):
         global mi
         mi = float(N_ano)/float(N)
         print("Start of evolution")
@@ -129,7 +128,6 @@ def main():
             for ind, fit in zip(pop, fitnesses):
                 ind.fitness.values = fit
 
-
         best_ind = tools.selBest(pop, 1)[0]
         for i in range(len(best_ind)):
             global quant_por_grupo
@@ -139,6 +137,8 @@ def main():
             try:            
                 f = open(sys.argv[1], "w")
                 flock(f, LOCK_EX | LOCK_NB)
+                f.write(str(ano_int))
+                f.write('\n')
                 for i in range(len(pop)):            
                     f.write(str((pop, 1)[0][i].fitness.values))
                 f.write('\n')

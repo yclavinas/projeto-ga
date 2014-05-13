@@ -60,7 +60,7 @@ elif(int(sys.argv[2]) == 3):
 elif(int(sys.argv[2]) == 4):
     toolbox.register("mate", tools.cxSimulatedBinary, eta = 0.5)#float
 elif(int(sys.argv[2]) == 5):
-    toolbox.register("mate", tools.cxSimulatedBinaryBounded, eta = 1, low = -1, up = 1)#float
+    toolbox.register("mate", tools.cxSimulatedBinaryBounded, eta = 0.5, low = -1, up = 1)#float
 
 if(int(sys.argv[3]) == 10):
     toolbox.register("mutate", tools.mutFlipBit, indpb=0.05)
@@ -86,7 +86,7 @@ elif(int(sys.argv[4]) == 27):
 def main():
     # random.seed(64)
 
-    CXPB, MUTPB, NGEN = 0.9, 0.1, 100
+    CXPB, MUTPB, NGEN = 0.9, 0.1, 5
     ano_int = 1997
     ano_str = str(ano_int)
     
@@ -94,7 +94,7 @@ def main():
     joint_log_likelihood, total_size, total_obs, menor_lat, menor_long, vector_latlong, expectations, N_ano, N = dados_observados_R(var_coord, ano_str)
     global mi
     mi = float(N_ano)/float(N)
-    pop = toolbox.population(n=500)
+    pop = toolbox.population(n=50)
     
     fitnesses = list(map(toolbox.evaluate, pop))
     for ind, fit in zip(pop, fitnesses):
@@ -157,22 +157,27 @@ def main():
             for ind, fit in zip(pop, fitnesses):
                 ind.fitness.values = fit
 
+        best_ind = tools.selBest(pop, 1)[0]
         for i in range(len(best_ind)):
             global quant_por_grupo
             quant_por_grupo[i] = poisson_press(best_ind[i], mi)
  
+
         while True:
             try:            
+                print 'while true'
                 f = open(sys.argv[1], "a")
+                print 'while true'
                 flock(f, LOCK_EX | LOCK_NB)
                 f.write(str(ano_int))
                 f.write('\n')
                 for i in range(len((pop, 1)[0])):            
                     f.write(str((pop, 1)[0][i].fitness.values))
                 f.write('\n')
+                global quant_por_grupo
                 f.write(str(quant_por_grupo))
                 f.write('\n')
-                f.write(str(best_ind))
+                f.write(str(best_ind.fitness.values))
                 f.write('\n')
                 flock(f, LOCK_UN)
                 f.write('\n')
