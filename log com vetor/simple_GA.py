@@ -86,7 +86,7 @@ elif(int(sys.argv[4]) == 27):
 def main():
     # random.seed(64)
 
-    CXPB, MUTPB, NGEN = 0.9, 0.1, 5
+    CXPB, MUTPB, NGEN = 0.9, 0.1, 100
     ano_int = 1997
     ano_str = str(ano_int)
     
@@ -94,7 +94,7 @@ def main():
     joint_log_likelihood, total_size, total_obs, menor_lat, menor_long, vector_latlong, expectations, N_ano, N = dados_observados_R(var_coord, ano_str)
     global mi
     mi = float(N_ano)/float(N)
-    pop = toolbox.population(n=50)
+    pop = toolbox.population(n=500)
     
     fitnesses = list(map(toolbox.evaluate, pop))
     for ind, fit in zip(pop, fitnesses):
@@ -165,9 +165,7 @@ def main():
 
         while True:
             try:            
-                print 'while true'
                 f = open(sys.argv[1], "a")
-                print 'while true'
                 flock(f, LOCK_EX | LOCK_NB)
                 f.write(str(ano_int))
                 f.write('\n')

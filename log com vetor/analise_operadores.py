@@ -56,7 +56,7 @@ toolbox.register("select", tools.selRoulette)
 def main():
     # random.seed(64)
 
-    CXPB, MUTPB, NGEN = 0.9, 0.1, 10
+    CXPB, MUTPB, NGEN = 0.9, 0.1, 100
     ano_int = 1997
     ano_str = str(ano_int)
     
@@ -64,7 +64,7 @@ def main():
     joint_log_likelihood, total_size, total_obs, menor_lat, menor_long, vector_latlong, expectations, N_ano, N = dados_observados_R(var_coord, ano_str)
     global mi
     mi = float(N_ano)/float(N)
-    pop = toolbox.population(n=100)
+    pop = toolbox.population(n=500)
 
     while(ano_int <= 1997):
         global mi
@@ -135,7 +135,7 @@ def main():
 
         while True:
             try:            
-                f = open(sys.argv[1], "w")
+                f = open(sys.argv[1], "a")
                 flock(f, LOCK_EX | LOCK_NB)
                 f.write(str(ano_int))
                 f.write('\n')
