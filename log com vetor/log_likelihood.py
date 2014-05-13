@@ -19,6 +19,7 @@ def log_likelihood(total_size, quant_por_grupo, expectation):
 		else:
 			log_likelihood[i] = -expectation[i] + (quant_por_grupo[i]*math.log10(expectation[i])) - (math.log10(fat(quant_por_grupo[i])))
 
+
 	#calcula o joint_log_likelihood
 	joint_log_likelihood = sum(log_likelihood)
 
@@ -48,7 +49,7 @@ def dados_observados_R(var_coord, ano_str):
 	bins_long = int(bins_long)
 	total_size = 2025
 
-	print "inicio da criacao do vetor modificado"
+	# print "inicio da criacao do vetor modificado"
 
 	#3.b) sem modificacao
 	modified_vetor, quant_por_grupo, N, total_obs, vector_latlong, total_size, N_ano = cria_vector(total_size, arq_entrada, 'r', 

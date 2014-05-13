@@ -62,10 +62,12 @@ def main():
     ano_str = str(ano_int)
     
     var_coord = 0.5
+    joint_log_likelihood, total_size, total_obs, menor_lat, menor_long, vector_latlong, expectations, N_ano, N = dados_observados_R(var_coord, ano_str)
+    global mi
+    mi = float(N_ano)/float(N)
+    pop = toolbox.population(n=100)
 
-    while(ano_int <= 1997):
-        print ano_int
-        joint_log_likelihood, total_size, total_obs, menor_lat, menor_long, vector_latlong, expectations, N_ano, N = dados_observados_R(var_coord, ano_str)
+    while(ano_int <= 2013):
         global mi
         mi = float(N_ano)/float(N)
         print("Start of evolution")
@@ -117,13 +119,22 @@ def main():
             print("  Evaluated %i individuals" % len(invalid_ind))
             pop[:] = offspring        
             CXPB, MUTPB = CXPB - (0.003), MUTPB + (0.003)
+            # fim loop GERACAO
+            joint_log_likelihood, total_size, total_obs, menor_lat, menor_long, vector_latlong, expectations, N_ano, N = dados_observados_R(var_coord, ano_str)
+            global mi
+            mi = float(N_ano)/float(N)
+            
+            pop = toolbox.population(n=100)
+            fitnesses = list(map(toolbox.evaluate, pop))
+            for ind, fit in zip(pop, fitnesses):
+                ind.fitness.values = fit
+
 
         best_ind = tools.selBest(pop, 1)[0]
         for i in range(len(best_ind)):
             global quant_por_grupo
             quant_por_grupo[i] = poisson_press(best_ind[i], mi)
 
-        print len(pop)
         while True:
             try:            
                 f = open(sys.argv[1], "w")

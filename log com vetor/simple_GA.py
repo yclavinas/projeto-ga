@@ -15,9 +15,11 @@ import time
 from calculo_grupos import calc_qual_coord, calc_coordenadas
 from poisson_press import poisson_press
 
+total_size = 2025
 global mi
 mi = 0.0 
 global quant_por_grupo
+quant_por_grupo = [0] * total_size
 
 creator.create("FitnessMax", base.Fitness, weights=(1.0,))
 creator.create("Individual", array.array, typecode='d', fitness=creator.FitnessMax)
@@ -26,7 +28,7 @@ toolbox = base.Toolbox()
 # Attribute generator
 toolbox.register("attr_float", random.random)
 # Structure initializers
-total_size = 2025
+
 toolbox.register("individual", tools.initRepeat, creator.Individual, toolbox.attr_float, total_size)
 toolbox.register("population", tools.initRepeat, list, toolbox.individual)
 
@@ -38,6 +40,7 @@ def evalOneMax(individual):
             individual[i] = -individual[i]
         global quant_por_grupo
         quant_por_grupo[i] = poisson_press(individual[i], mi)
+
     log_likelihood_ind, log_likelihood_total, descarta_modelo = log_likelihood(total_size, quant_por_grupo, individual)
 
     # L_test = L_test_sem_correct(joint_log_likelihood, log_likelihood_total, log_likelihood_ind)
@@ -55,7 +58,7 @@ elif(int(sys.argv[2]) == 2):
 elif(int(sys.argv[2]) == 3):
     toolbox.register("mate", tools.cxBlend, alpha = 0.5)#float
 elif(int(sys.argv[2]) == 4):
-    toolbox.register("mate", tools.cxSimulatedBinary, eta = 1)#float
+    toolbox.register("mate", tools.cxSimulatedBinary, eta = 0.5)#float
 elif(int(sys.argv[2]) == 5):
     toolbox.register("mate", tools.cxSimulatedBinaryBounded, eta = 1, low = -1, up = 1)#float
 
@@ -88,15 +91,18 @@ def main():
     ano_str = str(ano_int)
     
     var_coord = 0.5
-
-    while(ano_int <= 2013):
-        pop = toolbox.population(n=100)
-        joint_log_likelihood, total_size, total_obs, menor_lat, menor_long, vector_latlong, expectations, N_ano, N = dados_observados_R(var_coord, ano_str)
+    joint_log_likelihood, total_size, total_obs, menor_lat, menor_long, vector_latlong, expectations, N_ano, N = dados_observados_R(var_coord, ano_str)
+    global mi
+    mi = float(N_ano)/float(N)
+    pop = toolbox.population(n=500)
+    
+    fitnesses = list(map(toolbox.evaluate, pop))
+    for ind, fit in zip(pop, fitnesses):
+        ind.fitness.values = fit
+    
+    while(ano_int <= 1997):
         global mi
         mi = float(N_ano)/float(N)
-
-        print("Start of evolution")
-        
         # Evaluate the entire population
         fitnesses = list(map(toolbox.evaluate, pop))
         for ind, fit in zip(pop, fitnesses):
@@ -109,15 +115,10 @@ def main():
             offspring = toolbox.select(pop, len(pop))
             # Clone the selected individuals
             offspring = list(map(toolbox.clone, offspring))
-
-            fits = [ind.fitness.values[0] for ind in pop]
-            length = len(pop)
-            mean = sum(fits) / length
-            sum2 = sum(x*x for x in fits)
-            std = abs(sum2 / length - mean**2)**0.5
+            print("Start of evolution")
             # Apply crossover and mutation on the offspring
             for child1, child2 in zip(offspring[::2], offspring[1::2]):
-                print len(offspring)
+                
                 if random.random() < CXPB:
                     toolbox.mate(child1, child2)
                     del child1.fitness.values
@@ -146,6 +147,16 @@ def main():
                     break
 
             pop[:] = offspring    
+            # fim loop GERACAO
+            joint_log_likelihood, total_size, total_obs, menor_lat, menor_long, vector_latlong, expectations, N_ano, N = dados_observados_R(var_coord, ano_str)
+            global mi
+            mi = float(N_ano)/float(N)
+            
+            pop = toolbox.population(n=100)
+            fitnesses = list(map(toolbox.evaluate, pop))
+            for ind, fit in zip(pop, fitnesses):
+                ind.fitness.values = fit
+
         for i in range(len(best_ind)):
             global quant_por_grupo
             quant_por_grupo[i] = poisson_press(best_ind[i], mi)
@@ -160,6 +171,8 @@ def main():
                     f.write(str((pop, 1)[0][i].fitness.values))
                 f.write('\n')
                 f.write(str(quant_por_grupo))
+                f.write('\n')
+                f.write(str(best_ind))
                 f.write('\n')
                 flock(f, LOCK_UN)
                 f.write('\n')
