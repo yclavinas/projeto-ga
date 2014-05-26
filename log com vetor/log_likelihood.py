@@ -1,5 +1,6 @@
 import math
 from fatorial import fat
+from fatorial import tabela_fatorial
 from decimal import *
 
 #from log_criacao import log_criacao
@@ -17,7 +18,8 @@ def log_likelihood(total_size, quant_por_grupo, expectation):
 			log_likelihood[i] = Decimal('-Infinity')
 			descarta_Modelo = True
 		else:
-			log_likelihood[i] = -expectation[i] + (quant_por_grupo[i]*math.log10(expectation[i])) - (math.log10(fat(quant_por_grupo[i])))
+			# log_likelihood[i] = -expectation[i] + (quant_por_grupo[i]*math.log10(expectation[i])) - (math.log10(fat(quant_por_grupo[i])))
+			log_likelihood[i] = -expectation[i] + (quant_por_grupo[i]*math.log10(expectation[i])) - (math.log10(tabela_fatorial(quant_por_grupo[i])))
 
 
 	#calcula o joint_log_likelihood

@@ -2,6 +2,7 @@ import array
 import random
 import sys
 from fcntl import flock, LOCK_EX, LOCK_UN, LOCK_NB
+import time
 
 from deap import algorithms
 from deap import base
@@ -15,6 +16,8 @@ import time
 from calculo_grupos import calc_qual_coord, calc_coordenadas
 from poisson_press import poisson_press
 
+
+start = time.clock()
 global mi
 mi = 0.0 
 global quant_por_grupo
@@ -155,5 +158,8 @@ def main():
         CXPB, MUTPB = 0.9, 0.1
         ano_int += 1
         ano_str = str(ano_int)
+
+    elapsed = time.clock()
+    print(start - elapsed)
 if __name__ == "__main__":
     main()  

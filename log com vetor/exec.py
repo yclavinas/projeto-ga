@@ -3,8 +3,8 @@ for w in range(1):
 	k = 21 + w
 	print k
 
-	for i in range(2):
-		NUM_PROCESSES = 25
+	for i in range(1):
+		NUM_PROCESSES = 1
 
 		childrenBlend = []
 
@@ -17,7 +17,7 @@ for w in range(1):
 		        childrenBlend.append(pid)
 
 		    else:
-		        os.execlp('python', 'python', 'analise_operadores.py', "../../Dropbox/100operadores-cf0?/" + str(w+1) + "-selWorst(cxOnePoint, mutShuffleIndexes).txt", str(0), str(11),str(27), str(k))# overlay program
+		        os.execlp('python', 'python', 'analise_operadores.py', "../../Dropbox/100operadores-cf0?/" + str(w+1) + "-selWorst_COMtabelafatorial(cxOnePoint, mutShuffleIndexes).txt", str(0), str(11),str(27), str(k))# overlay program
 		        assert False, 'error starting program'   
 		        os._exit(0)
 		    j += 1
