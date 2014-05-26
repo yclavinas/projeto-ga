@@ -1,13 +1,17 @@
 def tabela_fatorial():
 	resultado = 1
-	n = 29
-	f = open("tabela_fatorial.txt", "r")
-	for line in f: 
-		data = str.split(line)
-		if(int(data[0]) == n):
-			print data[1]
-			exit(0)
-	print data[1]
+	n = 300
+	f = open("tabela_fatorial.txt", "w")
+	resultado = 1
+
+	lista = range(1,n+1)
+
+	for x in lista:
+		resultado = x * resultado
+		f.write(str(x))
+		f.write(str(' '))
+		f.write(str(resultado))
+		f.write(str('\n'))
 	f.close()
 
 if __name__ == "__main__":
