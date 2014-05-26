@@ -100,7 +100,7 @@ def main():
     for ind, fit in zip(pop, fitnesses):
         ind.fitness.values = fit
     
-    while(ano_int <= 2013):
+    while(ano_int <= 1997):
         global mi
         mi = float(N_ano)/float(N)
         # Evaluate the entire population

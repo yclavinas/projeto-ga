@@ -10,13 +10,17 @@ def fat(n):
 	return resultado
 
 def tabela_fatorial(n):
+	import math
 
 	resultado = 1
-
+	saida = 0
 	f = open("tabela_fatorial.txt", "r")
 	for line in f: 
 		data = str.split(line)
 		if(int(data[0]) == n):
-			return int(data[1])
-	return int(data[1])
+			saida = int(data[1])
 	f.close()
+	if(saida == 0):
+		print n
+		saida = ( math.sqrt(2*math.pi*n) ) * ( math.pow(n/math.e, n) )
+	return saida
