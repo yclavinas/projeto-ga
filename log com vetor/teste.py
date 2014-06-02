@@ -1,18 +1,22 @@
-def tabela_fatorial():
-	resultado = 1
-	n = 300
-	f = open("tabela_fatorial.txt", "w")
-	resultado = 1
-
-	lista = range(1,n+1)
-
-	for x in lista:
-		resultado = x * resultado
-		f.write(str(x))
-		f.write(str(' '))
-		f.write(str(resultado))
-		f.write(str('\n'))
-	f.close()
-
-if __name__ == "__main__":
-    tabela_fatorial()  
+@profile
+def primes(n): 
+    if n==2:
+        return [2]
+    elif n<2:
+        return []
+    s=range(3,n+1,2)
+    mroot = n ** 0.5
+    half=(n+1)/2-1
+    i=0
+    m=3
+    while m <= mroot:
+        if s[i]:
+            j=(m*m-3)/2
+            s[j]=0
+            while j<half:
+                s[j]=0
+                j+=m
+        i=i+1
+        m=2*i+3
+    return [2]+[x for x in s if x]
+primes(100)  
