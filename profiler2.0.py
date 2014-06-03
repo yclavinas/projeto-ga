@@ -2,7 +2,6 @@ import array
 import random
 import sys
 from fcntl import flock, LOCK_EX, LOCK_UN, LOCK_NB
-from decimal import *
 
 from deap import algorithms
 from deap import base
@@ -12,6 +11,11 @@ from deap import tools
 import math
 import time
 import random
+
+arq_entrada = '../filtro_terremoto_terra.txt'
+name = arq_entrada
+t_abertura = 'r'
+
 
 #@profile
 def tabela_fatorial(n):
@@ -27,6 +31,7 @@ def tabela_fatorial(n):
 	f.close()
 	saida = int(data[1])
 	return saida
+	
 #@profile
 def calc_lat(nome, t_abertura):
 	#abre arq
@@ -84,6 +89,11 @@ def calc_long(nome, t_abertura):
 	
 	f.close()
 	return maior_long, menor_long
+
+
+maior_lat, menor_lat = calc_lat(name, t_abertura)
+maior_long, menor_long = calc_long(name, t_abertura)
+
 #@profile
 def calc_grupo_coord(obs_menor_long, obs_menor_lat, menor_lat, menor_long, var_coord):
 
@@ -144,6 +154,7 @@ def criar_random(total_size, N, multiplicador, total_obs):
 		expectations_simulacao[l] = random.random()
 		simulacao_quant_por_grupo[l] = int(expectations_simulacao[l] * (total_obs/1000))
 	return expectations_simulacao, simulacao_quant_por_grupo
+
 #@profile
 def modificarObservacoes(vetor, s, bins_lat, bins_long, quant_por_grupo):
 
@@ -173,6 +184,7 @@ def calcular_expectations(modified_quant_por_grupo, total_size, N):
 	for l in xrange(total_size):
 		expectations[l] = (float(modified_quant_por_grupo[l])/float(N))
 	return expectations
+
 #@profile
 def poisson_press(x,mi):
 	if(mi <= 0):
@@ -190,8 +202,8 @@ def poisson_press(x,mi):
 #@profile
 def calc_coordenadas(var_coord, name, t_abertura):
 
-	maior_lat, menor_lat = calc_lat(name, t_abertura)
-	maior_long, menor_long = calc_long(name, t_abertura)
+	# maior_lat, menor_lat = calc_lat(name, t_abertura)
+	# maior_long, menor_long = calc_long(name, t_abertura)
 
 	espaco_lat = float(maior_lat) - float(menor_lat)
 	espaco_long = float(maior_long) - float(menor_long)
@@ -207,9 +219,6 @@ def calc_coordenadas(var_coord, name, t_abertura):
 def dados_observados_R(var_coord, ano_str):
 
 	##inicio coleta e insercao de incertezas
-		
-
-	arq_entrada = '../filtro_terremoto_terra.txt'
 
 	#1. Pegar as observacoes e criar o vetor Omega
 	#2. Calcular a expectativa das observacoes incertas, vetor de lambdas
@@ -272,6 +281,7 @@ toolbox.register("attr_float", random.random)
 
 toolbox.register("individual", tools.initRepeat, creator.Individual, toolbox.attr_float, total_size)
 toolbox.register("population", tools.initRepeat, list, toolbox.individual)
+
 #@profile
 def evalOneMax(individual):
     global quant_por_grupo
@@ -389,6 +399,10 @@ def main():
 
             pop[:] = offspring    
             # fim loop GERACAO
+
+        ano_int = ano_int + 1
+        ano_str = str(ano_int)
+
         joint_log_likelihood, total_size, total_obs, menor_lat, menor_long, vector_latlong, expectations, N_ano, N = dados_observados_R(var_coord, ano_str)
         global mi
         mi = float(N_ano)/float(N)
@@ -425,8 +439,7 @@ def main():
                 continue
             break
 
-        ano_int = ano_int + 1
-        ano_str = str(ano_int)
+        
 
 
 if __name__ == "__main__":
