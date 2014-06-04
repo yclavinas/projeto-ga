@@ -338,7 +338,7 @@ def main():
     # random.seed(64)
 
     CXPB, MUTPB, NGEN = 0.9, 0.1, 100
-    ano_int = 1997
+    ano_int = 2005
     ano_str = str(ano_int)
     
     var_coord = 0.5
@@ -407,7 +407,7 @@ def main():
         global mi
         mi = float(N_ano)/float(N)
         
-        pop = toolbox.population(n=10)
+        pop = toolbox.population(n=500)
         fitnesses = list(map(toolbox.evaluate, pop))
         for ind, fit in zip(pop, fitnesses):
             ind.fitness.values = fit
