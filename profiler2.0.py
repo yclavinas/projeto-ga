@@ -17,7 +17,7 @@ name = arq_entrada
 t_abertura = 'r'
 
 
-#@profile
+@profile
 def tabela_fatorial(n):
 
 	resultado = 1
@@ -32,7 +32,7 @@ def tabela_fatorial(n):
 	saida = int(data[1])
 	return saida
 	
-#@profile
+@profile
 def calc_lat(nome, t_abertura):
 	#abre arq
 	f = open(nome, t_abertura)
@@ -62,7 +62,7 @@ def calc_lat(nome, t_abertura):
 
 	return maior_lat, menor_lat
 
-#@profile
+@profile
 def calc_long(nome, t_abertura):
 	f = open(nome, t_abertura)
 	#x=400, y = 77398
@@ -94,7 +94,7 @@ def calc_long(nome, t_abertura):
 maior_lat, menor_lat = calc_lat(name, t_abertura)
 maior_long, menor_long = calc_long(name, t_abertura)
 
-#@profile
+@profile
 def calc_grupo_coord(obs_menor_long, obs_menor_lat, menor_lat, menor_long, var_coord):
 
 	dif_lat = obs_menor_lat - menor_lat
@@ -111,7 +111,7 @@ def calc_grupo_coord(obs_menor_long, obs_menor_lat, menor_lat, menor_long, var_c
 	indice = i + (m * (dif_lat*dif_long/0.5))
 
 	return qual_bin_lat, qual_bin_long, int(indice)
-#@profile
+@profile
 def cria_vector(total_size, nome, t_abertura, menor_lat, menor_long, var_coord, ano_str):
 
 	f = open(nome, t_abertura)
@@ -144,7 +144,7 @@ def cria_vector(total_size, nome, t_abertura, menor_lat, menor_long, var_coord, 
 	i = 0
 	return vector, vector_quantidade, N, total_obs, vector_latlong, len(vector), N_ano
 
-#@profile
+@profile
 def criar_random(total_size, N, multiplicador, total_obs):
 	expectations_simulacao = [None] * (total_size)
 	simulacao_quant_por_grupo = [0] * (total_size)
@@ -155,7 +155,7 @@ def criar_random(total_size, N, multiplicador, total_obs):
 		simulacao_quant_por_grupo[l] = int(expectations_simulacao[l] * (total_obs/1000))
 	return expectations_simulacao, simulacao_quant_por_grupo
 
-#@profile
+@profile
 def modificarObservacoes(vetor, s, bins_lat, bins_long, quant_por_grupo):
 
 	random.seed()
@@ -177,7 +177,7 @@ def modificarObservacoes(vetor, s, bins_lat, bins_long, quant_por_grupo):
 			N[i] += 1
 
 	return modified_vetor, N, modified_quant_por_grupo
-#@profile
+@profile
 def calcular_expectations(modified_quant_por_grupo, total_size, N):
 
 	expectations = [0.0] * (total_size)
@@ -185,7 +185,7 @@ def calcular_expectations(modified_quant_por_grupo, total_size, N):
 		expectations[l] = (float(modified_quant_por_grupo[l])/float(N))
 	return expectations
 
-#@profile
+@profile
 def poisson_press(x,mi):
 	if(mi <= 0):
 		return
@@ -199,7 +199,7 @@ def poisson_press(x,mi):
 				prob = prob * x
 			return (k)
 	return 1
-#@profile
+@profile
 def calc_coordenadas(var_coord, name, t_abertura):
 
 	# maior_lat, menor_lat = calc_lat(name, t_abertura)
@@ -215,7 +215,7 @@ def calc_coordenadas(var_coord, name, t_abertura):
 	bins_long = round(bins_long)
 
 	return menor_lat, menor_long, bins_lat, bins_long
-#@profile
+@profile
 def dados_observados_R(var_coord, ano_str):
 
 	##inicio coleta e insercao de incertezas
@@ -242,7 +242,7 @@ def dados_observados_R(var_coord, ano_str):
 
 	return joint_log_likelihood, total_size, total_obs, menor_lat, menor_long, vector_latlong, expectations, N_ano, N
 
-#@profile
+@profile
 def log_likelihood(total_size, quant_por_grupo, expectation):
 
 	log_likelihood =  [0]*(total_size)
@@ -282,7 +282,7 @@ toolbox.register("attr_float", random.random)
 toolbox.register("individual", tools.initRepeat, creator.Individual, toolbox.attr_float, total_size)
 toolbox.register("population", tools.initRepeat, list, toolbox.individual)
 
-#@profile
+@profile
 def evalOneMax(individual):
     global quant_por_grupo
     quant_por_grupo = [0] * len(individual)
@@ -333,7 +333,7 @@ elif(int(sys.argv[4]) == 27):
     toolbox.register("select", tools.selWorst)
 
 
-#@profile
+@profile
 def main():
     # random.seed(64)
 
@@ -345,7 +345,7 @@ def main():
     joint_log_likelihood, total_size, total_obs, menor_lat, menor_long, vector_latlong, expectations, N_ano, N = dados_observados_R(var_coord, ano_str)
     global mi
     mi = float(N_ano)/float(N)
-    pop = toolbox.population(n=500)
+    pop = toolbox.population(n=50)
     
     fitnesses = list(map(toolbox.evaluate, pop))
     for ind, fit in zip(pop, fitnesses):
