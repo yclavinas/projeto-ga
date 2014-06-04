@@ -148,51 +148,6 @@ Line #      Hits         Time  Per Hit   % Time  Line Contents
    144         2            2      1.0      0.0   i = 0
    145         2            4      2.0      0.0   return vector, vector_quantidade, N, total_obs, vector_latlong, len(vector), N_ano
 
-File: profiler2.0.py
-Function: criar_random at line 147
-Total time: 0 s
-
-Line #      Hits         Time  Per Hit   % Time  Line Contents
-==============================================================
-   147                                           @profile
-   148                                           def criar_random(total_size, N, multiplicador, total_obs):
-   149                                            expectations_simulacao = [None] * (total_size)
-   150                                            simulacao_quant_por_grupo = [0] * (total_size)
-   151                                           
-   152                                           
-   153                                            for l in xrange(total_size):
-   154                                              expectations_simulacao[l] = random.random()
-   155                                              simulacao_quant_por_grupo[l] = int(expectations_simulacao[l] * (total_obs/1000))
-   156                                            return expectations_simulacao, simulacao_quant_por_grupo
-
-File: profiler2.0.py
-Function: modificarObservacoes at line 158
-Total time: 0 s
-
-Line #      Hits         Time  Per Hit   % Time  Line Contents
-==============================================================
-   158                                           @profile
-   159                                           def modificarObservacoes(vetor, s, bins_lat, bins_long, quant_por_grupo):
-   160                                           
-   161                                            random.seed()
-   162                                           
-   163                                            total_size = bins_long * bins_lat
-   164                                            N = [0] * s
-   165                                            modified_vetor = [s*[0] for col in range(total_size)]
-   166                                            modified_quant_por_grupo = [s*[0] for col in range(total_size)]
-   167                                           
-   168                                            for i in range(s):
-   169                                              for j in range(total_size):
-   170                                                r = random.uniform(0,1)
-   171                                                if (r < 0.005):
-   172                                                  modified_vetor[j][i] = [None]
-   173                                                  modified_quant_por_grupo[j][i] = 0
-   174                                                else:
-   175                                                  modified_vetor[j][i] = vetor[j]
-   176                                                  modified_quant_por_grupo[j][i] = quant_por_grupo[j]
-   177                                                N[i] += 1
-   178                                           
-   179                                            return modified_vetor, N, modified_quant_por_grupo
 
 File: profiler2.0.py
 Function: calcular_expectations at line 180
