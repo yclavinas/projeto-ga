@@ -327,7 +327,7 @@ elif(int(sys.argv[4]) == 27):
 def main():
     # random.seed(64)
 
-    CXPB, MUTPB, NGEN = 0.9, 0.1, 100
+    CXPB, MUTPB, NGEN = 0.9, 0.1, 50
     ano_int = 2005
     ano_str = str(ano_int)
     
@@ -335,13 +335,13 @@ def main():
     joint_log_likelihood, total_size, total_obs, menor_lat, menor_long, vector_latlong, expectations, N_ano, N = dados_observados_R(var_coord, ano_str)
     global mi
     mi = float(N_ano)/float(N)
-    pop = toolbox.population(n=500)
+    pop = toolbox.population(n=100)
     
     fitnesses = list(map(toolbox.evaluate, pop))
     for ind, fit in zip(pop, fitnesses):
         ind.fitness.values = fit
     
-    while(ano_int <= 2005):
+    while(ano_int <= 2007):
         global mi
         mi = float(N_ano)/float(N)
         # Evaluate the entire population
@@ -393,7 +393,7 @@ def main():
         global mi
         mi = float(N_ano)/float(N)
         
-        pop = toolbox.population(n=10)
+        pop = toolbox.population(n=100)
         fitnesses = list(map(toolbox.evaluate, pop))
         for ind, fit in zip(pop, fitnesses):
             ind.fitness.values = fit

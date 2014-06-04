@@ -144,39 +144,39 @@ def cria_vector(total_size, nome, t_abertura, menor_lat, menor_long, var_coord, 
 	i = 0
 	return vector, vector_quantidade, N, total_obs, vector_latlong, len(vector), N_ano
 
-#@profile
-def criar_random(total_size, N, multiplicador, total_obs):
-	expectations_simulacao = [None] * (total_size)
-	simulacao_quant_por_grupo = [0] * (total_size)
+
+# def criar_random(total_size, N, multiplicador, total_obs):
+# 	expectations_simulacao = [None] * (total_size)
+# 	simulacao_quant_por_grupo = [0] * (total_size)
 
 
-	for l in xrange(total_size):
-		expectations_simulacao[l] = random.random()
-		simulacao_quant_por_grupo[l] = int(expectations_simulacao[l] * (total_obs/1000))
-	return expectations_simulacao, simulacao_quant_por_grupo
+# 	for l in xrange(total_size):
+# 		expectations_simulacao[l] = random.random()
+# 		simulacao_quant_por_grupo[l] = int(expectations_simulacao[l] * (total_obs/1000))
+# 	return expectations_simulacao, simulacao_quant_por_grupo
 
-#@profile
-def modificarObservacoes(vetor, s, bins_lat, bins_long, quant_por_grupo):
 
-	random.seed()
+# def modificarObservacoes(vetor, s, bins_lat, bins_long, quant_por_grupo):
 
-	total_size = bins_long * bins_lat
-	N = [0] * s
-	modified_vetor = [s*[0] for col in range(total_size)]
-	modified_quant_por_grupo = [s*[0] for col in range(total_size)]
+# 	random.seed()
 
-	for i in range(s):
-		for j in range(total_size):
-			r = random.uniform(0,1)
-			if (r < 0.005):
-				modified_vetor[j][i] = [None]
-				modified_quant_por_grupo[j][i] = 0
-			else:
-				modified_vetor[j][i] = vetor[j]
-				modified_quant_por_grupo[j][i] = quant_por_grupo[j]
-			N[i] += 1
+# 	total_size = bins_long * bins_lat
+# 	N = [0] * s
+# 	modified_vetor = [s*[0] for col in range(total_size)]
+# 	modified_quant_por_grupo = [s*[0] for col in range(total_size)]
 
-	return modified_vetor, N, modified_quant_por_grupo
+# 	for i in range(s):
+# 		for j in range(total_size):
+# 			r = random.uniform(0,1)
+# 			if (r < 0.005):
+# 				modified_vetor[j][i] = [None]
+# 				modified_quant_por_grupo[j][i] = 0
+# 			else:
+# 				modified_vetor[j][i] = vetor[j]
+# 				modified_quant_por_grupo[j][i] = quant_por_grupo[j]
+# 			N[i] += 1
+
+# 	return modified_vetor, N, modified_quant_por_grupo
 #@profile
 def calcular_expectations(modified_quant_por_grupo, total_size, N):
 
@@ -250,14 +250,17 @@ def log_likelihood(total_size, quant_por_grupo, expectation):
 	descarta_Modelo = False
 
 	for i in range(total_size):
-		if (quant_por_grupo[i] == 0 and expectation[i] == 0):
-			log_likelihood[i] += 1		
-		elif (quant_por_grupo[i] != 0 and expectation[i] == 0):
-			log_likelihood[i] = Decimal('-Infinity')
-			descarta_Modelo = True
-		else:
+		if expectation[i] == 0:
+			expectation[i] += 1
+		# if (quant_por_grupo[i] == 0 and expectation[i] == 0):
+		# 	log_likelihood[i] += 1		
+		# elif (quant_por_grupo[i] != 0 and expectation[i] == 0):
+		# 	log_likelihood[i] = Decimal('-Infinity')
+		# 	descarta_Modelo = True
+		# else:
 			# log_likelihood[i] = -expectation[i] + (quant_por_grupo[i]*math.log10(expectation[i])) - (math.log10(fat(quant_por_grupo[i])))
-			log_likelihood[i] = -expectation[i] + (quant_por_grupo[i]*math.log10(expectation[i])) - (math.log10(tabela_fatorial(quant_por_grupo[i])))
+
+		log_likelihood[i] = -expectation[i] + (quant_por_grupo[i]*math.log10(expectation[i])) - (math.log10(tabela_fatorial(quant_por_grupo[i])))
 
 
 	#calcula o joint_log_likelihood
@@ -337,21 +340,26 @@ elif(int(sys.argv[4]) == 27):
 def main():
     # random.seed(64)
 
+<<<<<<< HEAD
     CXPB, MUTPB, NGEN = 0.9, 0.1, 100
+=======
+    CXPB, MUTPB, NGEN = 0.9, 0.1, 10
+>>>>>>> aadd47a40ea657e5c4b506797c2a3971b1f92b66
     ano_int = 2005
     ano_str = str(ano_int)
     
     var_coord = 0.5
     joint_log_likelihood, total_size, total_obs, menor_lat, menor_long, vector_latlong, expectations, N_ano, N = dados_observados_R(var_coord, ano_str)
+ 
     global mi
     mi = float(N_ano)/float(N)
-    pop = toolbox.population(n=500)
+    pop = toolbox.population(n=10)
     
     fitnesses = list(map(toolbox.evaluate, pop))
     for ind, fit in zip(pop, fitnesses):
         ind.fitness.values = fit
     
-    while(ano_int <= 2013):
+    while(ano_int <= 2005):
         global mi
         mi = float(N_ano)/float(N)
         # Evaluate the entire population
