@@ -144,7 +144,7 @@ def cria_vector(total_size, nome, t_abertura, menor_lat, menor_long, var_coord, 
 	i = 0
 	return vector, vector_quantidade, N, total_obs, vector_latlong, len(vector), N_ano
 
-@profile
+
 def criar_random(total_size, N, multiplicador, total_obs):
 	expectations_simulacao = [None] * (total_size)
 	simulacao_quant_por_grupo = [0] * (total_size)
@@ -155,7 +155,7 @@ def criar_random(total_size, N, multiplicador, total_obs):
 		simulacao_quant_por_grupo[l] = int(expectations_simulacao[l] * (total_obs/1000))
 	return expectations_simulacao, simulacao_quant_por_grupo
 
-@profile
+
 def modificarObservacoes(vetor, s, bins_lat, bins_long, quant_por_grupo):
 
 	random.seed()
@@ -338,7 +338,7 @@ def main():
     # random.seed(64)
 
     CXPB, MUTPB, NGEN = 0.9, 0.1, 100
-    ano_int = 1997
+    ano_int = 2005
     ano_str = str(ano_int)
     
     var_coord = 0.5
@@ -351,7 +351,7 @@ def main():
     for ind, fit in zip(pop, fitnesses):
         ind.fitness.values = fit
     
-    while(ano_int <= 2013):
+    while(ano_int <= 2005):
         global mi
         mi = float(N_ano)/float(N)
         # Evaluate the entire population
