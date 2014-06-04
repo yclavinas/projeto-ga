@@ -338,7 +338,7 @@ def main():
     # random.seed(64)
 
     CXPB, MUTPB, NGEN = 0.9, 0.1, 100
-    ano_int = 1997
+    ano_int = 2005
     ano_str = str(ano_int)
     
     var_coord = 0.5
