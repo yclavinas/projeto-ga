@@ -345,7 +345,7 @@ def main():
     joint_log_likelihood, total_size, total_obs, menor_lat, menor_long, vector_latlong, expectations, N_ano, N = dados_observados_R(var_coord, ano_str)
     global mi
     mi = float(N_ano)/float(N)
-    pop = toolbox.population(n=50)
+    pop = toolbox.population(n=500)
     
     fitnesses = list(map(toolbox.evaluate, pop))
     for ind, fit in zip(pop, fitnesses):
@@ -407,7 +407,7 @@ def main():
         global mi
         mi = float(N_ano)/float(N)
         
-        pop = toolbox.population(n=10)
+        pop = toolbox.population(n=500)
         fitnesses = list(map(toolbox.evaluate, pop))
         for ind, fit in zip(pop, fitnesses):
             ind.fitness.values = fit
