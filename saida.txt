@@ -1,411 +1,410 @@
-File: profiler2.0.py
-Function: tabela_fatorial at line 20
-Total time: 3214.58 s
+Function: tabelaFatorial at line 19
+Total time: 0.000336 s
 
 Line #      Hits         Time  Per Hit   % Time  Line Contents
 ==============================================================
-    20                                           @profile
-    21                                           def tabela_fatorial(n):
-    22                                           
-    23  94375125     77726604      0.8      2.4   resultado = 1
-    24  94375125     71649223      0.8      2.2   saida = 0
-    25  94375125    906076242      9.6     28.2   f = open("tabela_fatorial.txt", "r")
-    26 101899330    647649410      6.4     20.1   for line in f:
-    27 101893888    244741156      2.4      7.6     data = str.split(line)
-    28 101893888    261591112      2.6      8.1     if(int(data[0]) == n):
-    29  94369683    178626905      1.9      5.6       saida = int(data[1])
-    30  94369683     74823594      0.8      2.3       break
-    31  94375125    450648596      4.8     14.0   f.close()
-    32  94375125    225598020      2.4      7.0   saida = int(data[1])
-    33  94375125     75451567      0.8      2.3   return saida
+    19                                           @profile
+    20                                           def tabelaFatorial():
+    21         1            1      1.0      0.3   i = 0
+    22         1            1      1.0      0.3   vetor = [0] * 100
+    23         1           24     24.0      7.1   f = open("tabela_fatorial.txt", "r")
+    24       101           67      0.7     19.9   for line in f:
+    25       100          106      1.1     31.5     data = str.split(line)
+    26       100           70      0.7     20.8     vetor[i] = data[1]
+    27       100           63      0.6     18.8     i += 1
+    28         1            4      4.0      1.2   f.close()
+    29         1            0      0.0      0.0   return vetor
+
 
 File: profiler2.0.py
-Function: calc_lat at line 35
-Total time: 0.304001 s
+Function: calc_lat at line 47
+Total time: 0.172388 s
 
 Line #      Hits         Time  Per Hit   % Time  Line Contents
 ==============================================================
-    35                                           @profile
-    36                                           def calc_lat(nome, t_abertura):
-    37                                            #abre arq
-    38         1           23     23.0      0.0   f = open(nome, t_abertura)
-    39                                            #x=400, y = 77398
-    40                                           
-    41         1            4      4.0      0.0   menor_lat = str(370)
-    42         1           14     14.0      0.0   maior_lat = str(0.0)
-    43                                           
-    44         1            5      5.0      0.0   limit_inf = str(34.8)
-    45         1            3      3.0      0.0   limit_sup = str(57.8)
-    46                                           
-    47     19452        26745      1.4      8.8   for line in f:
-    48     19451        73451      3.8     24.2       data = str.split(line)
-    49     19451        26768      1.4      8.8       if(data[6] > maior_lat):
-    50     19451        25763      1.3      8.5         if(data[6] >= limit_sup):
-    51                                                    maior_lat = data[6]
+    47                                           @profile
+    48                                           def calc_lat(nome, t_abertura):
+    49                                            #abre arq
+    50         1           16     16.0      0.0   f = open(nome, t_abertura)
+    51                                            #x=400, y = 77398
     52                                           
-    53         1           10     10.0      0.0   f.seek(0,0)
-    54                                           
-    55     19452        29604      1.5      9.7   for line in f:
-    56     19451        82835      4.3     27.2       data = str.split(line) 
-    57     19451        30497      1.6     10.0       if(data[6] < menor_lat):
-    58      5691         8251      1.4      2.7         if(data[6] >= limit_inf):
-    59         7            9      1.3      0.0           menor_lat = data[6]
-    60                                              
-    61         1           17     17.0      0.0   f.close()
-    62                                           
-    63         1            2      2.0      0.0   return maior_lat, menor_lat
+    53         1            2      2.0      0.0   menor_lat = str(370)
+    54         1            8      8.0      0.0   maior_lat = str(0.0)
+    55                                           
+    56         1            2      2.0      0.0   limit_inf = str(34.8)
+    57         1            2      2.0      0.0   limit_sup = str(57.8)
+    58                                           
+    59     19452        15529      0.8      9.0   for line in f:
+    60     19451        40374      2.1     23.4       data = str.split(line)
+    61     19451        16098      0.8      9.3       if(data[6] > maior_lat):
+    62     19451        15400      0.8      8.9         if(data[6] >= limit_sup):
+    63                                                    maior_lat = data[6]
+    64                                           
+    65         1            8      8.0      0.0   f.seek(0,0)
+    66                                           
+    67     19452        17459      0.9     10.1   for line in f:
+    68     19451        43971      2.3     25.5       data = str.split(line) 
+    69     19451        18423      0.9     10.7       if(data[6] < menor_lat):
+    70      5691         5080      0.9      2.9         if(data[6] >= limit_inf):
+    71         7            6      0.9      0.0           menor_lat = data[6]
+    72                                              
+    73         1            9      9.0      0.0   f.close()
+    74                                           
+    75         1            1      1.0      0.0   return maior_lat, menor_lat
 
 File: profiler2.0.py
-Function: calc_long at line 65
-Total time: 0.261871 s
+Function: calc_long at line 77
+Total time: 0.16333 s
 
 Line #      Hits         Time  Per Hit   % Time  Line Contents
 ==============================================================
-    65                                           @profile
-    66                                           def calc_long(nome, t_abertura):
-    67         1           29     29.0      0.0   f = open(nome, t_abertura)
-    68                                            #x=400, y = 77398
-    69                                           
-    70         1            3      3.0      0.0   menor_long = str(370)
-    71         1            5      5.0      0.0   maior_long = str(0.0)
-    72                                           
-    73         1            3      3.0      0.0   limit_inf = str(138.8)
-    74         1            3      3.0      0.0   limit_sup = str(161.8)
-    75                                           
-    76     19452        23227      1.2      8.9   for line in f:
-    77     19451        62260      3.2     23.8       data = str.split(line)
-    78     19451        23526      1.2      9.0       if(data[7] > maior_long):
-    79     19451        22678      1.2      8.7         if(data[7] >= limit_sup):
-    80                                                    maior_long = data[7]
+    77                                           @profile
+    78                                           def calc_long(nome, t_abertura):
+    79         1           19     19.0      0.0   f = open(nome, t_abertura)
+    80                                            #x=400, y = 77398
     81                                           
-    82         1            7      7.0      0.0   f.seek(0,0)
-    83                                           
-    84     19452        26274      1.4     10.0   for line in f:
-    85     19451        70904      3.6     27.1       data = str.split(line) 
-    86     19451        26797      1.4     10.2       if(data[7] < menor_long):
-    87      4414         6138      1.4      2.3         if(data[7] >= limit_inf):
-    88         6            6      1.0      0.0           menor_long = data[7]
-    89                                            
-    90         1           10     10.0      0.0   f.close()
-    91         1            1      1.0      0.0   return maior_long, menor_long
+    82         1            1      1.0      0.0   menor_long = str(370)
+    83         1            3      3.0      0.0   maior_long = str(0.0)
+    84                                           
+    85         1            2      2.0      0.0   limit_inf = str(138.8)
+    86         1            2      2.0      0.0   limit_sup = str(161.8)
+    87                                           
+    88     19452        15431      0.8      9.4   for line in f:
+    89     19451        40217      2.1     24.6       data = str.split(line)
+    90     19451        16146      0.8      9.9       if(data[7] > maior_long):
+    91     19451        15212      0.8      9.3         if(data[7] >= limit_sup):
+    92                                                    maior_long = data[7]
+    93                                           
+    94         1            7      7.0      0.0   f.seek(0,0)
+    95                                           
+    96     19452        15788      0.8      9.7   for line in f:
+    97     19451        40534      2.1     24.8       data = str.split(line) 
+    98     19451        16312      0.8     10.0       if(data[7] < menor_long):
+    99      4414         3639      0.8      2.2         if(data[7] >= limit_inf):
+   100         6            5      0.8      0.0           menor_long = data[7]
+   101                                            
+   102         1           11     11.0      0.0   f.close()
+   103         1            1      1.0      0.0   return maior_long, menor_long
 
 File: profiler2.0.py
-Function: calc_grupo_coord at line 96
-Total time: 0.030826 s
+Function: calc_grupo_coord at line 108
+Total time: 0.026221 s
 
 Line #      Hits         Time  Per Hit   % Time  Line Contents
 ==============================================================
-    96                                           @profile
-    97                                           def calc_grupo_coord(obs_menor_long, obs_menor_lat, menor_lat, menor_long, var_coord):
-    98                                           
-    99      3028         3160      1.0     10.3   dif_lat = obs_menor_lat - menor_lat
-   100      3028         2891      1.0      9.4   dif_long = obs_menor_long - menor_long
-   101                                           
-   102                                            # qual_bin_lat = dif_lat / var_coord
-   103                                            # qual_bin_long = dif_long / var_coord
-   104                                           
-   105      3028         2813      0.9      9.1   primeiro, segundo = 0.5, 1.5
-   106      3028         4338      1.4     14.1   modificador = divmod(primeiro, 0.5)
-   107      3028         3016      1.0      9.8   m = modificador[0]
-   108      3028         3732      1.2     12.1   index = divmod(segundo, 0.5)
-   109      3028         2950      1.0      9.6   i = index[0]
-   110      3028         3813      1.3     12.4   indice = i + (m * (dif_lat*dif_long/0.5))
-   111                                           
-   112      3028         4113      1.4     13.3   return int(indice)
-
-File: profiler2.0.py
-Function: cria_vector at line 114
-Total time: 0.575866 s
-
-Line #      Hits         Time  Per Hit   % Time  Line Contents
-==============================================================
-   114                                           @profile
-   115                                           def cria_vector(total_size, nome, t_abertura, menor_lat, menor_long, var_coord, ano_str):
+   108                                           @profile
+   109                                           def calc_grupo_coord(obs_menor_long, obs_menor_lat, menor_lat, menor_long, var_coord):
+   110                                           
+   111      3028         2804      0.9     10.7   dif_lat = obs_menor_lat - menor_lat
+   112      3028         2487      0.8      9.5   dif_long = obs_menor_long - menor_long
+   113                                           
+   114                                            # qual_bin_lat = dif_lat / var_coord
+   115                                            # qual_bin_long = dif_long / var_coord
    116                                           
-   117         2           91     45.5      0.0   f = open(nome, t_abertura)
-   118                                           
-   119         2            4      2.0      0.0   N = 0
-   120         2            3      1.5      0.0   N_ano = 0
-   121         2            6      3.0      0.0   total_obs = long(0)
-   122                                           
-   123         2           30     15.0      0.0   vector = [None]*(total_size)
-   124         2           26     13.0      0.0   vector_quantidade = [0]*(total_size)
-   125         2           25     12.5      0.0   vector_latlong = [None]*(total_size)
-   126                                            # kanto region
-   127     38904        86218      2.2     15.0   for line in f:
+   117      3028         2444      0.8      9.3   primeiro, segundo = 0.5, 1.5
+   118      3028         3639      1.2     13.9   modificador = divmod(primeiro, 0.5)
+   119      3028         2601      0.9      9.9   m = modificador[0]
+   120      3028         3145      1.0     12.0   index = divmod(segundo, 0.5)
+   121      3028         2539      0.8      9.7   i = index[0]
+   122      3028         3150      1.0     12.0   indice = i + (m * (dif_lat*dif_long/0.5))
+   123                                           
+   124      3028         3412      1.1     13.0   return int(indice)
+
+File: profiler2.0.py
+Function: cria_vector at line 126
+Total time: 0.441516 s
+
+Line #      Hits         Time  Per Hit   % Time  Line Contents
+==============================================================
+   126                                           @profile
+   127                                           def cria_vector(total_size, nome, t_abertura, menor_lat, menor_long, var_coord, ano_str):
    128                                           
-   129     38902       147644      3.8     25.6     aux2 = str.split(str(line))
-   130     38902       133064      3.4     23.1     if(int(aux2[0]) == int(ano_str)):
-   131      3028         4294      1.4      0.7       if(aux2[7] >= 138.8):
-   132      3028         5200      1.7      0.9         obs_menor_long = float(aux2[7])
-   133      3028         3994      1.3      0.7       if(aux2[7] >= 34.8):
-   134      3028         4804      1.6      0.8         obs_menor_lat = float(aux2[6])
-   135                                           
-   136                                                # x_long, y_lat,
-   137      3028        74862     24.7     13.0       index = calc_grupo_coord(obs_menor_long, obs_menor_lat, menor_lat, menor_long, var_coord)
-   138                                                    
-   139      3028         3832      1.3      0.7       vector[index] = line
-   140      3028         3919      1.3      0.7       vector_quantidade[index] += 1
-   141      3028         3511      1.2      0.6       N_ano += 1 
-   142     38902        49451      1.3      8.6     N += 1
-   143     38902        54605      1.4      9.5     total_obs += 1
-   144         2          278    139.0      0.0   f.close()
-   145         2            5      2.5      0.0   return vector, vector_quantidade, N, total_obs, vector_latlong, len(vector), N_ano
+   129         2           92     46.0      0.0   f = open(nome, t_abertura)
+   130                                           
+   131         2            2      1.0      0.0   N = 0
+   132         2            2      1.0      0.0   N_ano = 0
+   133         2            4      2.0      0.0   total_obs = long(0)
+   134                                           
+   135         2           21     10.5      0.0   vector = [None]*(total_size)
+   136         2           18      9.0      0.0   vector_quantidade = [0]*(total_size)
+   137         2           18      9.0      0.0   vector_latlong = [None]*(total_size)
+   138                                            # kanto region
+   139     38904        75865      2.0     17.2   for line in f:
+   140                                           
+   141     38902       104988      2.7     23.8     aux2 = str.split(str(line))
+   142     38902        96161      2.5     21.8     if(int(aux2[0]) == int(ano_str)):
+   143      3028         3485      1.2      0.8       if(aux2[7] >= 138.8):
+   144      3028         4127      1.4      0.9         obs_menor_long = float(aux2[7])
+   145      3028         3165      1.0      0.7       if(aux2[7] >= 34.8):
+   146      3028         3736      1.2      0.8         obs_menor_lat = float(aux2[6])
+   147                                           
+   148                                                # x_long, y_lat,
+   149      3028        63862     21.1     14.5       index = calc_grupo_coord(obs_menor_long, obs_menor_lat, menor_lat, menor_long, var_coord)
+   150                                                    
+   151      3028         3150      1.0      0.7       vector[index] = line
+   152      3028         3162      1.0      0.7       vector_quantidade[index] += 1
+   153      3028         2918      1.0      0.7       N_ano += 1 
+   154     38902        36775      0.9      8.3     N += 1
+   155     38902        39927      1.0      9.0     total_obs += 1
+   156         2           33     16.5      0.0   f.close()
+   157         2            5      2.5      0.0   return vector, vector_quantidade, N, total_obs, vector_latlong, len(vector), N_ano
 
 File: profiler2.0.py
-Function: calcular_expectations at line 147
-Total time: 0.010367 s
+Function: calcular_expectations at line 159
+Total time: 0.00604 s
 
 Line #      Hits         Time  Per Hit   % Time  Line Contents
 ==============================================================
-   147                                           @profile
-   148                                           def calcular_expectations(modified_quant_por_grupo, total_size, N):
-   149                                           
-   150         2           14      7.0      0.1   expectations = [0.0] * (total_size)
-   151      4052         3170      0.8     30.6   for l in xrange(total_size):
-   152      4050         7182      1.8     69.3     expectations[l] = (float(modified_quant_por_grupo[l])/float(N))
-   153         2            1      0.5      0.0   return expectations
+   159                                           @profile
+   160                                           def calcular_expectations(modified_quant_por_grupo, total_size, N):
+   161                                           
+   162         2           37     18.5      0.6   expectations = [0.0] * (total_size)
+   163      4052         1941      0.5     32.1   for l in xrange(total_size):
+   164      4050         4061      1.0     67.2     expectations[l] = (float(modified_quant_por_grupo[l])/float(N))
+   165         2            1      0.5      0.0   return expectations
 
 File: profiler2.0.py
-Function: poisson_press at line 155
-Total time: 800.655 s
+Function: poisson_press at line 167
+Total time: 558.823 s
 
 Line #      Hits         Time  Per Hit   % Time  Line Contents
 ==============================================================
-   155                                           @profile
-   156                                           def poisson_press(x,mi):
-   157  94373100     79621192      0.8      9.9   if(mi <= 0):
-   158                                              return
-   159  94373100     74308617      0.8      9.3   elif(x >= 0):
-   160  94373100     73998294      0.8      9.2     if(x < 1):
-   161  83900872     92085553      1.1     11.5       l = math.exp(-mi)
-   162  83900872     59090430      0.7      7.4       k = 0
-   163  83900872     57140442      0.7      7.1       prob = 1
-   164 178692191    146376127      0.8     18.3       while(l < prob):
-   165  94791319     72610224      0.8      9.1         k = k + 1
-   166  94791319     82192437      0.9     10.3         prob = prob * x
-   167  83900872     56194125      0.7      7.0       return (k)
-   168  10472228      7037065      0.7      0.9   return 1
+   167                                           @profile
+   168                                           def poisson_press(x,mi):
+   169  94373100     56485006      0.6     10.1   if(mi <= 0):
+   170                                              return
+   171  94373100     51265468      0.5      9.2   elif(x >= 0):
+   172  94373100     49979937      0.5      8.9     if(x < 1):
+   173  83900872     60506022      0.7     10.8       l = math.exp(-mi)
+   174  83900872     42432048      0.5      7.6       k = 0
+   175  83900872     40398171      0.5      7.2       prob = 1
+   176 178692191    102888578      0.6     18.4       while(l < prob):
+   177  94791319     52148031      0.6      9.3         k = k + 1
+   178  94791319     56322115      0.6     10.1         prob = prob * x
+   179  83900872     41202259      0.5      7.4       return (k)
+   180  10472228      5195613      0.5      0.9   return 1
 
 File: profiler2.0.py
-Function: calc_coordenadas at line 169
-Total time: 3.2e-05 s
+Function: calc_coordenadas at line 181
+Total time: 2.4e-05 s
 
 Line #      Hits         Time  Per Hit   % Time  Line Contents
 ==============================================================
-   169                                           @profile
-   170                                           def calc_coordenadas(var_coord, name, t_abertura):
-   171                                           
-   172                                            # maior_lat, menor_lat = calc_lat(name, t_abertura)
-   173                                            # maior_long, menor_long = calc_long(name, t_abertura)
-   174                                           
-   175         2            8      4.0     25.0   espaco_lat = float(maior_lat) - float(menor_lat)
-   176         2            4      2.0     12.5   espaco_long = float(maior_long) - float(menor_long)
-   177                                           
-   178         2            2      1.0      6.2   bins_lat = espaco_lat/var_coord 
-   179         2            2      1.0      6.2   bins_long = espaco_long/var_coord
-   180                                           
-   181         2           11      5.5     34.4   bins_lat = round(bins_lat)
-   182         2            3      1.5      9.4   bins_long = round(bins_long)
+   181                                           @profile
+   182                                           def calc_coordenadas(var_coord, name, t_abertura):
    183                                           
-   184         2            2      1.0      6.2   return bins_lat, bins_long
-
-File: profiler2.0.py
-Function: dados_observados_R at line 185
-Total time: 3.47251 s
-
-Line #      Hits         Time  Per Hit   % Time  Line Contents
-==============================================================
-   185                                           @profile
-   186                                           def dados_observados_R(var_coord, ano_str):
-   187                                           
-   188                                            ##inicio coleta e insercao de incertezas
+   184                                            # maior_lat, menor_lat = calc_lat(name, t_abertura)
+   185                                            # maior_long, menor_long = calc_long(name, t_abertura)
+   186                                           
+   187         2            6      3.0     25.0   espaco_lat = float(maior_lat) - float(menor_lat)
+   188         2            3      1.5     12.5   espaco_long = float(maior_long) - float(menor_long)
    189                                           
-   190                                            #1. Pegar as observacoes e criar o vetor Omega
-   191                                            #2. Calcular a expectativa das observacoes incertas, vetor de lambdas
-   192         2           65     32.5      0.0   bins_lat, bins_long = calc_coordenadas(var_coord, arq_entrada, 'r')
-   193                                            
-   194                                            global menor_lat, menor_long
-   195         2            5      2.5      0.0   menor_lat = float(menor_lat)
-   196         2            4      2.0      0.0   menor_long = float(menor_long)
-   197         2            3      1.5      0.0   bins_lat = int(bins_lat)
-   198         2            3      1.5      0.0   bins_long = int(bins_long)
-   199         2            2      1.0      0.0   total_size = 2025
-   200                                           
-   201                                            # print "inicio da criacao do vetor modificado"
-   202                                           
-   203                                            #3.b) sem modificacao
-   204         2            3      1.5      0.0   modified_vetor, quant_por_grupo, N, total_obs, vector_latlong, total_size, N_ano = cria_vector(total_size, arq_entrada, 'r', 
-   205         2       864399 432199.5     24.9     menor_lat, menor_long, var_coord, ano_str)
-   206                                           
-   207         2        16514   8257.0      0.5   expectations = calcular_expectations(quant_por_grupo, total_size, N)
-   208                                           
-   209         2      2591505 1295752.5     74.6    joint_log_likelihood, joint_log_likelihood_NaoUso, descarta_Modelo = log_likelihood(total_size, quant_por_grupo, expectations)
-   210                                           
-   211         2            4      2.0      0.0   return joint_log_likelihood, total_size, total_obs, menor_lat, menor_long, vector_latlong, expectations, N_ano, N
+   190         2            2      1.0      8.3   bins_lat = espaco_lat/var_coord 
+   191         2            0      0.0      0.0   bins_long = espaco_long/var_coord
+   192                                           
+   193         2            9      4.5     37.5   bins_lat = round(bins_lat)
+   194         2            2      1.0      8.3   bins_long = round(bins_long)
+   195                                           
+   196         2            2      1.0      8.3   return bins_lat, bins_long
 
 File: profiler2.0.py
-Function: log_likelihood at line 213
-Total time: 5055.16 s
+Function: dados_observados_R at line 197
+Total time: 0.712843 s
 
 Line #      Hits         Time  Per Hit   % Time  Line Contents
 ==============================================================
-   213                                           @profile
-   214                                           def log_likelihood(total_size, quant_por_grupo, expectation):
-   215                                           
-   216     46605       316351      6.8      0.0   log_likelihood =  [0]*(total_size)
-   217     46605        99699      2.1      0.0   joint_log_likelihood = long(0)
-   218     46605        40086      0.9      0.0   descarta_Modelo = False
-   219                                           
-   220  94421730     87766621      0.9      1.7   for i in range(total_size):
-   221  94375125    115543848      1.2      2.3     if expectation[i] == 0:
-   222    512575       884022      1.7      0.0       expectation[i] += 1
-   223                                              # if (quant_por_grupo[i] == 0 and expectation[i] == 0):
-   224                                              #   log_likelihood[i] += 1    
-   225                                              # elif (quant_por_grupo[i] != 0 and expectation[i] == 0):
-   226                                              #   log_likelihood[i] = Decimal('-Infinity')
-   227                                              #   descarta_Modelo = True
-   228                                              # else:
-   229                                                # log_likelihood[i] = -expectation[i] + (quant_por_grupo[i]*math.log10(expectation[i])) - (math.log10(fat(quant_por_grupo[i])))
-   230                                           
-   231  94375125   4849347868     51.4     95.9     log_likelihood[i] = -expectation[i] + (quant_por_grupo[i]*math.log10(expectation[i])) - (math.log10(tabela_fatorial(quant_por_grupo[i])))
-   232                                           
-   233                                           
-   234                                            #calcula o joint_log_likelihood
-   235     46605      1114826     23.9      0.0   joint_log_likelihood = sum(log_likelihood)
-   236                                           
-   237     46605        51456      1.1      0.0   return log_likelihood, joint_log_likelihood, descarta_Modelo
+   197                                           @profile
+   198                                           def dados_observados_R(var_coord, ano_str):
+   199                                           
+   200                                            ##inicio coleta e insercao de incertezas
+   201                                           
+   202                                            #1. Pegar as observacoes e criar o vetor Omega
+   203                                            #2. Calcular a expectativa das observacoes incertas, vetor de lambdas
+   204         2           47     23.5      0.0   bins_lat, bins_long = calc_coordenadas(var_coord, arq_entrada, 'r')
+   205                                            
+   206                                            global menor_lat, menor_long
+   207         2            2      1.0      0.0   menor_lat = float(menor_lat)
+   208         2            2      1.0      0.0   menor_long = float(menor_long)
+   209         2            2      1.0      0.0   bins_lat = int(bins_lat)
+   210         2            2      1.0      0.0   bins_long = int(bins_long)
+   211         2            0      0.0      0.0   total_size = 2025
+   212                                           
+   213                                            # print "inicio da criacao do vetor modificado"
+   214                                           
+   215                                            #3.b) sem modificacao
+   216         2            1      0.5      0.0   modified_vetor, quant_por_grupo, N, total_obs, vector_latlong, total_size, N_ano = cria_vector(total_size, arq_entrada, 'r', 
+   217         2       663787 331893.5     93.1     menor_lat, menor_long, var_coord, ano_str)
+   218                                           
+   219         2        10036   5018.0      1.4   expectations = calcular_expectations(quant_por_grupo, total_size, N)
+   220                                           
+   221         2        38962  19481.0      5.5   joint_log_likelihood, joint_log_likelihood_NaoUso, descarta_Modelo = log_likelihood(total_size, quant_por_grupo, expectations)
+   222                                           
+   223         2            2      1.0      0.0   return joint_log_likelihood, total_size, total_obs, menor_lat, menor_long, vector_latlong, expectations, N_ano, N
 
 File: profiler2.0.py
-Function: evalOneMax at line 256
-Total time: 7408.9 s
+Function: log_likelihood at line 225
+Total time: 402.093 s
 
 Line #      Hits         Time  Per Hit   % Time  Line Contents
 ==============================================================
-   256                                           @profile
-   257                                           def evalOneMax(individual):
-   258                                               global quant_por_grupo
-   259     46603       552860     11.9      0.0      quant_por_grupo = [0] * len(individual)
-   260  94417678     75442259      0.8      1.0      for i in range(len(individual)):
-   261  94371075     98087534      1.0      1.3          if(individual[i] < 0):
-   262                                                       individual[i] = -individual[i]
-   263                                                   global quant_por_grupo
-   264  94371075   1946317264     20.6     26.3          quant_por_grupo[i] = poisson_press(individual[i], mi)
-   265                                           
-   266     46603   5288450557 113478.8     71.4      log_likelihood_ind, log_likelihood_total, descarta_modelo = log_likelihood(total_size, quant_por_grupo, individual)
-   267                                           
-   268                                               # L_test = L_test_sem_correct(joint_log_likelihood, log_likelihood_total, log_likelihood_ind)
-   269                                               # return L_test,
-   270     46603        45158      1.0      0.0      return log_likelihood_total,
+   225                                           @profile
+   226                                           def log_likelihood(total_size, quant_por_grupo, expectation):
+   227                                           
+   228     46605       290635      6.2      0.1   log_likelihood =  [0]*(total_size)
+   229     46605       101882      2.2      0.0   joint_log_likelihood = long(0)
+   230     46605        30033      0.6      0.0   descarta_Modelo = False
+   231                                           
+   232  94421730     57521411      0.6     14.3   for i in range(total_size):
+   233  94375125     66947241      0.7     16.6     if expectation[i] == 0:
+   234    512575       511109      1.0      0.1       expectation[i] += 1
+   235                                              # if (quant_por_grupo[i] == 0 and expectation[i] == 0):
+   236                                              #   log_likelihood[i] += 1    
+   237                                              # elif (quant_por_grupo[i] != 0 and expectation[i] == 0):
+   238                                              #   log_likelihood[i] = Decimal('-Infinity')
+   239                                              #   descarta_Modelo = True
+   240                                              # else:
+   241                                                # log_likelihood[i] = -expectation[i] + (quant_por_grupo[i]*math.log10(expectation[i])) - (math.log10(fat(quant_por_grupo[i])))
+   242  94375125     58899694      0.6     14.6     if(quant_por_grupo[i] > 100):
+   243      2222         1314      0.6      0.0       cast = 99
+   244                                              else:
+   245  94372903     60288253      0.6     15.0       cast = quant_por_grupo[i] - 1
+   246  94375125    156600022      1.7     38.9     log_likelihood[i] = -expectation[i] + (quant_por_grupo[i]*math.log10(expectation[i])) - (math.log10(float(fatorial[cast])))
+   247                                           
+   248                                            #calcula o joint_log_likelihood
+   249     46605       860065     18.5      0.2   joint_log_likelihood = sum(log_likelihood)
+   250                                           
+   251     46605        40967      0.9      0.0   return log_likelihood, joint_log_likelihood, descarta_Modelo
 
 File: profiler2.0.py
-Function: main at line 307
-Total time: 7690.57 s
+Function: evalOneMax at line 274
+Total time: 2188.31 s
 
 Line #      Hits         Time  Per Hit   % Time  Line Contents
 ==============================================================
-   307                                           @profile
-   308                                           def main():
-   309         1           25     25.0      0.0      random.seed(64)
-   310         1            4      4.0      0.0      CXPB, MUTPB, NGEN = 0.9, 0.1, 100
-   311         1            3      3.0      0.0      ano_int = 2005
-   312         1            5      5.0      0.0      ano_str = str(ano_int)
-   313                                               
-   314         1            3      3.0      0.0      var_coord = 0.5
-   315         1      2023846 2023846.0      0.0      joint_log_likelihood, total_size, total_obs, menor_lat, menor_long, vector_latlong, expectations, N_ano, N = dados_observados_R(var_coord, ano_str)
-   316                                            
-   317                                               global mi
-   318         1            5      5.0      0.0      mi = float(N_ano)/float(N)
-   319         1      1053504 1053504.0      0.0      pop = toolbox.population(n=500)
-   320                                               
-   321                                               # fitnesses = list(map(toolbox.evaluate, pop))
-   322                                               # for ind, fit in zip(pop, fitnesses):
-   323                                               #     ind.fitness.values = fit
-   324                                               
-   325         2            5      2.5      0.0      while(ano_int <= 2005):
-   326                                                   global mi
-   327         1            4      4.0      0.0          mi = float(N_ano)/float(N)
-   328                                                   # Evaluate the entire population
-   329         1    110593002 110593002.0      1.4          fitnesses = list(map(toolbox.evaluate, pop))
-   330       501         1185      2.4      0.0          for ind, fit in zip(pop, fitnesses):
-   331       500         3129      6.3      0.0              ind.fitness.values = fit
-   332                                                   
-   333                                                   # Begin the evolutionck())
-   334       101          324      3.2      0.0          for g in range(NGEN):
-   335       100         2269     22.7      0.0              print("-- Generation %i --" % g)
-   336                                                       # Select the next generation individuals
-   337       100       775178   7751.8      0.0              offspring = toolbox.select(pop, len(pop))
-   338                                                       # Clone the selected individuals
-   339       100     19079052 190790.5      0.2              offspring = list(map(toolbox.clone, offspring))
-   340       100         2281     22.8      0.0              print("Start of evolution")
-   341                                                       # Apply crossover and mutation on the offspring
-   342     25100        63619      2.5      0.0              for child1, child2 in zip(offspring[::2], offspring[1::2]):
-   343                                                           
-   344     25000        66391      2.7      0.0                  if random.random() < CXPB:
-   345     22550       407514     18.1      0.0                      toolbox.mate(child1, child2)
-   346     22550        97300      4.3      0.0                      del child1.fitness.values
-   347     22550        87983      3.9      0.0                      del child2.fitness.values
-   348     50100       108959      2.2      0.0              for mutant in offspring:
-   349     50000       121704      2.4      0.0                  if random.random() < MUTPB:
-   350      5024      6942845   1381.9      0.1                      toolbox.mutate(mutant, indpb=0.05)
-   351      5024        22128      4.4      0.0                      del mutant.fitness.values
-   352                                                   
-   353                                                       # Evaluate the individuals with an invalid fitness
-   354     50100       184524      3.7      0.0              invalid_ind = [ind for ind in offspring if not ind.fitness.valid]
-   355       100   7461686543 74616865.4     97.0              fitnesses = list(map(toolbox.evaluate, invalid_ind))
-   356     45703       109834      2.4      0.0              for ind, fit in zip(invalid_ind, fitnesses):
-   357     45603       279317      6.1      0.0                  ind.fitness.values = fit
-   358                                                       
-   359       100         2652     26.5      0.0              print("  Evaluated %i individuals" % len(invalid_ind))
-   360                                                       
-   361                                                       # The population is entirely replaced by the offspring, but the last pop best_ind
-   362                                           
-   363       100       353111   3531.1      0.0              best_ind = tools.selBest(pop, 1)[0]
-   364       100       339777   3397.8      0.0              worst_ind = tools.selWorst(offspring, 1)[0]
-   365                                                       
-   366     28509        64068      2.2      0.0              for i in range(len(offspring)):
-   367     28509        95298      3.3      0.0                  if (offspring[i] == worst_ind):
-   368       100          268      2.7      0.0                      offspring[i] = best_ind
-   369       100          478      4.8      0.0                      break
-   370                                           
-   371       100       111799   1118.0      0.0              pop[:] = offspring    
-   372                                                       # fim loop GERACAO
-   373                                           
-   374         1            1      1.0      0.0          ano_int = ano_int + 1
-   375         1            4      4.0      0.0          ano_str = str(ano_int)
-   376                                           
-   377         1      1448805 1448805.0      0.0          joint_log_likelihood, total_size, total_obs, menor_lat, menor_long, vector_latlong, expectations, N_ano, N = dados_observados_R(var_coord, ano_str)
-   378                                                   global mi
-   379         1            4      4.0      0.0          mi = float(N_ano)/float(N)
-   380                                                   
-   381         1       671503 671503.0      0.0          pop = toolbox.population(n=500)
-   382         1     83717671 83717671.0      1.1          fitnesses = list(map(toolbox.evaluate, pop))
-   383       501          971      1.9      0.0          for ind, fit in zip(pop, fitnesses):
-   384       500         2307      4.6      0.0              ind.fitness.values = fit
-   385                                           
-   386         1         2757   2757.0      0.0          best_ind = tools.selBest(pop, 1)[0]
-   387      2026         3668      1.8      0.0          for i in range(len(best_ind)):
-   388                                                       global quant_por_grupo
-   389      2025        35292     17.4      0.0              quant_por_grupo[i] = poisson_press(best_ind[i], mi)
-   390                                            
+   274                                           @profile
+   275                                           def evalOneMax(individual):
+   276                                               global quant_por_grupo
+   277     46603       485100     10.4      0.0      quant_por_grupo = [0] * len(individual)
+   278  94417678     53583610      0.6      2.4      for i in range(len(individual)):
+   279  94371075     67343576      0.7      3.1          if(individual[i] < 0):
+   280                                                       individual[i] = -individual[i]
+   281                                                   global quant_por_grupo
+   282  94371075   1366924713     14.5     62.5          quant_por_grupo[i] = poisson_press(individual[i], mi)
+   283                                           
+   284     46603    699942547  15019.3     32.0      log_likelihood_ind, log_likelihood_total, descarta_modelo = log_likelihood(total_size, quant_por_grupo, individual)
+   285                                           
+   286                                               # L_test = L_test_sem_correct(joint_log_likelihood, log_likelihood_total, log_likelihood_ind)
+   287                                               # return L_test,
+   288     46603        31744      0.7      0.0      return log_likelihood_total,
+
+File: profiler2.0.py
+Function: main at line 325
+Total time: 2393.98 s
+
+Line #      Hits         Time  Per Hit   % Time  Line Contents
+==============================================================
+   325                                           @profile
+   326                                           def main():
+   327         1           17     17.0      0.0      random.seed(64)
+   328         1            2      2.0      0.0      CXPB, MUTPB, NGEN = 0.9, 0.1, 100
+   329         1            2      2.0      0.0      ano_int = 2005
+   330         1            2      2.0      0.0      ano_str = str(ano_int)
+   331                                               
+   332         1            1      1.0      0.0      var_coord = 0.5
+   333         1       339295 339295.0      0.0      joint_log_likelihood, total_size, total_obs, menor_lat, menor_long, vector_latlong, expectations, N_ano, N = dados_observados_R(var_coord, ano_str)
+   334                                            
+   335                                               global mi
+   336         1            3      3.0      0.0      mi = float(N_ano)/float(N)
+   337         1       611346 611346.0      0.0      pop = toolbox.population(n=500)
+   338                                               
+   339                                               # fitnesses = list(map(toolbox.evaluate, pop))
+   340                                               # for ind, fit in zip(pop, fitnesses):
+   341                                               #     ind.fitness.values = fit
+   342                                               
+   343         2            5      2.5      0.0      while(ano_int <= 2005):
+   344                                                   global mi
+   345         1            5      5.0      0.0          mi = float(N_ano)/float(N)
+   346                                                   # Evaluate the entire population
+   347         1     34340904 34340904.0      1.4          fitnesses = list(map(toolbox.evaluate, pop))
+   348       501          944      1.9      0.0          for ind, fit in zip(pop, fitnesses):
+   349       500         2346      4.7      0.0              ind.fitness.values = fit
+   350                                                   
+   351                                                   # Begin the evolutionck())
+   352       101          254      2.5      0.0          for g in range(NGEN):
+   353       100         1865     18.6      0.0              print("-- Generation %i --" % g)
+   354                                                       # Select the next generation individuals
+   355       100       531065   5310.6      0.0              offspring = toolbox.select(pop, len(pop))
+   356                                                       # Clone the selected individuals
+   357       100     14751492 147514.9      0.6              offspring = list(map(toolbox.clone, offspring))
+   358       100         2008     20.1      0.0              print("Start of evolution")
+   359                                                       # Apply crossover and mutation on the offspring
+   360     25100        49162      2.0      0.0              for child1, child2 in zip(offspring[::2], offspring[1::2]):
+   361                                                           
+   362     25000        49718      2.0      0.0                  if random.random() < CXPB:
+   363     22550       305131     13.5      0.0                      toolbox.mate(child1, child2)
+   364     22550        72179      3.2      0.0                      del child1.fitness.values
+   365     22550        64005      2.8      0.0                      del child2.fitness.values
+   366     50100        89238      1.8      0.0              for mutant in offspring:
+   367     50000        96411      1.9      0.0                  if random.random() < MUTPB:
+   368      5024      5211408   1037.3      0.2                      toolbox.mutate(mutant, indpb=0.05)
+   369      5024        20579      4.1      0.0                      del mutant.fitness.values
+   370                                                   
+   371                                                       # Evaluate the individuals with an invalid fitness
+   372     50100       137319      2.7      0.0              invalid_ind = [ind for ind in offspring if not ind.fitness.valid]
+   373       100   2307619658 23076196.6     96.4              fitnesses = list(map(toolbox.evaluate, invalid_ind))
+   374     45703        85934      1.9      0.0              for ind, fit in zip(invalid_ind, fitnesses):
+   375     45603       204366      4.5      0.0                  ind.fitness.values = fit
+   376                                                       
+   377       100         2661     26.6      0.0              print("  Evaluated %i individuals" % len(invalid_ind))
+   378                                                       
+   379                                                       # The population is entirely replaced by the offspring, but the last pop best_ind
+   380                                           
+   381       100       242758   2427.6      0.0              best_ind = tools.selBest(pop, 1)[0]
+   382       100       234052   2340.5      0.0              worst_ind = tools.selWorst(offspring, 1)[0]
+   383                                                       
+   384     28509        49651      1.7      0.0              for i in range(len(offspring)):
+   385     28509        71814      2.5      0.0                  if (offspring[i] == worst_ind):
+   386       100          221      2.2      0.0                      offspring[i] = best_ind
+   387       100          402      4.0      0.0                      break
+   388                                           
+   389       100        76481    764.8      0.0              pop[:] = offspring    
+   390                                                       # fim loop GERACAO
    391                                           
-   392         1            2      2.0      0.0          while True:
-   393         1            2      2.0      0.0              try:            
-   394         1           24     24.0      0.0                  f = open(sys.argv[1], "a")
-   395         1            8      8.0      0.0                  flock(f, LOCK_EX | LOCK_NB)
-   396         1            7      7.0      0.0                  f.write(str(ano_int))
-   397         1            3      3.0      0.0                  f.write('\n')
-   398       501          976      1.9      0.0                  for i in range(len((pop, 1)[0])):            
-   399       500         4016      8.0      0.0                      f.write(str((pop, 1)[0][i].fitness.values))
-   400         1            3      3.0      0.0                  f.write('\n')
-   401                                                           global quant_por_grupo
-   402         1          103    103.0      0.0                  f.write(str(quant_por_grupo))
-   403         1            3      3.0      0.0                  f.write('\n')
-   404         1           10     10.0      0.0                  f.write(str(best_ind.fitness.values))
-   405         1            2      2.0      0.0                  f.write('\n')
-   406         1            5      5.0      0.0                  flock(f, LOCK_UN)
-   407         1            2      2.0      0.0                  f.write('\n')
-   408                                                       except IOError:
-   409                                                           time.sleep(5)
-   410                                                           continue
-   411         1            2      2.0      0.0              break
+   392         1            2      2.0      0.0          ano_int = ano_int + 1
+   393         1            3      3.0      0.0          ano_str = str(ano_int)
+   394                                           
+   395         1       373671 373671.0      0.0          joint_log_likelihood, total_size, total_obs, menor_lat, menor_long, vector_latlong, expectations, N_ano, N = dados_observados_R(var_coord, ano_str)
+   396                                                   global mi
+   397         1            3      3.0      0.0          mi = float(N_ano)/float(N)
+   398                                                   
+   399         1       594586 594586.0      0.0          pop = toolbox.population(n=500)
+   400         1     27699883 27699883.0      1.2          fitnesses = list(map(toolbox.evaluate, pop))
+   401       501          920      1.8      0.0          for ind, fit in zip(pop, fitnesses):
+   402       500         2210      4.4      0.0              ind.fitness.values = fit
+   403                                           
+   404         1         2436   2436.0      0.0          best_ind = tools.selBest(pop, 1)[0]
+   405      2026         3450      1.7      0.0          for i in range(len(best_ind)):
+   406                                                       global quant_por_grupo
+   407      2025        31730     15.7      0.0              quant_por_grupo[i] = poisson_press(best_ind[i], mi)
+   408                                            
+   409                                           
+   410         1            2      2.0      0.0          while True:
+   411         1            2      2.0      0.0              try:            
+   412         1           40     40.0      0.0                  f = open(sys.argv[1], "a")
+   413         1            9      9.0      0.0                  flock(f, LOCK_EX | LOCK_NB)
+   414         1            7      7.0      0.0                  f.write(str(ano_int))
+   415         1            2      2.0      0.0                  f.write('\n')
+   416       501          911      1.8      0.0                  for i in range(len((pop, 1)[0])):            
+   417       500         3896      7.8      0.0                      f.write(str((pop, 1)[0][i].fitness.values))
+   418         1            2      2.0      0.0                  f.write('\n')
+   419                                                           global quant_por_grupo
+   420         1           95     95.0      0.0                  f.write(str(quant_por_grupo))
+   421         1            2      2.0      0.0                  f.write('\n')
+   422         1            9      9.0      0.0                  f.write(str(best_ind.fitness.values))
+   423         1            2      2.0      0.0                  f.write('\n')
+   424         1            5      5.0      0.0                  flock(f, LOCK_UN)
+   425         1            2      2.0      0.0                  f.write('\n')
+   426                                                       except IOError:
+   427                                                           time.sleep(5)
+   428                                                           continue
+   429         1            1      1.0      0.0              break

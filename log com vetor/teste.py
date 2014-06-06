@@ -1,22 +1,33 @@
-@profile
-def primes(n): 
-    if n==2:
-        return [2]
-    elif n<2:
-        return []
-    s=range(3,n+1,2)
-    mroot = n ** 0.5
-    half=(n+1)/2-1
-    i=0
-    m=3
-    while m <= mroot:
-        if s[i]:
-            j=(m*m-3)/2
-            s[j]=0
-            while j<half:
-                s[j]=0
-                j+=m
-        i=i+1
-        m=2*i+3
-    return [2]+[x for x in s if x]
-primes(100)  
+import math
+
+def poisson_press(x,mi):
+    if(mi <= 0):
+        return
+    elif(x >= 0):
+        if(x < 1):
+            l = math.exp(-mi)
+            k = 0
+            prob = 1
+            while(l < prob):
+                k = k + 1
+                prob = prob * x
+            return (k)
+    return 1
+
+def poisson_press2(x,mi):
+    if(mi <= 0):
+        return
+    elif(x >= 0):
+        if(x < 1):
+            l = math.exp(-mi)
+            k = 0
+            prob = 1
+            while(l < prob):
+                k = k + 1
+                prob = prob * x
+            return (k)
+    return 1
+
+print poisson_press(0.15, 10)
+print poisson_press(0.50, 15)
+print poisson_press(0.85, 10)

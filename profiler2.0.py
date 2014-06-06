@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 import array
 import random
 import sys
@@ -16,23 +18,19 @@ arq_entrada = '../filtro_terremoto_terra.txt'
 name = arq_entrada
 t_abertura = 'r'
 
-
-@profile
-def tabela_fatorial(n):
-
-	resultado = 1
-	saida = 0
+#@profile
+def tabelaFatorial():
+	i = 0
+	vetor = [0] * 100
 	f = open("tabela_fatorial.txt", "r")
 	for line in f:
 		data = str.split(line)
-		if(int(data[0]) == n):
-			saida = int(data[1])
-			break
+		vetor[i] = data[1]
+		i += 1
 	f.close()
-	saida = int(data[1])
-	return saida
+	return vetor
 	
-@profile
+#@profile
 def calc_lat(nome, t_abertura):
 	#abre arq
 	f = open(nome, t_abertura)
@@ -62,7 +60,7 @@ def calc_lat(nome, t_abertura):
 
 	return maior_lat, menor_lat
 
-@profile
+#@profile
 def calc_long(nome, t_abertura):
 	f = open(nome, t_abertura)
 	#x=400, y = 77398
@@ -93,7 +91,7 @@ def calc_long(nome, t_abertura):
 maior_lat, menor_lat = calc_lat(name, t_abertura)
 maior_long, menor_long = calc_long(name, t_abertura)
 
-@profile
+#@profile
 def calc_grupo_coord(obs_menor_long, obs_menor_lat, menor_lat, menor_long, var_coord):
 
 	dif_lat = obs_menor_lat - menor_lat
@@ -111,7 +109,7 @@ def calc_grupo_coord(obs_menor_long, obs_menor_lat, menor_lat, menor_long, var_c
 
 	return int(indice)
 
-@profile
+#@profile
 def cria_vector(total_size, nome, t_abertura, menor_lat, menor_long, var_coord, ano_str):
 
 	f = open(nome, t_abertura)
@@ -144,7 +142,7 @@ def cria_vector(total_size, nome, t_abertura, menor_lat, menor_long, var_coord, 
 	f.close()
 	return vector, vector_quantidade, N, total_obs, vector_latlong, len(vector), N_ano
 
-@profile
+#@profile
 def calcular_expectations(modified_quant_por_grupo, total_size, N):
 
 	expectations = [0.0] * (total_size)
@@ -152,7 +150,7 @@ def calcular_expectations(modified_quant_por_grupo, total_size, N):
 		expectations[l] = (float(modified_quant_por_grupo[l])/float(N))
 	return expectations
 
-@profile
+#@profile
 def poisson_press(x,mi):
 	if(mi <= 0):
 		return
@@ -166,7 +164,8 @@ def poisson_press(x,mi):
 				prob = prob * x
 			return (k)
 	return 1
-@profile
+
+#@profile
 def calc_coordenadas(var_coord, name, t_abertura):
 
 	# maior_lat, menor_lat = calc_lat(name, t_abertura)
@@ -182,7 +181,7 @@ def calc_coordenadas(var_coord, name, t_abertura):
 	bins_long = round(bins_long)
 
 	return bins_lat, bins_long
-@profile
+#@profile
 def dados_observados_R(var_coord, ano_str):
 
 	##inicio coleta e insercao de incertezas
@@ -210,7 +209,7 @@ def dados_observados_R(var_coord, ano_str):
 
 	return joint_log_likelihood, total_size, total_obs, menor_lat, menor_long, vector_latlong, expectations, N_ano, N
 
-@profile
+#@profile
 def log_likelihood(total_size, quant_por_grupo, expectation):
 
 	log_likelihood =  [0]*(total_size)
@@ -227,9 +226,11 @@ def log_likelihood(total_size, quant_por_grupo, expectation):
 		# 	descarta_Modelo = True
 		# else:
 			# log_likelihood[i] = -expectation[i] + (quant_por_grupo[i]*math.log10(expectation[i])) - (math.log10(fat(quant_por_grupo[i])))
-
-		log_likelihood[i] = -expectation[i] + (quant_por_grupo[i]*math.log10(expectation[i])) - (math.log10(tabela_fatorial(quant_por_grupo[i])))
-
+		if(quant_por_grupo[i] > 100):
+			cast = 99
+		else:
+			cast = quant_por_grupo[i] - 1
+		log_likelihood[i] = -expectation[i] + (quant_por_grupo[i]*math.log10(expectation[i])) - (math.log10(float(fatorial[cast])))
 
 	#calcula o joint_log_likelihood
 	joint_log_likelihood = sum(log_likelihood)
@@ -241,6 +242,10 @@ global mi
 mi = 0.0 
 global quant_por_grupo
 quant_por_grupo = [0] * total_size
+global fatorial
+fatorial = tabelaFatorial()
+
+
 
 creator.create("FitnessMax", base.Fitness, weights=(1.0,))
 creator.create("Individual", array.array, typecode='d', fitness=creator.FitnessMax)
@@ -253,7 +258,7 @@ toolbox.register("attr_float", random.random)
 toolbox.register("individual", tools.initRepeat, creator.Individual, toolbox.attr_float, total_size)
 toolbox.register("population", tools.initRepeat, list, toolbox.individual)
 
-@profile
+#@profile
 def evalOneMax(individual):
     global quant_por_grupo
     quant_por_grupo = [0] * len(individual)
@@ -304,11 +309,11 @@ elif(int(sys.argv[4]) == 27):
     toolbox.register("select", tools.selWorst)
 
 
-@profile
+#@profile
 def main():
-    random.seed(64)
-    CXPB, MUTPB, NGEN = 0.9, 0.1, 100
-    ano_int = 2005
+    # random.seed(64)
+    CXPB, MUTPB, NGEN = 0.9, 0.1, 10
+    ano_int = 2000
     ano_str = str(ano_int)
     
     var_coord = 0.5
@@ -316,13 +321,13 @@ def main():
  
     global mi
     mi = float(N_ano)/float(N)
-    pop = toolbox.population(n=500)
+    pop = toolbox.population(n=10)
     
     # fitnesses = list(map(toolbox.evaluate, pop))
     # for ind, fit in zip(pop, fitnesses):
     #     ind.fitness.values = fit
     
-    while(ano_int <= 2005):
+    while(ano_int <= 2000):
         global mi
         mi = float(N_ano)/float(N)
         # Evaluate the entire population
@@ -378,7 +383,7 @@ def main():
         global mi
         mi = float(N_ano)/float(N)
         
-        pop = toolbox.population(n=500)
+        pop = toolbox.population(n=10)
         fitnesses = list(map(toolbox.evaluate, pop))
         for ind, fit in zip(pop, fitnesses):
             ind.fitness.values = fit
@@ -393,7 +398,7 @@ def main():
             try:            
                 f = open(sys.argv[1], "a")
                 flock(f, LOCK_EX | LOCK_NB)
-                f.write(str(ano_int))
+                f.write(str(ano_int - 1))
                 f.write('\n')
                 for i in range(len((pop, 1)[0])):            
                     f.write(str((pop, 1)[0][i].fitness.values))
@@ -414,7 +419,4 @@ def main():
 
 
 if __name__ == "__main__":
-	start = time.clock()
 	main()
-	elapsed = (time.clock() - start)
-	print (elapsed)

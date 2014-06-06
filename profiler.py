@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 import array
 import random
 import sys
