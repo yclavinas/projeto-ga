@@ -1,5 +1,0 @@
-# SW Pacific testing region in the following format:
-# min latitude, max latitude, min longitude, max longitude
-
--60.25	0.25	109.75	180
--60.25	0.25	-180	-169.75
