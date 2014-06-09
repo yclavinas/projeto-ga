@@ -1,9 +1,11 @@
+#!/usr/bin/env python
+
 import os, time
 for w in range(1):
 	k = 21 + w
 	print k
 
-	for i in range(100):
+	for i in range(23):
 		NUM_PROCESSES = 1
 
 		childrenBlend = []
@@ -24,7 +26,7 @@ for w in range(1):
 		for i, childBlend in enumerate(childrenBlend):
 		    os.waitpid(childBlend, 0)
 
-	for i in range(100):
+	for i in range(50):
 		NUM_PROCESSES = 1
 
 		childrenBlend = []
@@ -46,7 +48,7 @@ for w in range(1):
 		    os.waitpid(childBlend, 0)
 
 
-	for i in range(100):
+	for i in range(50):
 		NUM_PROCESSES = 1
 	 	childrenBlend = []
 
