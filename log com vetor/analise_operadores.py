@@ -126,7 +126,7 @@ def main():
             global mi
             mi = float(N_ano)/float(N)
             
-            pop = toolbox.population(n=100)
+            pop = toolbox.population(n=500)
             fitnesses = list(map(toolbox.evaluate, pop))
             for ind, fit in zip(pop, fitnesses):
                 ind.fitness.values = fit
