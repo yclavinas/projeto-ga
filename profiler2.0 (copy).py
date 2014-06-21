@@ -243,8 +243,8 @@ def log_likelihood(total_size, quant_por_grupo, expectation):
 			cast = 99
 		else:
 			cast = quant_por_grupo[i] - 1
-		# log_likelihood[i] = -expectation[i] + (quant_por_grupo[i]*math.log10(expectation[i])) - (math.log10(float(fatorial[cast])))
-		log_likelihood[i] = -expectation[i] + (quant_por_grupo[i]*math.log10(expectation[i])) - (math.log10(fat(quant_por_grupo[i])))
+		log_likelihood[i] = -expectation[i] + (quant_por_grupo[i]*math.log10(expectation[i])) - (math.log10(float(fatorial[cast])))
+		# log_likelihood[i] = -expectation[i] + (quant_por_grupo[i]*math.log10(expectation[i])) - (math.log10(fat(quant_por_grupo[i])))
 
 	#calcula o joint_log_likelihood
 	joint_log_likelihood = sum(log_likelihood)
@@ -429,7 +429,6 @@ def main():
                 time.sleep(5)
                 continue
             break
-        ano_int = 2010
 
         
 
