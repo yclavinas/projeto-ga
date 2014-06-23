@@ -85,7 +85,7 @@ for w in range(1):
 	 	        childrenBlend.append(pid)
 
 	 	    else:
-	 	        os.execlp('python', 'python', 'simpleGA_old.py', "../../../../Dropbox/operadores-?/difTabelaCalc/" + str(w+1) + "-cxBlendComCalc.txt", str(3), str(11),str(27), str(k)) # overlay program
+	 	        os.execlp('python', 'python', 'simpleGA_old.py', "../../../../../Dropbox/operadores-?/difTabelaCalc/" + str(w+1) + "-cxBlendComCalc.txt", str(3), str(11),str(27), str(k)) # overlay program
 	 	        assert False, 'error starting program'   
 	 	        os._exit(0)
 	 	    j += 1

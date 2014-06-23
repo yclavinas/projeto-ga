@@ -85,7 +85,7 @@ elif(int(sys.argv[4]) == 27):
 
 def main():
     # random.seed(64)
-    CXPB, MUTPB, NGEN = 0.9, 0.1, 10
+    CXPB, MUTPB, NGEN = 0.9, 0.1, 100
     ano_int = 2000
     ano_str = str(ano_int)
     
@@ -94,7 +94,7 @@ def main():
  
     global mi
     mi = float(N_ano)/float(N)
-    pop = toolbox.population(n=5)
+    pop = toolbox.population(n=500)
     
     # fitnesses = list(map(toolbox.evaluate, pop))
     # for ind, fit in zip(pop, fitnesses):
@@ -157,7 +157,7 @@ def main():
         global mi
         mi = float(N_ano)/float(N)
         
-        pop = toolbox.population(n=5)
+        pop = toolbox.population(n=500)
         fitnesses = list(map(toolbox.evaluate, pop))
         for ind, fit in zip(pop, fitnesses):
             ind.fitness.values = fit
