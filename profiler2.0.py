@@ -33,15 +33,13 @@ def tabelaFatorial():
 def fat(n):
 	resultado = 1
 	lista = range(1,n+1)
+	print n
+	for x in lista:
+		resultado = x * resultado
 
-	try:
-		for x in lista:
-			resultado = x * resultado
-
-		return resultado
-	except ValueError:
-		print 'Deu erro no calculo do fat'
-		exit(0)
+	return resultado
+	
+		
 	
 #@profile
 def calc_lat(nome, t_abertura):
@@ -139,17 +137,18 @@ def cria_vector(total_size, nome, t_abertura, menor_lat, menor_long, var_coord, 
 
 		aux2 = str.split(str(line))
 		if(int(aux2[0]) == int(ano_str)):
-			if(aux2[7] >= 138.8):
-				obs_menor_long = float(aux2[7])
-			if(aux2[7] >= 34.8):
-				obs_menor_lat = float(aux2[6])
+			if(float(aux2[9]) >= 2.5):
+				if(float(aux2[7]) >= 138.8):
+					obs_menor_long = float(aux2[7])
+				if(float(aux2[6]) >= 34.8):
+					obs_menor_lat = float(aux2[6])
 
-			# x_long, y_lat,
-			index = calc_grupo_coord(obs_menor_long, obs_menor_lat, menor_lat, menor_long, var_coord)
-					
-			vector[index] = line
-			vector_quantidade[index] += 1
-			N_ano += 1 
+				# x_long, y_lat,
+				index = calc_grupo_coord(obs_menor_long, obs_menor_lat, menor_lat, menor_long, var_coord)
+						
+				vector[index] = line
+				vector_quantidade[index] += 1
+				N_ano += 1 
 		N += 1
 		total_obs += 1
 	f.close()
@@ -243,8 +242,8 @@ def log_likelihood(total_size, quant_por_grupo, expectation):
 			cast = 99
 		else:
 			cast = quant_por_grupo[i] - 1
-		# log_likelihood[i] = -expectation[i] + (quant_por_grupo[i]*math.log10(expectation[i])) - (math.log10(float(fatorial[cast])))
-		log_likelihood[i] = -expectation[i] + (quant_por_grupo[i]*math.log10(expectation[i])) - (math.log10(fat(quant_por_grupo[i])))
+		log_likelihood[i] = -expectation[i] + (quant_por_grupo[i]*math.log10(expectation[i])) - (math.log10(float(fatorial[cast])))
+		# log_likelihood[i] = -expectation[i] + (quant_por_grupo[i]*math.log10(expectation[i])) - (math.log10(fat(quant_por_grupo[i])))
 
 	#calcula o joint_log_likelihood
 	joint_log_likelihood = sum(log_likelihood)
