@@ -1,0 +1,4 @@
+include HISTORY MANIFEST.in VERSION README setup.py arch.c python-transcendental.spec config.h.def
+recursive-include python * 
+recursive-include src * 
+recursive-include cephes * 

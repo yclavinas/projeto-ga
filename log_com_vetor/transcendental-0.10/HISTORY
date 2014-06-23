@@ -1,0 +1,64 @@
+2012.05.30
+==========
+Version 0.10. Updating for the latest release of numpy.
+
+2009.03.26
+==========
+Version 0.09. A remaining reference to _statistics was replaced by
+_transcendental, following a bug report by Dean Provins.
+
+2008.12.18
+==========
+Version 0.08. Removed the remaining functions from Numeric. Released the
+wrapper code under the Python license; the licensing status of the Cephes
+library itself is unclear to me.
+
+2008.12.05
+==========
+Version 0.07. Modified test functions that are no longer needed with current
+Python versions. Changing from Numerical Python to NumPy.
+
+2007.03.06
+==========
+Version 0.06. Using a config.h script instead of compile-time arguments.
+Removing the specialized error message for transcendental.
+
+2004.06.08
+==========
+Version 0.05. Added the RPM package specification in python-transcendental.spec,
+which was kindly provided by Simon Clift of the University of Waterloo, Canada.
+
+2004.03.01
+==========
+Version 0.04. Rewrote the code in arch.c, which is used when running "python
+setup.py config" to check the computer architecture, in particular the format
+of floating point numbers. This check is now more comprehensive and strict. The
+architecture check was now tested on a computer with a DEC-type architecture.
+Previously, only the IBMPC and MIEEE checks were tested (on a Windows machine
+and on Mac OS X, respectively).
+
+2003.12.19
+==========
+Version 0.03. Bug fix. Some mathematical libraries, notably on Unix and Linux,
+contain a function called gamma, which is the logarithm of the gamma function
+instead of the gamma function itself. Incorrect answers occurred when Cephes
+called the gamma function in the math library instead of its own gamma function,
+which does not include the logarithm. This was fixed by renaming the gamma
+function in the Cephes library to cephesgamma. If a function gamma is found in
+the math library that really is the gamma function, then cephesgamma is
+#defined to gamma.
+
+2003.07.15
+==========
+Version 0.02. Expanded the set of available functions. Changed the name of
+the extension module to transcendental.
+
+2003.04.06
+==========
+Version 0.01. Originated at the University of Tokyo, Institute of Medical
+Science, Human Genome Center, Laboratory of DNA Information Analysis. Our
+first, rather modest, goal is to get access to the erf error function, either
+from the standard math library, or, if we cannot find it there, from the cephes
+routine.
+
+Michiel de Hoon, mdehoon@ims.u-tokyo.ac.jp
