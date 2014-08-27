@@ -1,0 +1,13 @@
+forecastFile=DBMForecast.xml
+observationFile=SWPCatalog.dat
+referenceForecastFile=Triple_SForecast.xml
+executeLTest=true
+executeMTest=false
+executeNTest=true
+executeRTest=true
+executeSTest=true
+executeMolchanTest=true
+executeASSTest=true
+executeROCTest=true
+executeGamblingTest=true
+resultsFile=swTestResults.txt

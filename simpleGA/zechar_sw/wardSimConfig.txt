@@ -1,0 +1,13 @@
+forecastFile=WardSimulationForecast.xml
+observationFile=RELMCatalog.dat
+referenceForecastFile=
+executeLTest=false
+executeMTest=true
+executeNTest=false
+executeRTest=false
+executeSTest=false
+executeMolchanTest=false
+executeASSTest=false
+executeROCTest=false
+executeGamblingTest=false
+resultsFile=WardTestResults.txt

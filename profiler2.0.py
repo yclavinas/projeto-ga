@@ -33,7 +33,6 @@ def tabelaFatorial():
 def fat(n):
 	resultado = 1
 	lista = range(1,n+1)
-	print n
 	for x in lista:
 		resultado = x * resultado
 
@@ -121,38 +120,36 @@ def calc_grupo_coord(obs_menor_long, obs_menor_lat, menor_lat, menor_long, var_c
 	return int(indice)
 
 #@profile
-def cria_vector(total_size, nome, t_abertura, menor_lat, menor_long, var_coord, ano_str):
-
+def cria_vector(total_size, nome, t_abertura, menor_lat, menor_long, var_coord, ano):
 	f = open(nome, t_abertura)
 
 	N = 0
 	N_ano = 0
 	total_obs = long(0)
-
 	vector = [None]*(total_size)
 	vector_quantidade = [0]*(total_size)
 	vector_latlong = [None]*(total_size)
+
 	# kanto region
 	for line in f:
-
 		aux2 = str.split(str(line))
-		if(int(aux2[0]) == int(ano_str)):
-			if(float(aux2[9]) >= 2.5):
-				if(float(aux2[7]) >= 138.8):
-					obs_menor_long = float(aux2[7])
-				if(float(aux2[6]) >= 34.8):
-					obs_menor_lat = float(aux2[6])
+		if(int(aux2[0]) == ano):
+			# if(float(aux2[9]) >= 2.5):
+			if(aux2[7] >= 138.8):
+				obs_menor_long = float(aux2[7])
+			if(aux2[6] >= 34.8):
+				obs_menor_lat = float(aux2[6])
 
-				# x_long, y_lat,
-				index = calc_grupo_coord(obs_menor_long, obs_menor_lat, menor_lat, menor_long, var_coord)
-						
-				vector[index] = line
-				vector_quantidade[index] += 1
-				N_ano += 1 
+            # x_long, y_lat,
+			index = calc_grupo_coord(obs_menor_long, obs_menor_lat, menor_lat, menor_long, var_coord)
+                    
+			vector[index] = line
+			vector_quantidade[index] += 1
+			N_ano += 1 
 		N += 1
 		total_obs += 1
 	f.close()
-	return vector, vector_quantidade, N, total_obs, vector_latlong, len(vector), N_ano
+	return vector, vector_quantidade, N, total_obs, vector, len(vector), N_ano
 
 #@profile
 def calcular_expectations(modified_quant_por_grupo, total_size, N):
@@ -194,7 +191,7 @@ def calc_coordenadas(var_coord, name, t_abertura):
 
 	return bins_lat, bins_long
 #@profile
-def dados_observados_R(var_coord, ano_str):
+def dados_observados_R(var_coord, ano):
 
 	##inicio coleta e insercao de incertezas
 
@@ -209,17 +206,16 @@ def dados_observados_R(var_coord, ano_str):
 	bins_long = int(bins_long)
 	total_size = 2025
 
-	# print "inicio da criacao do vetor modificado"
-
 	#3.b) sem modificacao
 	modified_vetor, quant_por_grupo, N, total_obs, vector_latlong, total_size, N_ano = cria_vector(total_size, arq_entrada, 'r', 
-		menor_lat, menor_long, var_coord, ano_str)
+		menor_lat, menor_long, var_coord, ano)
+	
 
 	expectations = calcular_expectations(quant_por_grupo, total_size, N)
 
 	joint_log_likelihood, joint_log_likelihood_NaoUso, descarta_Modelo = log_likelihood(total_size, quant_por_grupo, expectations)
 
-	return joint_log_likelihood, total_size, total_obs, menor_lat, menor_long, vector_latlong, expectations, N_ano, N
+	return joint_log_likelihood, total_size, total_obs, menor_lat, menor_long, vector_latlong, expectations, N_ano, N, quant_por_grupo
 
 #@profile
 def log_likelihood(total_size, quant_por_grupo, expectation):
@@ -279,8 +275,8 @@ def evalOneMax(individual):
         if(individual[i] < 0):
             individual[i] = -individual[i]
         global quant_por_grupo
-        quant_por_grupo[i] = poisson_press(individual[i], mi)
 
+        quant_por_grupo[i] = poisson_press(individual[i], mi)
     log_likelihood_ind, log_likelihood_total, descarta_modelo = log_likelihood(total_size, quant_por_grupo, individual)
 
     # L_test = L_test_sem_correct(joint_log_likelihood, log_likelihood_total, log_likelihood_ind)
@@ -325,16 +321,16 @@ elif(int(sys.argv[4]) == 27):
 #@profile
 def main():
     # random.seed(64)
-    CXPB, MUTPB, NGEN = 0.9, 0.1, 100
+    CXPB, MUTPB, NGEN = 0.9, 0.1, 1
     ano_int = 2000
-    ano_str = str(ano_int)
+    # ano_str = str(ano_int)
     
     var_coord = 0.5
-    joint_log_likelihood, total_size, total_obs, menor_lat, menor_long, vector_latlong, expectations, N_ano, N = dados_observados_R(var_coord, ano_str)
+    joint_log_likelihood, total_size, total_obs, menor_lat, menor_long, vector_latlong, expectations, N_ano, N, quant_por_grupo_R = dados_observados_R(var_coord, ano_int)
  
     global mi
     mi = float(N_ano)/float(N)
-    pop = toolbox.population(n=500)
+    pop = toolbox.population(n=5)
     
     # fitnesses = list(map(toolbox.evaluate, pop))
     # for ind, fit in zip(pop, fitnesses):
@@ -391,13 +387,13 @@ def main():
 
         ano_int = ano_int + 1
         
-        ano_str = str(ano_int)
+        # ano_str = str(ano_int)
 
-        joint_log_likelihood, total_size, total_obs, menor_lat, menor_long, vector_latlong, expectations, N_ano, N = dados_observados_R(var_coord, ano_str)
+        joint_log_likelihood, total_size, total_obs, menor_lat, menor_long, vector_latlong, expectations, N_ano, N,quant_por_grupo_R = dados_observados_R(var_coord, ano_int)
         global mi
         mi = float(N_ano)/float(N)
         
-        pop = toolbox.population(n=500)
+        pop = toolbox.population(n=5)
         fitnesses = list(map(toolbox.evaluate, pop))
         for ind, fit in zip(pop, fitnesses):
             ind.fitness.values = fit
@@ -411,24 +407,24 @@ def main():
         while True:
             try:            
                 f = open(sys.argv[1], "a")
-                flock(f, LOCK_EX | LOCK_NB)
+                # flock(f, LOCK_EX | LOCK_NB)
                 f.write(str(ano_int - 1))
                 f.write('\n')
-                for i in range(len((pop, 1)[0])):            
-                    f.write(str((pop, 1)[0][i].fitness.values))
+                # for i in range(len((pop, 1)[0])):            
+                #     f.write(str((pop, 1)[0][i].fitness.values))
+                # f.write('\n')
+                # global quant_por_grupo
+                f.write(str(quant_por_grupo_R))
                 f.write('\n')
-                global quant_por_grupo
-                f.write(str(quant_por_grupo))
-                f.write('\n')
-                f.write(str(best_ind.fitness.values))
-                f.write('\n')
-                flock(f, LOCK_UN)
-                f.write('\n')
+                # f.write(str(best_ind.fitness.values))
+                # f.write('\n')
+                # flock(f, LOCK_UN)
+                # f.write('\n')
             except IOError:
                 time.sleep(5)
                 continue
             break
-        ano_int = 2010
+        # ano_int = 2010
 
         
 

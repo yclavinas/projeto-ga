@@ -298,7 +298,7 @@ def main():
     mi = float(N_ano)/float(N)
     pop = toolbox.population(n=500)
 
-    while(ano_int <= 2010):
+    while(ano_int <= 2000):
         global mi
         mi = float(N_ano)/float(N)
         print("Start of evolution")

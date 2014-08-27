@@ -31,116 +31,120 @@ def tabelaFatorial():
     return vetor
     
 #@profile
-def calc_lat(nome, t_abertura):
-    #abre arq
-    f = open(nome, t_abertura)
-    #x=400, y = 77398
+# def calc_lat(nome, t_abertura):
+#     #abre arq
+#     f = open(nome, t_abertura)
+#     #x=400, y = 77398
 
-    menor_lat = str(370)
-    maior_lat = str(0.0)
+#     menor_lat = str(370)
+#     maior_lat = str(0.0)
 
-    limit_inf = str(34.8)
-    limit_sup = str(57.8)
+#     limit_inf = str(34.8)
+#     limit_sup = str(36.3)
 
-    for line in f:
-        data = str.split(line)
-        if(data[6] > maior_lat):
-            if(data[6] >= limit_sup):
-                maior_lat = data[6]
+#     for line in f:
+#         data = str.split(line)
+#         if(data[6] > maior_lat):
+#             if(data[6] >= limit_sup):
+#                 maior_lat = data[6]
 
-    f.seek(0,0)
+#     f.seek(0,0)
 
-    for line in f:
-        data = str.split(line) 
-        if(data[6] < menor_lat):
-            if(data[6] >= limit_inf):
-                menor_lat = data[6]
+#     for line in f:
+#         data = str.split(line) 
+#         if(data[6] < menor_lat):
+#             if(data[6] >= limit_inf):
+#                 menor_lat = data[6]
       
-    f.close()
+#     f.close()
 
-    return maior_lat, menor_lat
+#     return maior_lat, menor_lat
 
-#@profile
-def calc_long(nome, t_abertura):
-    f = open(nome, t_abertura)
-    #x=400, y = 77398
+# #@profile
+# def calc_long(nome, t_abertura):
+#     f = open(nome, t_abertura)
+#     #x=400, y = 77398
 
-    menor_long = str(370)
-    maior_long = str(0.0)
+#     menor_long = str(370)
+#     maior_long = str(0.0)
 
-    limit_inf = str(138.8)
-    limit_sup = str(161.8)
+#     limit_inf = str(138.8)
+#     limit_sup = str(140.3)
 
-    for line in f:
-        data = str.split(line)
-        if(data[7] > maior_long):
-            if(data[7] >= limit_sup):
-                maior_long = data[7]
+#     for line in f:
+#         data = str.split(line)
+#         if(data[7] > maior_long):
+#             if(data[7] >= limit_sup):
+#                 maior_long = data[7]
 
-    f.seek(0,0)
+#     f.seek(0,0)
 
-    for line in f:
-        data = str.split(line) 
-        if(data[7] < menor_long):
-            if(data[7] >= limit_inf):
-                menor_long = data[7]
+#     for line in f:
+#         data = str.split(line) 
+#         if(data[7] < menor_long):
+#             if(data[7] >= limit_inf):
+#                 menor_long = data[7]
     
-    f.close()
-    return maior_long, menor_long
+#     f.close()
+#     return maior_long, menor_long
 
-maior_lat, menor_lat = calc_lat(name, t_abertura)
-maior_long, menor_long = calc_long(name, t_abertura)
+# maior_lat, menor_lat = calc_lat(name, t_abertura)
+# maior_long, menor_long = calc_long(name, t_abertura)
 
-#@profile
-def calc_grupo_coord(obs_menor_long, obs_menor_lat, menor_lat, menor_long, var_coord):
-
-    dif_lat = obs_menor_lat - menor_lat
-    dif_long = obs_menor_long - menor_long
-
-    # qual_bin_lat = dif_lat / var_coord
-    # qual_bin_long = dif_long / var_coord
-
-    primeiro, segundo = 0.5, 1.5
-    modificador = divmod(primeiro, 0.5)
-    m = modificador[0]
-    index = divmod(segundo, 0.5)
-    i = index[0]
-    indice = i + (m * (dif_lat*dif_long/0.5))
-
-    return int(indice)
+menor_long, menor_lat = 138.8, 34.8
 
 #@profile
-def cria_vector(total_size, nome, t_abertura, menor_lat, menor_long, var_coord, ano_str):
+def calc_grupo_coord(obs_long, obs_lat, menor_lat, menor_long):
 
+    intervalo = 0.1/3
+    k, l, index = 0, 0, 0
+
+    #long
+    for i in range(0, 150000000, 3333333):
+        index = float(i)/100000000 + 138.8
+        if(obs_long >= index and obs_long < (index + intervalo)):
+            if(index + intervalo > 140.3):
+                k -= 1
+            break
+        k += 1
+    for j in range(0, 150000000, 3333333):
+        index = float(j)/100000000 + 34.8
+        if(obs_lat >= index and obs_lat < (index + intervalo)):
+            if(index + intervalo > 36.3):
+                l -= 1
+            break
+        l += 1
+    index = k*45 + l
+
+    return int(index)
+
+#@profile
+def cria_vector(total_size, nome, t_abertura, menor_lat, menor_long, ano):
     f = open(nome, t_abertura)
 
     N = 0
-    N_ano = 0
-    total_obs = long(0)
 
-    vector = [None]*(total_size)
     vector_quantidade = [0]*(total_size)
-    vector_latlong = [None]*(total_size)
     # kanto region
     for line in f:
-
         aux2 = str.split(str(line))
-        if(int(aux2[0]) == int(ano_str)):
-            if(aux2[7] >= 138.8):
-                obs_menor_long = float(aux2[7])
-            if(aux2[7] >= 34.8):
-                obs_menor_lat = float(aux2[6])
-
-            # x_long, y_lat,
-            index = calc_grupo_coord(obs_menor_long, obs_menor_lat, menor_lat, menor_long, var_coord)
-                    
-            vector[index] = line
-            vector_quantidade[index] += 1
-            N_ano += 1 
+        if(int(aux2[0]) == int(ano)):
+            if(float(aux2[9]) >= 2.5):
+                if(float(aux2[7]) >= 138.8):
+                    if(float(aux2[7]) <= 140.3):
+                        obs_long = float(aux2[7])
+                        if(float(aux2[6]) >= 34.8):
+                            if(float(aux2[6]) <= 36.3):
+                                obs_lat = float(aux2[6])
+                                index = calc_grupo_coord(obs_long, obs_lat, menor_lat, menor_long)
+                                if(index < 0 or index > 2024):
+                                    print "Deu erro!!!"
+                                    exit(0)
+                                vector_quantidade[index] += 1             
         N += 1
-        total_obs += 1
+    print vector_quantidade
     f.close()
-    return vector, vector_quantidade, N, total_obs, vector_latlong, len(vector), N_ano
+    return vector_quantidade, N, sum(vector_quantidade)
 
 #@profile
 def calcular_expectations(modified_quant_por_grupo, total_size, N):
@@ -166,48 +170,19 @@ def poisson_press(x,mi):
     return 1
 
 #@profile
-def calc_coordenadas(var_coord, name, t_abertura):
-
-    # maior_lat, menor_lat = calc_lat(name, t_abertura)
-    # maior_long, menor_long = calc_long(name, t_abertura)
-
-    espaco_lat = float(maior_lat) - float(menor_lat)
-    espaco_long = float(maior_long) - float(menor_long)
-
-    bins_lat = espaco_lat/var_coord 
-    bins_long = espaco_long/var_coord
-
-    bins_lat = round(bins_lat)
-    bins_long = round(bins_long)
-
-    return bins_lat, bins_long
-#@profile
-def dados_observados_R(var_coord, ano_str):
-
-    ##inicio coleta e insercao de incertezas
-
-    #1. Pegar as observacoes e criar o vetor Omega
-    #2. Calcular a expectativa das observacoes incertas, vetor de lambdas
-    bins_lat, bins_long = calc_coordenadas(var_coord, arq_entrada, 'r')
+def dados_observados_R(ano):
     
     global menor_lat, menor_long
     menor_lat = float(menor_lat)
     menor_long = float(menor_long)
-    bins_lat = int(bins_lat)
-    bins_long = int(bins_long)
     total_size = 2025
 
-    # print "inicio da criacao do vetor modificado"
-
-    #3.b) sem modificacao
-    modified_vetor, quant_por_grupo, N, total_obs, vector_latlong, total_size, N_ano = cria_vector(total_size, arq_entrada, 'r', 
-        menor_lat, menor_long, var_coord, ano_str)
-
+    quant_por_grupo, N, N_ano = cria_vector(total_size, arq_entrada, 'r', menor_lat, menor_long, ano)
     expectations = calcular_expectations(quant_por_grupo, total_size, N)
 
     joint_log_likelihood, joint_log_likelihood_NaoUso, descarta_Modelo = log_likelihood(total_size, quant_por_grupo, expectations)
 
-    return joint_log_likelihood, total_size, total_obs, menor_lat, menor_long, vector_latlong, expectations, N_ano, N
+    return joint_log_likelihood, total_size, menor_lat, menor_long, expectations, N_ano, N
 
 #@profile
 def log_likelihood(total_size, quant_por_grupo, expectation):
@@ -313,11 +288,9 @@ elif(int(sys.argv[4]) == 27):
 def main():
     # random.seed(64)
     CXPB, MUTPB, NGEN = 0.9, 0.1, 100
-    ano_int = 2000
-    ano_str = str(ano_int)
+    ano = 2010
     
-    var_coord = 0.5
-    joint_log_likelihood, total_size, total_obs, menor_lat, menor_long, vector_latlong, expectations, N_ano, N = dados_observados_R(var_coord, ano_str)
+    joint_log_likelihood, total_size, menor_lat, menor_long, expectations, N_ano, N = dados_observados_R(ano)
  
     global mi
     mi = float(N_ano)/float(N)
@@ -327,7 +300,7 @@ def main():
     # for ind, fit in zip(pop, fitnesses):
     #     ind.fitness.values = fit
     
-    while(ano_int <= 2010):
+    while(ano <= 2010):
         global mi
         mi = float(N_ano)/float(N)
         # Evaluate the entire population
@@ -376,14 +349,14 @@ def main():
             pop[:] = offspring    
             # fim loop GERACAO
 
-        ano_int = ano_int + 1
-        ano_str = str(ano_int)
+        ano += 1
 
-        joint_log_likelihood, total_size, total_obs, menor_lat, menor_long, vector_latlong, expectations, N_ano, N = dados_observados_R(var_coord, ano_str)
+        if(ano <= 2010):
+            joint_log_likelihood, total_size, menor_lat, menor_long, expectations, N_ano, N = dados_observados_R(ano)
         global mi
         mi = float(N_ano)/float(N)
         
-        pop = toolbox.population(n=500)
+        pop = toolbox.population(n=50)
         fitnesses = list(map(toolbox.evaluate, pop))
         for ind, fit in zip(pop, fitnesses):
             ind.fitness.values = fit
@@ -391,29 +364,29 @@ def main():
         best_ind = tools.selBest(pop, 1)[0]
         for i in range(len(best_ind)):
             global quant_por_grupo
-            quant_por_grupo[i] = poisson_press(best_ind[i], mi)
+            quant_por_grupo[i] = poisson_press(best_ind[i], mi) - 1 
  
-
-        while True:
-            try:            
-                f = open(sys.argv[1], "a")
-                flock(f, LOCK_EX | LOCK_NB)
-                f.write(str(ano_int - 1))
-                f.write('\n')
-                for i in range(len((pop, 1)[0])):            
-                    f.write(str((pop, 1)[0][i].fitness.values))
-                f.write('\n')
-                global quant_por_grupo
-                f.write(str(quant_por_grupo))
-                f.write('\n')
-                f.write(str(best_ind.fitness.values))
-                f.write('\n')
-                flock(f, LOCK_UN)
-                f.write('\n')
-            except IOError:
-                time.sleep(5)
-                continue
-            break
+        print quant_por_grupo
+        # while True:
+        #     try:            
+        #         f = open(sys.argv[1], "a")
+        #         flock(f, LOCK_EX | LOCK_NB)
+        #         f.write(str(ano - 1))
+        #         f.write('\n')
+        #         for i in range(len((pop, 1)[0])):            
+        #             f.write(str((pop, 1)[0][i].fitness.values))
+        #         f.write('\n')
+        #         global quant_por_grupo
+        #         f.write(str(quant_por_grupo))
+        #         f.write('\n')
+        #         f.write(str(best_ind.fitness.values))
+        #         f.write('\n')
+        #         flock(f, LOCK_UN)
+        #         f.write('\n')
+        #     except IOError:
+        #         time.sleep(5)
+        #         continue
+        #     break
 
         
 
