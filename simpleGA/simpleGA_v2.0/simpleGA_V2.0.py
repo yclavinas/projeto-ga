@@ -14,9 +14,19 @@ import math
 import time
 import random
 
-arq_entrada = 'terremotos.txt'
+arq_entrada = '../../jmacat_20000101_20131115_Mth2.5.dat'
 name = arq_entrada
 t_abertura = 'r'
+menor_long, menor_lat = 138.8, 34.8
+maior_long, maior_lat = 140.3, 36.3
+depth = 100.0
+mag = 2.5
+total_size = 2025
+global mi
+mi = 0.0 
+# global quant_por_grupo
+quant_por_grupo = [0] * total_size
+global fatorial
 
 
 #@profile
@@ -31,9 +41,8 @@ def tabelaFatorial():
     f.close()
     return vetor
 
-menor_long, menor_lat = 138.8, 34.8
-maior_long, maior_lat = 140.3, 36.3
 
+fatorial = tabelaFatorial()
 #@profile
 def calc_grupo_coord(obs_long, obs_lat, menor_lat, menor_long):
 
@@ -73,22 +82,22 @@ def cria_vector(total_size, nome, t_abertura, menor_lat, menor_long, ano):
             N_ano +=1
             obs_long = float(parTerremoto[0])
             obs_lat = float(parTerremoto[1])
-            
+
             if(obs_long >= menor_long and obs_long <= maior_long):                    
                 if(obs_lat >= menor_lat and obs_lat <= maior_lat):
-                    if(float(parTerremoto[6]) < 100.0):
-                        if(float(parTerremoto[5]) > 2.5):
-                            
-                            index = calc_grupo_coord(obs_long, obs_lat, menor_lat, menor_long)
+                    # if(float(parTerremoto[6]) < depth):
+                    if(float(parTerremoto[5]) > mag):
+                        
+                        index = calc_grupo_coord(obs_long, obs_lat, menor_lat, menor_long)
+                        vector_quantidade[index] += 1
 
-                            if(index < 0 or index > 2024):
-                                print "Deu erro!!!"
-                                exit(0)
-
-                            vector_quantidade[index] += 1               
+                        if(index < 0 or index > 2024):
+                            print "Deu erro!!!"
+                            exit(0)
+                                       
         N += 1
     f.close()
-    print sum(vector_quantidade), N_ano
+    print ano, sum(vector_quantidade), N_ano
     return vector_quantidade, N, sum(vector_quantidade)
 
 #@profile
@@ -155,13 +164,7 @@ def log_likelihood(total_size, quant_por_grupo, expectation):
 
     return log_likelihood, joint_log_likelihood, descarta_Modelo
 
-total_size = 2025
-global mi
-mi = 0.0 
-global quant_por_grupo
-quant_por_grupo = [0] * total_size
-global fatorial
-fatorial = tabelaFatorial()
+
 
 
 
@@ -178,12 +181,12 @@ toolbox.register("population", tools.initRepeat, list, toolbox.individual)
 
 #@profile
 def evalOneMax(individual):
-    global quant_por_grupo
+    # global quant_por_grupo
     quant_por_grupo = [0] * len(individual)
     for i in range(len(individual)):
         if(individual[i] < 0):
             individual[i] = -individual[i]
-        global quant_por_grupo
+        # global quant_por_grupo
         quant_por_grupo[i] = poisson_press(individual[i], mi)
 
     log_likelihood_ind, log_likelihood_total, descarta_modelo = log_likelihood(total_size, quant_por_grupo, individual)
@@ -227,104 +230,104 @@ elif(int(sys.argv[4]) == 27):
 
 #@profile
 def main():
-    # random.seed(64)
+    random.seed(64)
     CXPB, MUTPB, NGEN = 0.9, 0.1, 100
-    ano = 2000
+    ano, ano_limite = 2000, 2013
     
     joint_log_likelihood, total_size, menor_lat, menor_long, expectations, N_anoRegiao, N = dados_observados_R(ano)
     global mi
     mi = float(N_anoRegiao)/float(N)
-    # pop = toolbox.population(n=500)
+    pop = toolbox.population(n=500)
     
-    # fitnesses = list(map(toolbox.evaluate, pop))
-    # for ind, fit in zip(pop, fitnesses):
-    #     ind.fitness.values = fit
+    fitnesses = list(map(toolbox.evaluate, pop))
+    for ind, fit in zip(pop, fitnesses):
+        ind.fitness.values = fit
     
-    while(ano <= 2013):
+    while(ano <= ano_limite):
         global mi
         mi = float(N_anoRegiao)/float(N)
         # Evaluate the entire population
-        # fitnesses = list(map(toolbox.evaluate, pop))
-        # for ind, fit in zip(pop, fitnesses):
-        #     ind.fitness.values = fit
+        fitnesses = list(map(toolbox.evaluate, pop))
+        for ind, fit in zip(pop, fitnesses):
+            ind.fitness.values = fit
         
-        # Begin the evolutionck())
-        # for g in range(NGEN):
-        #     print("-- Generation %i --" % g)
-        #     # Select the next generation individuals
-        #     offspring = toolbox.select(pop, len(pop))
-        #     # Clone the selected individuals
-        #     offspring = list(map(toolbox.clone, offspring))
-        #     print("Start of evolution")
-        #     # Apply crossover and mutation on the offspring
-        #     for child1, child2 in zip(offspring[::2], offspring[1::2]):
+        # Begin the evolution())
+        for g in range(NGEN):
+            print("-- Generation %i --" % g)
+            # Select the next generation individuals
+            offspring = toolbox.select(pop, len(pop))
+            # Clone the selected individuals
+            offspring = list(map(toolbox.clone, offspring))
+            print("Start of evolution")
+            # Apply crossover and mutation on the offspring
+            for child1, child2 in zip(offspring[::2], offspring[1::2]):
                 
-        #         if random.random() < CXPB:
-        #             toolbox.mate(child1, child2)
-        #             del child1.fitness.values
-        #             del child2.fitness.values
-        #     for mutant in offspring:
-        #         if random.random() < MUTPB:
-        #             toolbox.mutate(mutant, indpb=0.05)
-        #             del mutant.fitness.values
+                if random.random() < CXPB:
+                    toolbox.mate(child1, child2)
+                    del child1.fitness.values
+                    del child2.fitness.values
+            for mutant in offspring:
+                if random.random() < MUTPB:
+                    toolbox.mutate(mutant, indpb=0.05)
+                    del mutant.fitness.values
         
-        #     # Evaluate the individuals with an invalid fitness
-        #     invalid_ind = [ind for ind in offspring if not ind.fitness.valid]
-        #     fitnesses = list(map(toolbox.evaluate, invalid_ind))
-        #     for ind, fit in zip(invalid_ind, fitnesses):
-        #         ind.fitness.values = fit
+            # Evaluate the individuals with an invalid fitness
+            invalid_ind = [ind for ind in offspring if not ind.fitness.valid]
+            fitnesses = list(map(toolbox.evaluate, invalid_ind))
+            for ind, fit in zip(invalid_ind, fitnesses):
+                ind.fitness.values = fit
             
-        #     print("  Evaluated %i individuals" % len(invalid_ind))
+            print("  Evaluated %i individuals" % len(invalid_ind))
             
-        #     # The population is entirely replaced by the offspring, but the last pop best_ind
+            # The population is entirely replaced by the offspring, but the last pop best_ind
 
-        #     best_ind = tools.selBest(pop, 1)[0]
-        #     worst_ind = tools.selWorst(offspring, 1)[0]
+            best_ind = tools.selBest(pop, 1)[0]
+            worst_ind = tools.selWorst(offspring, 1)[0]
             
-        #     for i in range(len(offspring)):
-        #         if (offspring[i] == worst_ind):
-        #             offspring[i] = best_ind
-        #             break
+            for i in range(len(offspring)):
+                if (offspring[i] == worst_ind):
+                    offspring[i] = best_ind
+                    break
 
-        #     pop[:] = offspring    
-        #     # fim loop GERACAO
+            pop[:] = offspring    
+            # fim loop GERACAO
 
         ano += 1
 
-        if(ano <= 2013):
+        if(ano <= ano_limite):
             joint_log_likelihood, total_size, menor_lat, menor_long, expectations, N_anoRegiao, N = dados_observados_R(ano)
         global mi
         mi = float(N_anoRegiao)/float(N)
-        # pop = toolbox.population(n=500)
-        # fitnesses = list(map(toolbox.evaluate, pop))
-        # for ind, fit in zip(pop, fitnesses):
-        #     ind.fitness.values = fit
+        pop = toolbox.population(n=500)
+        fitnesses = list(map(toolbox.evaluate, pop))
+        for ind, fit in zip(pop, fitnesses):
+            ind.fitness.values = fit
 
-        # best_ind = tools.selBest(pop, 1)[0]
-        # for i in range(len(best_ind)):
-        #     global quant_por_grupo
-        #     quant_por_grupo[i] = poisson_press(best_ind[i], mi) 
+        best_ind = tools.selBest(pop, 1)[0]
+        for i in range(len(best_ind)):
+            # global quant_por_grupo
+            quant_por_grupo[i] = poisson_press(best_ind[i], mi) 
  
-        # while True:
-        #     try:            
-        #         f = open(sys.argv[1], "a")
-        #         flock(f, LOCK_EX | LOCK_NB)
-        #         f.write(str(ano - 1))
-        #         f.write('\n')
-        #         for i in range(len((pop, 1)[0])):            
-        #             f.write(str((pop, 1)[0][i].fitness.values))
-        #         f.write('\n')
-        #         global quant_por_grupo
-        #         f.write(str(quant_por_grupo))
-        #         f.write('\n')
-        #         f.write(str(best_ind.fitness.values))
-        #         f.write('\n')
-        #         flock(f, LOCK_UN)
-        #         f.write('\n')
-        #     except IOError:
-        #         time.sleep(5)
-        #         continue
-        #     break
+        while True:
+            try:            
+                f = open(sys.argv[1], "a")
+                flock(f, LOCK_EX | LOCK_NB)
+                f.write(str(ano - 1))
+                f.write('\n')
+                for i in range(len((pop, 1)[0])):            
+                    f.write(str((pop, 1)[0][i].fitness.values))
+                f.write('\n')
+                # global quant_por_grupo
+                f.write(str(quant_por_grupo))
+                f.write('\n')
+                f.write(str(best_ind.fitness.values))
+                f.write('\n')
+                flock(f, LOCK_UN)
+                f.write('\n')
+            except IOError:
+                time.sleep(5)
+                continue
+            break
 
         
 
