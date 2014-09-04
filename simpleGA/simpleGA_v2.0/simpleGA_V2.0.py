@@ -18,13 +18,11 @@ arq_entrada = '../../jmacat_20000101_20131115_Mth2.5.dat'
 name = arq_entrada
 t_abertura = 'r'
 menor_long, menor_lat = 138.8, 34.8
-maior_long, maior_lat = 140.3, 36.3
+maior_long, maior_lat = 141.05, 37.05
 depth = 100.0
 mag = 2.5
 total_size = 2025
-global mi
-mi = 0.0 
-# global quant_por_grupo
+global quant_por_grupo
 quant_por_grupo = [0] * total_size
 global fatorial
 
@@ -46,32 +44,42 @@ fatorial = tabelaFatorial()
 #@profile
 def calc_grupo_coord(obs_long, obs_lat, menor_lat, menor_long):
 
-    intervalo = 0.1/3
+    
     k, l, index = 0, 0, 0
 
-    #long
-    for i in range(0, 150000000, 3333333):
+    #100000000 valor utilizado para melhorar a precisao, por ser fracao indeterminada, 1/3
+    max_range_long = (maior_long - menor_long)*100000000#2.25
+    max_range_lat = (maior_lat - menor_lat)*100000000
+    
+    end_range_long = max_range_long/45#0.05
+    end_range_lat = max_range_lat/45
+
+    intervalo = (maior_long - menor_long)/45
+
+    for i in range(0, int(max_range_long), int(end_range_long)):
+        #Viu? Tirei o 100000000 que eu havia multiplicado
         index = float(i)/100000000 + menor_long
         if(obs_long >= index and obs_long < (index + intervalo)):
             if(index + intervalo > maior_long):
                 k -= 1
             break
         k += 1
-    for j in range(0, 150000000, 3333333):
+    for j in range(0, int(max_range_lat), int(end_range_lat)):
+        #Viu? Tirei o 100000000 que eu havia multiplicado
         index = float(j)/100000000 + menor_lat
         if(obs_lat >= index and obs_lat < (index + intervalo)):
             if(index + intervalo > menor_lat):
                 l -= 1
             break
         l += 1
-    index = k*45 + l
+    index = k*45 + l#matriz[i,j] -> vetor[i*45 + j], i = long, j = lat
 
     return int(index)
 
 #@profile
 def cria_vector(total_size, nome, t_abertura, menor_lat, menor_long, ano):
     f = open(nome, t_abertura)
-    N, N_ano = 0, 0
+    N, N_ano= 0, 0
     vector_quantidade = [0]*(total_size)
 
     # kanto region
@@ -83,21 +91,18 @@ def cria_vector(total_size, nome, t_abertura, menor_lat, menor_long, ano):
             obs_long = float(parTerremoto[0])
             obs_lat = float(parTerremoto[1])
 
-            if(obs_long >= menor_long and obs_long <= maior_long):                    
-                if(obs_lat >= menor_lat and obs_lat <= maior_lat):
-                    # if(float(parTerremoto[6]) < depth):
-                    if(float(parTerremoto[5]) > mag):
-                        
-                        index = calc_grupo_coord(obs_long, obs_lat, menor_lat, menor_long)
-                        vector_quantidade[index] += 1
+            if(obs_long > menor_long and obs_long < maior_long):                    
+                if(obs_lat > menor_lat and obs_lat < maior_lat):
+                    if(float(parTerremoto[6]) <= depth):
+                        if(float(parTerremoto[5]) >= mag):
+                            index = calc_grupo_coord(obs_long, obs_lat, menor_lat, menor_long)
 
-                        if(index < 0 or index > 2024):
-                            print "Deu erro!!!"
-                            exit(0)
-                                       
+                            if(index < 0 or index > 2024):
+                                print "Deu erro no index: ", index
+                                exit(0)
+                            vector_quantidade[index] += 1
         N += 1
     f.close()
-    print ano, sum(vector_quantidade), N_ano
     return vector_quantidade, N, sum(vector_quantidade)
 
 #@profile
@@ -110,61 +115,52 @@ def calcular_expectations(modified_quant_por_grupo, total_size, N):
 
 #@profile
 def poisson_press(x,mi):
-    if(mi <= 0):
-        return
-    elif(x >= 0):
-        if(x < 1):
-            l = math.exp(-mi)
-            k = 0
-            prob = 1
-            while(l < prob):
-                k = k + 1
-                prob = prob * x
-            return (k)
-    return 1
+    if(mi >= 0):
+        if(x >= 0):
+            if(x < 1):
+                l = math.exp(-mi)
+                k = 1
+                prob = 1 * x
+                while(prob>l):
+                    k += 1
+                    prob = prob * x
+                return (k)
+
 
 #@profile
 def dados_observados_R(ano):
     
-    global menor_lat, menor_long
-    menor_lat = float(menor_lat)
-    menor_long = float(menor_long)
-    total_size = 2025
-
+    global quant_por_grupo
     quant_por_grupo, N, N_anoRegiao = cria_vector(total_size, arq_entrada, 'r', menor_lat, menor_long, ano)
-    expectations = calcular_expectations(quant_por_grupo, total_size, N)
-
-    joint_log_likelihood, joint_log_likelihood_NaoUso, descarta_Modelo = log_likelihood(total_size, quant_por_grupo, expectations)
-
-    return joint_log_likelihood, total_size, menor_lat, menor_long, expectations, N_anoRegiao, N
+    
+    return quant_por_grupo, N, N_anoRegiao
 
 #@profile
-def log_likelihood(total_size, quant_por_grupo, expectation):
+def log_likelihood(quant_por_grupoMODELO):
 
     log_likelihood =  [0]*(total_size)
     joint_log_likelihood = long(0)
     descarta_Modelo = False
 
+
     for i in range(total_size):
-        if expectation[i] == 0:
-            expectation[i] += 1
-        if (quant_por_grupo[i] == 0 and expectation[i] == 0):
+        if quant_por_grupoMODELO[i] == 0:
+            quant_por_grupoMODELO[i] += 1
+        if (quant_por_grupo[i] == 0 and quant_por_grupoMODELO[i] == 0):
           log_likelihood[i] += 1      
-        elif (quant_por_grupo[i] != 0 and expectation[i] == 0):
+        elif (quant_por_grupo[i] != 0 and quant_por_grupoMODELO[i] == 0):
           log_likelihood[i] = Decimal('-Infinity')
           descarta_Modelo = True
         if(quant_por_grupo[i] > 100):
             cast = 99
         else:
-            cast = quant_por_grupo[i] - 1
-        log_likelihood[i] = -expectation[i] + (quant_por_grupo[i]*math.log10(expectation[i])) - (math.log10(float(fatorial[cast])))
+            cast = quant_por_grupo[i]
+        log_likelihood[i] = -quant_por_grupoMODELO[i] + (quant_por_grupo[i]*math.log10(quant_por_grupoMODELO[i])) - (math.log10(float(fatorial[cast])))
 
     #calcula o joint_log_likelihood
     joint_log_likelihood = sum(log_likelihood)
 
     return log_likelihood, joint_log_likelihood, descarta_Modelo
-
-
 
 
 
@@ -181,15 +177,15 @@ toolbox.register("population", tools.initRepeat, list, toolbox.individual)
 
 #@profile
 def evalOneMax(individual):
-    # global quant_por_grupo
-    quant_por_grupo = [0] * len(individual)
+    global quant_por_grupo
+    
+    quant_por_grupoMODELO = [0] * len(individual)
     for i in range(len(individual)):
-        if(individual[i] < 0):
-            individual[i] = -individual[i]
-        # global quant_por_grupo
-        quant_por_grupo[i] = poisson_press(individual[i], mi)
-
-    log_likelihood_ind, log_likelihood_total, descarta_modelo = log_likelihood(total_size, quant_por_grupo, individual)
+        quant_por_grupoMODELO[i] = poisson_press(individual[i], quant_por_grupo[i])
+        if(quant_por_grupoMODELO[i] == None):
+            print  individual[i], quant_por_grupo[i]
+            exit(0)
+    log_likelihood_ind, log_likelihood_total, descarta_modelo = log_likelihood(quant_por_grupoMODELO)
 
     return log_likelihood_total,
 
@@ -230,22 +226,15 @@ elif(int(sys.argv[4]) == 27):
 
 #@profile
 def main():
-    random.seed(64)
+    # random.seed(64)
     CXPB, MUTPB, NGEN = 0.9, 0.1, 100
-    ano, ano_limite = 2000, 2013
-    
-    joint_log_likelihood, total_size, menor_lat, menor_long, expectations, N_anoRegiao, N = dados_observados_R(ano)
-    global mi
-    mi = float(N_anoRegiao)/float(N)
-    pop = toolbox.population(n=500)
-    
-    fitnesses = list(map(toolbox.evaluate, pop))
-    for ind, fit in zip(pop, fitnesses):
-        ind.fitness.values = fit
-    
+    ano, ano_limite = 2000, 2010
+
     while(ano <= ano_limite):
-        global mi
-        mi = float(N_anoRegiao)/float(N)
+        quant_por_grupo, N, N_anoRegiao = dados_observados_R(ano)
+
+        pop = toolbox.population(n=500)
+
         # Evaluate the entire population
         fitnesses = list(map(toolbox.evaluate, pop))
         for ind, fit in zip(pop, fitnesses):
@@ -261,29 +250,36 @@ def main():
             print("Start of evolution")
             # Apply crossover and mutation on the offspring
             for child1, child2 in zip(offspring[::2], offspring[1::2]):
-                
                 if random.random() < CXPB:
                     toolbox.mate(child1, child2)
                     del child1.fitness.values
                     del child2.fitness.values
             for mutant in offspring:
                 if random.random() < MUTPB:
-                    toolbox.mutate(mutant, indpb=0.05)
+                    toolbox.mutate(mutant)
                     del mutant.fitness.values
         
             # Evaluate the individuals with an invalid fitness
+
             invalid_ind = [ind for ind in offspring if not ind.fitness.valid]
-            fitnesses = list(map(toolbox.evaluate, invalid_ind))
+            for i in range(len(invalid_ind)):
+                for j in range(len(invalid_ind[i])):
+                    if(invalid_ind[i][j] < 0):
+                        invalid_ind[i][j] = -invalid_ind[i][j]
+                    if(invalid_ind[i][j] > 1):
+                        invalid_ind[i][j] = random.random()
+
+            fitnesses = map(toolbox.evaluate, invalid_ind)
             for ind, fit in zip(invalid_ind, fitnesses):
                 ind.fitness.values = fit
             
-            print("  Evaluated %i individuals" % len(invalid_ind))
+            print("Evaluated %i individuals" % len(invalid_ind))
             
             # The population is entirely replaced by the offspring, but the last pop best_ind
 
             best_ind = tools.selBest(pop, 1)[0]
             worst_ind = tools.selWorst(offspring, 1)[0]
-            
+
             for i in range(len(offspring)):
                 if (offspring[i] == worst_ind):
                     offspring[i] = best_ind
@@ -291,22 +287,28 @@ def main():
 
             pop[:] = offspring    
             # fim loop GERACAO
+            while True:
+                try:            
+                    f = open(str(ano)+"best.txt", "a")
+                    flock(f, LOCK_EX | LOCK_NB)
+                    f.write(str(best_ind.fitness))
+                    f.write('\n')
+                    flock(f, LOCK_UN)
+                    f.write('\n')
+                except IOError:
+                    time.sleep(5)
+                    continue
+                break
 
         ano += 1
 
-        if(ano <= ano_limite):
-            joint_log_likelihood, total_size, menor_lat, menor_long, expectations, N_anoRegiao, N = dados_observados_R(ano)
-        global mi
-        mi = float(N_anoRegiao)/float(N)
-        pop = toolbox.population(n=500)
-        fitnesses = list(map(toolbox.evaluate, pop))
-        for ind, fit in zip(pop, fitnesses):
-            ind.fitness.values = fit
 
+        MODELO = [0] * total_size
         best_ind = tools.selBest(pop, 1)[0]
+
         for i in range(len(best_ind)):
-            # global quant_por_grupo
-            quant_por_grupo[i] = poisson_press(best_ind[i], mi) 
+            # quant_por_grupo
+            MODELO[i] = poisson_press(best_ind[i], quant_por_grupo[i]) 
  
         while True:
             try:            
@@ -314,13 +316,7 @@ def main():
                 flock(f, LOCK_EX | LOCK_NB)
                 f.write(str(ano - 1))
                 f.write('\n')
-                for i in range(len((pop, 1)[0])):            
-                    f.write(str((pop, 1)[0][i].fitness.values))
-                f.write('\n')
-                # global quant_por_grupo
-                f.write(str(quant_por_grupo))
-                f.write('\n')
-                f.write(str(best_ind.fitness.values))
+                f.write(str(MODELO))
                 f.write('\n')
                 flock(f, LOCK_UN)
                 f.write('\n')
