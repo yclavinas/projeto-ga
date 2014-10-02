@@ -289,7 +289,7 @@ def main():
             # fim loop GERACAO
             while True:
                 try:            
-                    f = open('../../../Dropbox/operadores-?/'+str(ano)+"best.txt", "a")
+                    f = open('../../../../../../Dropbox/best/'+ str(ano) + str(' ') + sys.argv[2]+sys.argv[3]+sys.argv[4], "a")
                     flock(f, LOCK_EX | LOCK_NB)
                     f.write(str(best_ind.fitness))
                     f.write('\n')
