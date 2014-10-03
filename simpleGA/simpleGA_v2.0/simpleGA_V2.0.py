@@ -241,7 +241,8 @@ def main():
 
     logbook = tools.Logbook()
     logbook.header = "gen","time","min","avg","max","std"
-
+    starttime = time.time()
+    
     while(ano <= ano_limite):
         quant_por_grupo, N, N_anoRegiao = dados_observados_R(ano)
 
