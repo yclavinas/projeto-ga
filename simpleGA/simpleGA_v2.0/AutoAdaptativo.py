@@ -223,7 +223,6 @@ elif(int(sys.argv[4]) == 26):
 elif(int(sys.argv[4]) == 27):
     toolbox.register("select", tools.selWorst)
 
-
 #@profile
 def main():
     # random.seed(64)
@@ -249,18 +248,26 @@ def main():
             offspring = list(map(toolbox.clone, offspring))
             print("Start of evolution")
             # Apply crossover and mutation on the offspring
-            for child1, child2 in zip(offspring[::2], offspring[1::2]):
-                if random.random() < CXPB:
-                    toolbox.mate(child1, child2)
-                    del child1.fitness.values
-                    del child2.fitness.values
-            for mutant in offspring:
-                if random.random() < MUTPB:
-                    toolbox.mutate(mutant)
-                    del mutant.fitness.values
-        
-            # Evaluate the individuals with an invalid fitness
-
+            m = 0
+            while (m < 50):
+                operator1 = 0
+                ja_fez = 0
+                for child1, child2 in zip(offspring[::2], offspring[1::2]):
+                    if random.random() < CXPB and ja_fez == 0:
+                        toolbox.mate(child1, child2)
+                        del child1.fitness.values
+                        del child2.fitness.values
+                        operator1 = 1
+                        m += 2
+                        ja_fez = 1
+                for mutant in offspring:
+                    if(operator1 == 0):
+                        if random.random() < MUTPB and ja_fez == 0:
+                            toolbox.mutate(mutant, indpb=0.05)
+                            del mutant.fitness.values
+                            m += 1
+                            ja_fez = 1
+        # Evaluate the individuals with an invalid fitness
             invalid_ind = [ind for ind in offspring if not ind.fitness.valid]
             for i in range(len(invalid_ind)):
                 for j in range(len(invalid_ind[i])):
@@ -272,7 +279,7 @@ def main():
             fitnesses = map(toolbox.evaluate, invalid_ind)
             for ind, fit in zip(invalid_ind, fitnesses):
                 ind.fitness.values = fit
-            
+
             print("Evaluated %i individuals" % len(invalid_ind))
             
             # The population is entirely replaced by the offspring, but the last pop best_ind
@@ -285,6 +292,7 @@ def main():
                     offspring[i] = best_ind
                     break
 
+            CXPB, MUTPB = CXPB - (0.003), MUTPB + (0.003)
             pop[:] = offspring    
             # fim loop GERACAO
             while True:
@@ -300,6 +308,7 @@ def main():
                     continue
                 break
 
+        CXPB, MUTPB = 0.9, 0.1
         ano += 1
 
 
