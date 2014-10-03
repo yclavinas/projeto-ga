@@ -289,6 +289,11 @@ def main():
             best_ind = tools.selBest(pop, 1)[0]
             worst_ind = tools.selWorst(offspring, 1)[0]
 
+
+
+            pop[:] = offspring  
+            hof.update(pop)  
+            # fim loop GERACAO
             print 'best_ind'
             print best_ind
             raw_input()
@@ -302,10 +307,6 @@ def main():
                 if (offspring[i] == worst_ind):
                     offspring[i] = best_ind
                     break
-
-            pop[:] = offspring  
-            hof.update(pop)  
-            # fim loop GERACAO
             while True:
                 try:            
                     f = open('best/'+ str(ano) + str(' ') + sys.argv[2]+sys.argv[3]+sys.argv[4], "a")
