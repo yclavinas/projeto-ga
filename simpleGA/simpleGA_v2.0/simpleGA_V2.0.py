@@ -289,9 +289,13 @@ def main():
             best_ind = tools.selBest(pop, 1)[0]
             worst_ind = tools.selWorst(offspring, 1)[0]
 
+            print best_ind
+            raw_input()
+            print hof[0]
+            raw_input()
             if (best_ind == hof[0]):
-                print iguais
-
+                print 'iguais'
+            exit(0)
             for i in range(len(offspring)):
                 if (offspring[i] == worst_ind):
                     offspring[i] = best_ind
