@@ -310,7 +310,7 @@ def main():
                     flock(f, LOCK_UN)
                     f.close()
                     f = open('logBook/'+ str(ano) + str(' ') + sys.argv[2]+sys.argv[3]+sys.argv[4], "a")
-                    lock(f, LOCK_EX | LOCK_NB)
+                    flock(f, LOCK_EX | LOCK_NB)
                     f.write(str(logbook))
                     f.write('\n')
                     flock(f, LOCK_UN)
