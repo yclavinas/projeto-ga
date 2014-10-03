@@ -245,7 +245,7 @@ def main():
         quant_por_grupo, N, N_anoRegiao = dados_observados_R(ano)
 
         pop = toolbox.population(n=500)
-        hof = tools.HallOfFame(1)
+
         # Evaluate the entire population
         fitnesses = list(map(toolbox.evaluate, pop))
         for ind, fit in zip(pop, fitnesses):
@@ -289,24 +289,16 @@ def main():
             best_ind = tools.selBest(pop, 1)[0]
             worst_ind = tools.selWorst(offspring, 1)[0]
 
-
-
-            pop[:] = offspring  
-            hof.update(pop)  
-            # fim loop GERACAO
-            print 'best_ind'
-            print best_ind
-            raw_input()
-            print 'hof[0]'
-            print hof[0]
-            raw_input()
-            if (best_ind == hof[0]):
-                print 'iguais'
-            exit(0)
             for i in range(len(offspring)):
                 if (offspring[i] == worst_ind):
                     offspring[i] = best_ind
                     break
+
+            pop[:] = offspring  
+            record = stats.compile(pop)
+            logbook.record(gen=g,time=time.time()-starttime,**record)
+
+            # fim loop GERACAO
             while True:
                 try:            
                     f = open('best/'+ str(ano) + str(' ') + sys.argv[2]+sys.argv[3]+sys.argv[4], "a")
@@ -314,7 +306,13 @@ def main():
                     f.write(str(best_ind.fitness))
                     f.write('\n')
                     flock(f, LOCK_UN)
+                    f.close()
+                    f = open('logBook/'+ str(ano) + str(' ') + sys.argv[2]+sys.argv[3]+sys.argv[4], "a")
+                    lock(f, LOCK_EX | LOCK_NB)
+                    f.write(str(logbook))
                     f.write('\n')
+                    flock(f, LOCK_UN)
+                    f.close()
                 except IOError:
                     time.sleep(5)
                     continue
@@ -340,6 +338,7 @@ def main():
                 f.write('\n')
                 flock(f, LOCK_UN)
                 f.write('\n')
+                f.close()
             except IOError:
                 time.sleep(5)
                 continue
