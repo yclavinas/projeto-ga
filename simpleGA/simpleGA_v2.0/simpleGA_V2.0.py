@@ -289,8 +289,8 @@ def main():
             best_ind = tools.selBest(pop, 1)[0]
             worst_ind = tools.selWorst(offspring, 1)[0]
 
-            print best_ind, hof[0]
-            exit(0)
+            if (best_ind == hof[0]):
+                print iguais
 
             for i in range(len(offspring)):
                 if (offspring[i] == worst_ind):
