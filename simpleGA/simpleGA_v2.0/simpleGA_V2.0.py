@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 
+import time
 import array
 import random
 import sys
