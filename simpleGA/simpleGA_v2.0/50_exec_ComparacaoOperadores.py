@@ -5,7 +5,7 @@ for w in range(1):
 	k = 21 + w
 	print k
 
-	# for i in range(50):
+	# for i in range(1):
 	# 	NUM_PROCESSES = 1
 
 	# 	childrenBlend = []
@@ -26,7 +26,7 @@ for w in range(1):
 	# 	for i, childBlend in enumerate(childrenBlend):
 	# 	    os.waitpid(childBlend, 0)
 
-	# for i in range(50):
+	# for i in range(1):
 	# 	NUM_PROCESSES = 1
 
 	# 	childrenBlend = []
@@ -48,7 +48,7 @@ for w in range(1):
 	# 	    os.waitpid(childBlend, 0)
 
 
-	for i in range(50):
+	for i in range(1):
 		NUM_PROCESSES = 1
 	 	childrenBlend = []
 
@@ -61,7 +61,7 @@ for w in range(1):
 	 	        childrenBlend.append(pid)
 
 	 	    else:
-	 	        os.execlp('python', 'python', 'simpleGA_V2.0.py', "cxUniform(selRoulette, mutPolynomialBounded).txt", str(2), str(12),str(24), str(k)) # overlay program
+	 	        os.execlp('python', 'python', 'simpleGA_V2.0.py', "analiseOperadores/cxUniform(selRoulette, mutPolynomialBounded).txt", str(2), str(12),str(24), str(k)) # overlay program
 	 	        assert False, 'error starting program'   
 	 	        os._exit(0)
 	 	    j += 1
@@ -69,7 +69,7 @@ for w in range(1):
 	 	    os.waitpid(childBlend, 0)
 
 
-	for i in range(50):
+	for i in range(1):
 	 	NUM_PROCESSES = 1
 	 	def timeConsumingFunction():
 	 	    x = 1
@@ -87,7 +87,7 @@ for w in range(1):
 	 	        childrenBlend.append(pid)
 
 	 	    else:
-	 	        os.execlp('python', 'python', 'simpleGA_V2.0.py', "cxBlend(selRoulette, mutPolynomialBounded).txt", str(3), str(12),str(24), str(k)) # overlay program
+	 	        os.execlp('python', 'python', 'simpleGA_V2.0.py', "analiseOperadores/cxBlend(selRoulette, mutPolynomialBounded).txt", str(3), str(12),str(24), str(k)) # overlay program
 	 	        assert False, 'error starting program'   
 	 	        os._exit(0)
 	 	    j += 1
@@ -95,7 +95,7 @@ for w in range(1):
 	 	    os.waitpid(childBlend, 0)
 
 
-	for i in range(50):
+	for i in range(1):
 	 	NUM_PROCESSES = 1
 	 	def timeConsumingFunction():
 	 	    x = 1
@@ -113,7 +113,7 @@ for w in range(1):
 		        childrenBlend.append(pid)
 
 		    else:
-		        os.execlp('python', 'python', 'simpleGA_V2.0.py', "cxSimulatedBinary(selRoulette, mutPolynomialBounded).txt", str(4), str(12),str(24), str(k)) # overlay program
+		        os.execlp('python', 'python', 'simpleGA_V2.0.py', "analiseOperadores/cxSimulatedBinary(selRoulette, mutPolynomialBounded).txt", str(4), str(12),str(24), str(k)) # overlay program
 		        assert False, 'error starting program'   
 		        os._exit(0)
 		    j += 1
@@ -121,7 +121,7 @@ for w in range(1):
 		    os.waitpid(childBlend, 0)
 
 
-	for i in range(50):
+	for i in range(1):
 		NUM_PROCESSES = 1
 		def timeConsumingFunction():
 		    x = 1
@@ -139,7 +139,7 @@ for w in range(1):
 		        childrenBlend.append(pid)
 
 		    else:
-		        os.execlp('python', 'python', 'simpleGA_V2.0.py', "cxSimulatedBinaryBounded(selRoulette, mutPolynomialBounded).txt", str(5), str(12),str(24), str(k)) # overlay program
+		        os.execlp('python', 'python', 'simpleGA_V2.0.py', "analiseOperadores/cxSimulatedBinaryBounded(selRoulette, mutPolynomialBounded).txt", str(5), str(12),str(24), str(k)) # overlay program
 		        assert False, 'error starting program'   
 		        os._exit(0)
 		    j += 1
@@ -147,7 +147,7 @@ for w in range(1):
 		    os.waitpid(childBlend, 0)
 
 
-	# for i in range(50):
+	# for i in range(1):
 
 	# 	childrenBlend = []
 
@@ -168,7 +168,7 @@ for w in range(1):
 	# 	    os.waitpid(childBlend, 0)
 
 
-	# for i in range(50):
+	# for i in range(1):
 
 	# 	childrenBlend = []
 
@@ -189,7 +189,7 @@ for w in range(1):
 	# 	    os.waitpid(childBlend, 0)
 
 
-	# for i in range(50):
+	# for i in range(1):
 	# 	NUM_PROCESSES = 1
 		
 
@@ -212,7 +212,7 @@ for w in range(1):
 	# 	    os.waitpid(childBlend, 0)
 
 
-	# for i in range(50):
+	# for i in range(1):
 	# 	NUM_PROCESSES = 1
 
 	# 	childrenBlend = []
@@ -234,7 +234,7 @@ for w in range(1):
 	# 	    os.waitpid(childBlend, 0)
 
 
-	# for i in range(50):
+	# for i in range(1):
 	# 	NUM_PROCESSES = 1
 	# 	childrenBlend = []
 
@@ -255,7 +255,7 @@ for w in range(1):
 	# 	    os.waitpid(childBlend, 0)
 
 
-	# for i in range(50):
+	# for i in range(1):
 	# 	NUM_PROCESSES = 1
 	# 	childrenBlend = []
 

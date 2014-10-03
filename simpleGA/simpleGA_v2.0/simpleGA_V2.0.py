@@ -10,9 +10,11 @@ from deap import base
 from deap import creator
 from deap import tools
 
+
 import math
 import time
 import random
+import numpy
 
 arq_entrada = '../../jmacat_20000101_20131115_Mth2.5.dat'
 name = arq_entrada
@@ -230,11 +232,20 @@ def main():
     CXPB, MUTPB, NGEN = 0.9, 0.1, 100
     ano, ano_limite = 2000, 2010
 
+    stats = tools.Statistics(key=lambda ind: ind.fitness.values)
+    stats.register("avg", numpy.mean)
+    stats.register("std", numpy.std)
+    stats.register("min", numpy.min)
+    stats.register("max", numpy.max)
+
+    logbook = tools.Logbook()
+    logbook.header = "gen","time","min","avg","max","std"
+
     while(ano <= ano_limite):
         quant_por_grupo, N, N_anoRegiao = dados_observados_R(ano)
 
         pop = toolbox.population(n=500)
-
+        hof = tools.HallOfFame(1)
         # Evaluate the entire population
         fitnesses = list(map(toolbox.evaluate, pop))
         for ind, fit in zip(pop, fitnesses):
@@ -247,7 +258,6 @@ def main():
             offspring = toolbox.select(pop, len(pop))
             # Clone the selected individuals
             offspring = list(map(toolbox.clone, offspring))
-            print("Start of evolution")
             # Apply crossover and mutation on the offspring
             for child1, child2 in zip(offspring[::2], offspring[1::2]):
                 if random.random() < CXPB:
@@ -273,23 +283,26 @@ def main():
             for ind, fit in zip(invalid_ind, fitnesses):
                 ind.fitness.values = fit
             
-            print("Evaluated %i individuals" % len(invalid_ind))
             
             # The population is entirely replaced by the offspring, but the last pop best_ind
 
             best_ind = tools.selBest(pop, 1)[0]
             worst_ind = tools.selWorst(offspring, 1)[0]
 
+            print best_ind, hof[0]
+            exit(0)
+
             for i in range(len(offspring)):
                 if (offspring[i] == worst_ind):
                     offspring[i] = best_ind
                     break
 
-            pop[:] = offspring    
+            pop[:] = offspring  
+            hof.update(pop)  
             # fim loop GERACAO
             while True:
                 try:            
-                    f = open('../../../../../../Dropbox/best/'+ str(ano) + str(' ') + sys.argv[2]+sys.argv[3]+sys.argv[4], "a")
+                    f = open('best/'+ str(ano) + str(' ') + sys.argv[2]+sys.argv[3]+sys.argv[4], "a")
                     flock(f, LOCK_EX | LOCK_NB)
                     f.write(str(best_ind.fitness))
                     f.write('\n')

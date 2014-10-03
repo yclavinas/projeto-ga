@@ -233,7 +233,7 @@ def main():
         quant_por_grupo, N, N_anoRegiao = dados_observados_R(ano)
 
         pop = toolbox.population(n=500)
-
+        
         # Evaluate the entire population
         fitnesses = list(map(toolbox.evaluate, pop))
         for ind, fit in zip(pop, fitnesses):
