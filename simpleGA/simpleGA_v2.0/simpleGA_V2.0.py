@@ -309,12 +309,6 @@ def main():
                     f.write('\n')
                     flock(f, LOCK_UN)
                     f.close()
-                    f = open('logBook/'+ str(ano) + str(' ') + sys.argv[2]+sys.argv[3]+sys.argv[4], "a")
-                    flock(f, LOCK_EX | LOCK_NB)
-                    f.write(str(logbook))
-                    f.write('\n')
-                    flock(f, LOCK_UN)
-                    f.close()
                 except IOError:
                     time.sleep(5)
                     continue
@@ -340,6 +334,12 @@ def main():
                 f.write('\n')
                 flock(f, LOCK_UN)
                 f.write('\n')
+                f.close()
+                f = open('logBook/'+ str(ano) + str(' ') + sys.argv[2]+sys.argv[3]+sys.argv[4], "a")
+                flock(f, LOCK_EX | LOCK_NB)
+                f.write(str(logbook))
+                f.write('\n')
+                flock(f, LOCK_UN)
                 f.close()
             except IOError:
                 time.sleep(5)

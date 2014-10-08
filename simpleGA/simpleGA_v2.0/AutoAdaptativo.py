@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 
+import time
 import array
 import random
 import sys
@@ -10,10 +11,13 @@ from deap import base
 from deap import creator
 from deap import tools
 
+
 import math
 import time
 import random
+import numpy
 
+slices = 5
 arq_entrada = '../../jmacat_20000101_20131115_Mth2.5.dat'
 name = arq_entrada
 t_abertura = 'r'
@@ -25,7 +29,31 @@ total_size = 2025
 global quant_por_grupo
 quant_por_grupo = [0] * total_size
 global fatorial
+global mi 
 
+#@profile
+def calculo_lambda(ano):
+    f = open(arq_entrada, 'r')
+    lambda_ano = 0.0
+    ano_limite = ano + slices
+    # kanto region
+    while (ano < ano_limite):
+        for line in f:
+            parTerremoto = str.split(str(line))
+
+            if(int(parTerremoto[2]) == ano):
+                obs_long = float(parTerremoto[0])
+                obs_lat = float(parTerremoto[1])
+
+                if(obs_long > menor_long and obs_long < maior_long):                    
+                    if(obs_lat > menor_lat and obs_lat < maior_lat):
+                        if(float(parTerremoto[6]) <= depth):
+                            if(float(parTerremoto[5]) >= mag):
+                                lambda_ano +=1
+        f.seek(0,0)
+        ano +=1
+    lambda_ano = lambda_ano/total_size
+    return lambda_ano
 
 #@profile
 def tabelaFatorial():
@@ -114,16 +142,17 @@ def calcular_expectations(modified_quant_por_grupo, total_size, N):
     return expectations
 
 #@profile
-def poisson_press(x,mi):
+def poisson_press(prob,mi): #prob e o valor do bin
+
     if(mi >= 0):
-        if(x >= 0):
-            if(x < 1):
+        if(prob >= 0):
+            if(prob < 1):
                 l = math.exp(-mi)
                 k = 1
-                prob = 1 * x
-                while(prob>l):
+                p = 1 * prob
+                while(p > l):
                     k += 1
-                    prob = prob * x
+                    p = p * prob
                 return (k)
 
 
@@ -178,10 +207,11 @@ toolbox.register("population", tools.initRepeat, list, toolbox.individual)
 #@profile
 def evalOneMax(individual):
     global quant_por_grupo
+    global mi
     
     quant_por_grupoMODELO = [0] * len(individual)
     for i in range(len(individual)):
-        quant_por_grupoMODELO[i] = poisson_press(individual[i], quant_por_grupo[i])
+        quant_por_grupoMODELO[i] = poisson_press(individual[i], mi)
         if(quant_por_grupoMODELO[i] == None):
             print  individual[i], quant_por_grupo[i]
             exit(0)
@@ -196,7 +226,7 @@ if(int(sys.argv[2]) == 0):
 elif(int(sys.argv[2]) == 1):
     toolbox.register("mate", tools.cxTwoPoints)
 elif(int(sys.argv[2]) == 2):
-    toolbox.register("mate", tools.cxUniform, indpb=0.05)
+    toolbox.register("mate", tools.cxUniform, indpb=0.5)
 elif(int(sys.argv[2]) == 3):
     toolbox.register("mate", tools.cxBlend, alpha = 0.5)#float
 elif(int(sys.argv[2]) == 4):
@@ -213,7 +243,7 @@ elif(int(sys.argv[3]) == 12):
     toolbox.register("mutate", tools.mutPolynomialBounded,indpb=0.05, eta = 1, low = 0, up = 1)#float
 
 if(int(sys.argv[4]) == 23):
-    toolbox.register("select", tools.selTournament, tournsize=3)
+    toolbox.register("select", tools.selTournament, tournsize=50)
 elif(int(sys.argv[4]) == 24):
     toolbox.register("select", tools.selRoulette)
 elif(int(sys.argv[4]) == 25):
@@ -223,19 +253,36 @@ elif(int(sys.argv[4]) == 26):
 elif(int(sys.argv[4]) == 27):
     toolbox.register("select", tools.selWorst)
 
+
 #@profile
 def main():
     # random.seed(64)
-    CXPB, MUTPB, NGEN = 0.9, 0.1, 100
-    ano, ano_limite = 2000, 2010
+    CXPB, MUTPB, NGEN, cumulative = 0.9, 0.1, 10, 0.8
+    ano, ano_limite, ano_teste = 2000, 2010, 50
 
-    while(ano <= ano_limite):
-        quant_por_grupo, N, N_anoRegiao = dados_observados_R(ano)
-
-        pop = toolbox.population(n=500)
         
+    stats = tools.Statistics(key=lambda ind: ind.fitness.values)
+    stats.register("avg", numpy.mean)
+    stats.register("std", numpy.std)
+    stats.register("min", numpy.min)
+    stats.register("max", numpy.max)
+
+    # logbook = tools.Logbook()
+    # logbook.header = "gen","time","min","avg","max","std"
+    
+    
+    while(ano_teste <= ano_limite):
+        global mi
+        mi = calculo_lambda(ano)
+        ano_teste = ano + slices
+
+        quant_por_grupo, N, N_anoRegiao = dados_observados_R(ano_teste)
+
+        pop = toolbox.population(n=50)
+
         # Evaluate the entire population
         fitnesses = list(map(toolbox.evaluate, pop))
+
         for ind, fit in zip(pop, fitnesses):
             ind.fitness.values = fit
         
@@ -243,31 +290,38 @@ def main():
         for g in range(NGEN):
             print("-- Generation %i --" % g)
             # Select the next generation individuals
-            offspring = toolbox.select(pop, len(pop))
+            offspring = toolbox.select(pop, 50)
             # Clone the selected individuals
             offspring = list(map(toolbox.clone, offspring))
-            print("Start of evolution")
             # Apply crossover and mutation on the offspring
             m = 0
+            cx, mut = 0,0
             while (m < 50):
-                operator1 = 0
-                ja_fez = 0
                 for child1, child2 in zip(offspring[::2], offspring[1::2]):
-                    if random.random() < CXPB and ja_fez == 0:
+                    if random.random() < CXPB:
                         toolbox.mate(child1, child2)
                         del child1.fitness.values
                         del child2.fitness.values
-                        operator1 = 1
                         m += 2
-                        ja_fez = 1
+                        cx +=1
+            m = 0
+            limite = 50 - cx
+            while(m < limite):
                 for mutant in offspring:
-                    if(operator1 == 0):
-                        if random.random() < MUTPB and ja_fez == 0:
-                            toolbox.mutate(mutant, indpb=0.05)
-                            del mutant.fitness.values
-                            m += 1
-                            ja_fez = 1
-        # Evaluate the individuals with an invalid fitness
+                    if random.random() < MUTPB:
+                        i = 0
+                        chance = 1
+                        for bin in mutant:
+                            if random.random() < chance:
+                                mutant[i] = random.random()
+                                chance *= cumulative
+                                i += 1
+                        del mutant.fitness.values
+                        m += 1
+                    if (m >= limite):
+                        break
+            # Evaluate the individuals with an invalid fitness
+
             invalid_ind = [ind for ind in offspring if not ind.fitness.valid]
             for i in range(len(invalid_ind)):
                 for j in range(len(invalid_ind[i])):
@@ -279,8 +333,7 @@ def main():
             fitnesses = map(toolbox.evaluate, invalid_ind)
             for ind, fit in zip(invalid_ind, fitnesses):
                 ind.fitness.values = fit
-
-            print("Evaluated %i individuals" % len(invalid_ind))
+            
             
             # The population is entirely replaced by the offspring, but the last pop best_ind
 
@@ -293,31 +346,32 @@ def main():
                     break
 
             CXPB, MUTPB = CXPB - (0.003), MUTPB + (0.003)
-            pop[:] = offspring    
+            pop[:] = offspring  
+            record = stats.compile(pop)
+            logbook.record(gen=g,time=time.time()-starttime,**record)
+
             # fim loop GERACAO
             while True:
                 try:            
-                    f = open('../../../../../../Dropbox/best/'+ str(ano) + str(' ') + sys.argv[2]+sys.argv[3]+sys.argv[4], "a")
+                    f = open('best/'"AA"+ str(ano_teste) + str(' ') + sys.argv[2]+sys.argv[3]+sys.argv[4], "a")
                     flock(f, LOCK_EX | LOCK_NB)
                     f.write(str(best_ind.fitness))
                     f.write('\n')
                     flock(f, LOCK_UN)
-                    f.write('\n')
+                    f.close()
                 except IOError:
                     time.sleep(5)
                     continue
                 break
-
         CXPB, MUTPB = 0.9, 0.1
         ano += 1
-
 
         MODELO = [0] * total_size
         best_ind = tools.selBest(pop, 1)[0]
 
         for i in range(len(best_ind)):
             # quant_por_grupo
-            MODELO[i] = poisson_press(best_ind[i], quant_por_grupo[i]) 
+            MODELO[i] = poisson_press(best_ind[i],mi) 
  
         while True:
             try:            
@@ -329,6 +383,13 @@ def main():
                 f.write('\n')
                 flock(f, LOCK_UN)
                 f.write('\n')
+                f.close()
+                f = open('logBook/'"AA"+ str(ano) + str(' ') + sys.argv[2]+sys.argv[3]+sys.argv[4], "a")
+                flock(f, LOCK_EX | LOCK_NB)
+                f.write(str(logbook))
+                f.write('\n')
+                flock(f, LOCK_UN)
+                f.close()
             except IOError:
                 time.sleep(5)
                 continue

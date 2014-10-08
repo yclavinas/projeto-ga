@@ -4,7 +4,7 @@
 import os, time
 for w in range(1):
 	k = 21 + w
-	print k
+	# print k
 
 	for i in range(1):
 		NUM_PROCESSES = 1
@@ -20,7 +20,7 @@ for w in range(1):
 		        childrenBlend.append(pid)
 
 		    else:
-		        os.execlp('python', 'python', 'AutoAdaptativo.py', "-analise_operadores(cxOnePoint, mutShuffleIndexes).txt", str(0), str(11),str(27), str(k))# overlay program
+		        os.execlp('python', 'python', 'AutoAdaptativo.py', "AA-analise_operadores(cxUniform, selRoulette).txt", str(2), str(11),str(24), str(k))# overlay program
 		        assert False, 'error starting program'   
 		        os._exit(0)
 		    j += 1
