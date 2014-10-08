@@ -267,8 +267,8 @@ def main():
     stats.register("min", numpy.min)
     stats.register("max", numpy.max)
 
-    # logbook = tools.Logbook()
-    # logbook.header = "gen","time","min","avg","max","std"
+    logbook = tools.Logbook()
+    logbook.header = "gen","time","min","avg","max","std"
     
     
     while(ano_teste <= ano_limite):
