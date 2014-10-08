@@ -269,7 +269,7 @@ def main():
 
     logbook = tools.Logbook()
     logbook.header = "gen","time","min","avg","max","std"
-    
+    starttime = time.time()
     
     while(ano_teste <= ano_limite):
         global mi
