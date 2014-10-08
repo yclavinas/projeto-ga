@@ -257,7 +257,7 @@ elif(int(sys.argv[4]) == 27):
 #@profile
 def main():
     # random.seed(64)
-    CXPB, MUTPB, NGEN, cumulative = 0.9, 0.1, 10, 0.8
+    CXPB, MUTPB, NGEN, cumulative = 0.9, 0.1, 100, 0.8
     ano, ano_limite, ano_teste = 2000, 2010, 50
 
         
@@ -278,7 +278,7 @@ def main():
 
         quant_por_grupo, N, N_anoRegiao = dados_observados_R(ano_teste)
 
-        pop = toolbox.population(n=50)
+        pop = toolbox.population(n=500)
 
         # Evaluate the entire population
         fitnesses = list(map(toolbox.evaluate, pop))
