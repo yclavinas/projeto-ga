@@ -349,10 +349,21 @@ def main():
             CXPB, MUTPB = CXPB - (0.003), MUTPB + (0.003)
             pop[:] = offspring  
             record = stats.compile(pop)
-            melhor = stats.compile(best_ind)
-            logbook.record(gen=g,time=time.time()-starttime,**record,**melhor)
+            logbook.record(gen=g,time=time.time()-starttime,**record)
 
             # fim loop GERACAO
+            while True:
+                try:            
+                    f = open('best/'"AA"+ str(ano_teste) + str(' ') + sys.argv[2]+sys.argv[3]+sys.argv[4], "a")
+                    flock(f, LOCK_EX | LOCK_NB)
+                    f.write(str(best_ind.fitness))
+                    f.write('\n')
+                    flock(f, LOCK_UN)
+                    f.close()
+                except IOError:
+                    time.sleep(5)
+                    continue
+                break
         CXPB, MUTPB = 0.9, 0.1
         ano += 1
         ano_teste = ano + slices
