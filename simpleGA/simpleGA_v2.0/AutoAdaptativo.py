@@ -258,9 +258,10 @@ elif(int(sys.argv[4]) == 27):
 def main():
     # random.seed(64)
     CXPB, MUTPB, NGEN, cumulative = 0.9, 0.1, 100, 0.8
-    ano, ano_limite, ano_teste = 2000, 2010, 50
+    ano, ano_limite = 2000, 2010
 
-        
+    ano_teste = ano + slices    
+
     stats = tools.Statistics(key=lambda ind: ind.fitness.values)
     stats.register("avg", numpy.mean)
     stats.register("std", numpy.std)
@@ -274,7 +275,7 @@ def main():
     while(ano_teste <= ano_limite):
         global mi
         mi = calculo_lambda(ano)
-        ano_teste = ano + slices
+        
 
         quant_por_grupo, N, N_anoRegiao = dados_observados_R(ano_teste)
 
@@ -348,23 +349,12 @@ def main():
             CXPB, MUTPB = CXPB - (0.003), MUTPB + (0.003)
             pop[:] = offspring  
             record = stats.compile(pop)
-            logbook.record(gen=g,time=time.time()-starttime,**record)
+            logbook.record(gen=g,time=time.time()-starttime,**record, best_ind, ano)
 
             # fim loop GERACAO
-            while True:
-                try:            
-                    f = open('best/'"AA"+ str(ano_teste) + str(' ') + sys.argv[2]+sys.argv[3]+sys.argv[4], "a")
-                    flock(f, LOCK_EX | LOCK_NB)
-                    f.write(str(best_ind.fitness))
-                    f.write('\n')
-                    flock(f, LOCK_UN)
-                    f.close()
-                except IOError:
-                    time.sleep(5)
-                    continue
-                break
         CXPB, MUTPB = 0.9, 0.1
         ano += 1
+        ano_teste = ano + slices
 
         MODELO = [0] * total_size
         best_ind = tools.selBest(pop, 1)[0]

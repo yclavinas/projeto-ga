@@ -298,21 +298,9 @@ def main():
 
             pop[:] = offspring  
             record = stats.compile(pop)
-            logbook.record(gen=g,time=time.time()-starttime,**record)
+            logbook.record(gen=g,time=time.time()-starttime,**record, best_ind, ano)
 
             # fim loop GERACAO
-            while True:
-                try:            
-                    f = open('best/'+ str(ano) + str(' ') + sys.argv[2]+sys.argv[3]+sys.argv[4], "a")
-                    flock(f, LOCK_EX | LOCK_NB)
-                    f.write(str(best_ind.fitness))
-                    f.write('\n')
-                    flock(f, LOCK_UN)
-                    f.close()
-                except IOError:
-                    time.sleep(5)
-                    continue
-                break
 
         ano += 1
 
@@ -335,7 +323,7 @@ def main():
                 flock(f, LOCK_UN)
                 f.write('\n')
                 f.close()
-                f = open('logBook/'+ str(ano) + str(' ') + sys.argv[2]+sys.argv[3]+sys.argv[4], "a")
+                f = open('logBook/'+ str(ano - 1) + str(' ') + sys.argv[2]+sys.argv[3]+sys.argv[4], "a")
                 flock(f, LOCK_EX | LOCK_NB)
                 f.write(str(logbook))
                 f.write('\n')
