@@ -384,7 +384,7 @@ def main():
                 flock(f, LOCK_UN)
                 f.write('\n')
                 f.close()
-                f = open('logBook/'"AA"+ str(ano) + str(' ') + sys.argv[2]+sys.argv[3]+sys.argv[4], "a")
+                f = open('logBook/'"AA"+ str(ano_teste) + str(' ') + sys.argv[2]+sys.argv[3]+sys.argv[4], "a")
                 flock(f, LOCK_EX | LOCK_NB)
                 f.write(str(logbook))
                 f.write('\n')
