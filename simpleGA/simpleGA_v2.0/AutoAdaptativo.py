@@ -377,7 +377,7 @@ def main():
             try:            
                 f = open(sys.argv[1], "a")
                 flock(f, LOCK_EX | LOCK_NB)
-                f.write(str(ano - 1))
+                f.write(str(ano_teste))
                 f.write('\n')
                 f.write(str(MODELO))
                 f.write('\n')
