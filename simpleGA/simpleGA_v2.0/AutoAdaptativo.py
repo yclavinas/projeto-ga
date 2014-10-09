@@ -350,7 +350,7 @@ def main():
             pop[:] = offspring  
             record = stats.compile(pop)
             melhor = stats.compile(best_ind)
-            logbook.record(gen=g,time=time.time()-starttime,**record, **melhor, **ano)
+            logbook.record(gen=g,time=time.time()-starttime,**record,**melhor)
 
             # fim loop GERACAO
         CXPB, MUTPB = 0.9, 0.1
