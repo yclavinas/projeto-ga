@@ -349,7 +349,8 @@ def main():
             CXPB, MUTPB = CXPB - (0.003), MUTPB + (0.003)
             pop[:] = offspring  
             record = stats.compile(pop)
-            logbook.record(gen=g,time=time.time()-starttime,**record, **best_ind, **ano)
+            melhor = stats.compile(best_ind)
+            logbook.record(gen=g,time=time.time()-starttime,**record, **melhor, **ano)
 
             # fim loop GERACAO
         CXPB, MUTPB = 0.9, 0.1
