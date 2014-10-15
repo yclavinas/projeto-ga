@@ -1,5 +1,4 @@
-#2000-media melhores
-#2001-media pop
+#!/usr/bin/env Rscript
 setwd("~/Documents/UnB/GA/projeto-ga/simpleGA/simpleGA_v2.0/14-10.mapas/Uniform")
 options(scipen=999)
 library(grid)
