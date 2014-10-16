@@ -56,6 +56,7 @@ def calculo_lambda(ano):
     return lambda_ano
 
 #@profile
+#olhar como funciona o zip
 def tabelaFatorial():
     i = 0
     vetor = [0] * 100
@@ -268,8 +269,8 @@ def main():
     stats.register("min", numpy.min)
     stats.register("max", numpy.max)
 
-    logbook = tools.Logbook()
-    logbook.header = "gen","time","min","avg","max","std"
+    # logbook = tools.Logbook()
+    # logbook.header = "gen","time","min","avg","max","std"
     starttime = time.time()
     
     while(ano_teste <= ano_limite):
@@ -292,6 +293,8 @@ def main():
             print("-- Generation %i --" % g)
             # Select the next generation individuals
             offspring = toolbox.select(pop, 50)
+            print len(offspring)
+            exit(0)
             # Clone the selected individuals
             offspring = list(map(toolbox.clone, offspring))
             # Apply crossover and mutation on the offspring
@@ -349,7 +352,7 @@ def main():
             CXPB, MUTPB = CXPB - (0.003), MUTPB + (0.003)
             pop[:] = offspring  
             record = stats.compile(pop)
-            logbook.record(gen=g,time=time.time()-starttime,**record)
+            # logbook.record(gen=g,time=time.time()-starttime,**record)
 
             # fim loop GERACAO
             while True:
@@ -388,7 +391,7 @@ def main():
                 f.close()
                 f = open('logBook/'"AA"+ str(ano_teste-1) + str(' ') + sys.argv[2]+sys.argv[3]+sys.argv[4], "a")
                 flock(f, LOCK_EX | LOCK_NB)
-                f.write(str(logbook))
+                # f.write(str(logbook))
                 f.write('\n')
                 flock(f, LOCK_UN)
                 f.close()
