@@ -204,7 +204,7 @@ for w in range(1):
 		        childrenBlend.append(pid)
 
 		    else:
-		        os.execlp('python', 'python', 'simpleGA_V2.0.py', "../../../../../../Dropbox/operadores/" + str(w+1) + "-selTournament(cxUniform, mutPolynomialBounded).txt", str(2), str(12),str(23), str(k)) # overlay program
+		        os.execlp('python', 'python', 'simpleGA_V2.0.py', ".analiseOperadores/selTournament(cxUniform, mutPolynomialBounded).txt", str(2), str(12),str(23), str(k)) # overlay program
 		        assert False, 'error starting program'   
 		        os._exit(0)
 		    j += 1
@@ -226,7 +226,7 @@ for w in range(1):
 		        childrenBlend.append(pid)
 
 		    else:
-		        os.execlp('python', 'python', 'simpleGA_V2.0.py', "../../../../../../Dropbox/operadores/" + str(w+1) + "-selRoulette(cxOnePoint, mutPolynomialBounded).txt", str(2), str(12),str(24), str(k)) # overlay program
+		        os.execlp('python', 'python', 'simpleGA_V2.0.py', "analiseOperadores/selRoulette(cxOnePoint, mutPolynomialBounded).txt", str(2), str(12),str(24), str(k)) # overlay program
 		        assert False, 'error starting program'   
 		        os._exit(0)
 		    j += 1
@@ -247,7 +247,7 @@ for w in range(1):
 		        childrenBlend.append(pid)
 
 		    else:
-		        os.execlp('python', 'python', 'simpleGA_V2.0.py', "../../../../../../Dropbox/operadores/" + str(w+1) + "-selRandom(cxOnePoint, mutPolynomialBounded).txt", str(2), str(12),str(25), str(k)) # overlay program
+		        os.execlp('python', 'python', 'simpleGA_V2.0.py', "analiseOperadores/selRandom(cxOnePoint, mutPolynomialBounded).txt", str(2), str(12),str(25), str(k)) # overlay program
 		        assert False, 'error starting program'   
 		        os._exit(0)
 		    j += 1
@@ -268,7 +268,7 @@ for w in range(1):
 		        childrenBlend.append(pid)
 
 		    else:
-		        os.execlp('python', 'python', 'simpleGA_V2.0.py', "../../../../../../Dropbox/operadores/" + str(w+1) + "-selWorst(cxOnePoint, mutPolynomialBounded).txt", str(2), str(12),str(27), str(k))# overlay program
+		        os.execlp('python', 'python', 'simpleGA_V2.0.py', "analiseOperadores/selWorst(cxOnePoint, mutPolynomialBounded).txt", str(2), str(12),str(27), str(k))# overlay program
 		        assert False, 'error starting program'   
 		        os._exit(0)
 		    j += 1
@@ -288,7 +288,7 @@ for w in range(1):
 		        childrenBlend.append(pid)
 
 		    else:
-		        os.execlp('python', 'python', 'simpleGA_V2.0.py', "../../../../../../Dropbox/operadores/" + str(w+1) + "-selBest(cxOnePoint, mutPolynomialBounded).txt", str(2), str(12),str(26), str(k))# overlay program
+		        os.execlp('python', 'python', 'simpleGA_V2.0.py', "analiseOperadores/selBest(cxOnePoint, mutPolynomialBounded).txt", str(2), str(12),str(26), str(k))# overlay program
 		        assert False, 'error starting program'   
 		        os._exit(0)
 		    j += 1
