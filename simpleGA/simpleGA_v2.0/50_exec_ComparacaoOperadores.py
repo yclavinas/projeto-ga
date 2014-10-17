@@ -262,35 +262,35 @@ for w in range(1):
 		j = 0
 		t = time.time()
 		for process in range(NUM_PROCESSES):
-		    pid = os.fork() 
+			pid = os.fork() 
 
-		    if pid:
-		        childrenBlend.append(pid)
+			if pid:
+				childrenBlend.append(pid)
 
-		    else:
-		        os.execlp('python', 'python', 'simpleGA_V2.0.py', "analiseOperadores/selWorst(cxOnePoint, mutPolynomialBounded).txt", str(2), str(12),str(27), str(k))# overlay program
-		        assert False, 'error starting program'   
-		        os._exit(0)
-		    j += 1
+			else:
+				os.execlp('python', 'python', 'simpleGA_V2.0.py', "analiseOperadores/selWorst(cxOnePoint, mutPolynomialBounded).txt", str(2), str(12),str(27), str(k))# overlay program
+				assert False, 'error starting program'   
+				os._exit(0)
+			j += 1
 		for i, childBlend in enumerate(childrenBlend):
-		    os.waitpid(childBlend, 0)
+			os.waitpid(childBlend, 0)
 
-    for i in range(50):
+	for i in range(50):
 		NUM_PROCESSES = 1
 		childrenBlend = []
 
 		j = 0
 		t = time.time()
 		for process in range(NUM_PROCESSES):
-		    pid = os.fork() 
+			pid = os.fork() 
 
-		    if pid:
-		        childrenBlend.append(pid)
+			if pid:
+				childrenBlend.append(pid)
 
-		    else:
-		        os.execlp('python', 'python', 'simpleGA_V2.0.py', "analiseOperadores/selBest(cxOnePoint, mutPolynomialBounded).txt", str(2), str(12),str(26), str(k))# overlay program
-		        assert False, 'error starting program'   
-		        os._exit(0)
-		    j += 1
+			else:
+				os.execlp('python', 'python', 'simpleGA_V2.0.py', "analiseOperadores/selBest(cxOnePoint, mutPolynomialBounded).txt", str(2), str(12),str(26), str(k))# overlay program
+				assert False, 'error starting program'   
+				os._exit(0)
+			j += 1
 		for i, childBlend in enumerate(childrenBlend):
-		    os.waitpid(childBlend, 0)
+			os.waitpid(childBlend, 0)
