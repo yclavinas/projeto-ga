@@ -184,13 +184,13 @@ for w in range(1):
 	# 	        os.execlp('python', 'python', 'simpleGA_V2.0.py', "../../../../../../Dropbox/operadores/" + str(w+1) + "-mutPolynomialBounded(selWorst, cxOnePoint).txt", str(0), str(12),str(27), str(k)) # overlay program
 	# 	        assert False, 'error starting program'   
 	# 	        os._exit(0)
-	# 	    j += 1
-	# 	for i, childBlend in enumerate(childrenBlend):
-	# 	    os.waitpid(childBlend, 0)
+		#     j += 1
+		# for i, childBlend in enumerate(childrenBlend):
+		#     os.waitpid(childBlend, 0)
 
 
-	# for i in range(50):
-	# 	NUM_PROCESSES = 1
+	for i in range(50):
+		NUM_PROCESSES = 1
 		
 
 		childrenBlend = []
