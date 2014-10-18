@@ -204,7 +204,7 @@ for w in range(1):
 		        childrenBlend.append(pid)
 
 		    else:
-		        os.execlp('python', 'python', 'simpleGA_V2.0.py', ".analiseOperadores/selTournament(cxUniform, mutPolynomialBounded).txt", str(2), str(12),str(23), str(k)) # overlay program
+		        os.execlp('python', 'python', 'simpleGA_V2.0.py', "analiseOperadores/selTournament(cxUniform, mutPolynomialBounded).txt", str(2), str(12),str(23), str(k)) # overlay program
 		        assert False, 'error starting program'   
 		        os._exit(0)
 		    j += 1
