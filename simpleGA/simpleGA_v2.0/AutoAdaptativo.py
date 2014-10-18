@@ -292,7 +292,7 @@ def main():
         for g in range(NGEN):
             print("-- Generation %i --" % g)
             # Select the next generation individuals
-            offspring = toolbox.select(pop, 50)
+            offspring = toolbox.select(pop, len(pop))
             print len(offspring)
             exit(0)
             # Clone the selected individuals
