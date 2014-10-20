@@ -18,7 +18,7 @@ import random
 import numpy
 
 slices = 5
-arq_entrada = '../../jmacat_20000101_20131115_Mth2.5.dat'
+arq_entrada = '../../atividadesAntigas/jmacat_20000101_20131115_Mth2.5.dat'
 name = arq_entrada
 t_abertura = 'r'
 menor_long, menor_lat = 138.8, 34.8
