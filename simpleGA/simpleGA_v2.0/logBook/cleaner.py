@@ -6,13 +6,14 @@ def cleaner(file_entrada, file_saida):
 
 	text = open(file_entrada, 'r')
 
-	saveFile = open(file_saida+".txt", 'a')
+	saveFile = open(file_saida+".txt", 'w')
 	for line in text:
 		data = re.sub(r'^[a-z].*$', '', line, flags=re.MULTILINE)
 		# data = re.sub(r'\n', '', line, flags=re.MULTILINE)
 		saveFile.write(data)
 		saveFile.write('\n')
-
+	text.close()
+	saveFile.close()
 
 cleaner('2000 Uniform,roleta,polynomialBounded', "2000_Uniform")
 cleaner('2001 Uniform,roleta,polynomialBounded', "2001_Uniform")
