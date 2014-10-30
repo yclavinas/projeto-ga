@@ -225,4 +225,3 @@ graficos(uniform2009, blend2009, simulatedBinary2009, simBinBounded2009,
          stdUniform2009, stdBlend2009, stdsimulatedBinary2009, stdsimBinBounded2009,"2009")
 graficos(uniform2010, blend2010, simulatedBinary2010, simBinBounded2010,
          stdUniform2010, stdBlend2010, stdsimulatedBinary2010, stdsimBinBounded2010,"2010")
-
