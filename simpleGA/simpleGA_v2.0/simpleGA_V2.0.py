@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 
-import time
+
 import array
-import random
+
 import sys
 from fcntl import flock, LOCK_EX, LOCK_UN, LOCK_NB
 
@@ -17,6 +17,7 @@ import time
 import random
 import numpy
 
+#feito
 arq_entrada = '../../atividadesAntigas/jmacat_20000101_20131115_Mth2.5.dat'
 name = arq_entrada
 t_abertura = 'r'
@@ -29,7 +30,7 @@ global quant_por_grupo
 quant_por_grupo = [0] * total_size
 global fatorial
 
-
+#nao precisa!
 #@profile
 def tabelaFatorial():
     i = 0
@@ -44,6 +45,7 @@ def tabelaFatorial():
 
 
 fatorial = tabelaFatorial()
+#feito
 #@profile
 def calc_grupo_coord(obs_long, obs_lat, menor_lat, menor_long):
 
@@ -60,6 +62,7 @@ def calc_grupo_coord(obs_long, obs_lat, menor_lat, menor_long):
     intervalo = (maior_long - menor_long)/45
 
     for i in range(0, int(max_range_long), int(end_range_long)):
+
         #Viu? Tirei o 100000000 que eu havia multiplicado
         index = float(i)/100000000 + menor_long
         if(obs_long >= index and obs_long < (index + intervalo)):
@@ -71,14 +74,16 @@ def calc_grupo_coord(obs_long, obs_lat, menor_lat, menor_long):
         #Viu? Tirei o 100000000 que eu havia multiplicado
         index = float(j)/100000000 + menor_lat
         if(obs_lat >= index and obs_lat < (index + intervalo)):
-            if(index + intervalo > menor_lat):
+            if(index + intervalo > maior_lat):
                 l -= 1
             break
         l += 1
     index = k*45 + l#matriz[i,j] -> vetor[i*45 + j], i = long, j = lat
 
+
     return int(index)
 
+#feito
 #@profile
 def cria_vector(total_size, nome, t_abertura, menor_lat, menor_long, ano):
     f = open(nome, t_abertura)
@@ -109,6 +114,7 @@ def cria_vector(total_size, nome, t_abertura, menor_lat, menor_long, ano):
     return vector_quantidade, N, sum(vector_quantidade)
 
 #@profile
+#nao precisa
 def calcular_expectations(modified_quant_por_grupo, total_size, N):
 
     expectations = [0.0] * (total_size)
@@ -117,6 +123,7 @@ def calcular_expectations(modified_quant_por_grupo, total_size, N):
     return expectations
 
 #@profile
+#feito
 def poisson_press(x,mi):
     if(mi >= 0):
         if(x >= 0):
@@ -131,6 +138,7 @@ def poisson_press(x,mi):
 
 
 #@profile
+#nao precisa
 def dados_observados_R(ano):
     
     global quant_por_grupo
@@ -139,6 +147,7 @@ def dados_observados_R(ano):
     return quant_por_grupo, N, N_anoRegiao
 
 #@profile
+#feito
 def log_likelihood(quant_por_grupoMODELO):
 
     log_likelihood =  [0]*(total_size)
@@ -166,7 +175,6 @@ def log_likelihood(quant_por_grupoMODELO):
     return log_likelihood, joint_log_likelihood, descarta_Modelo
 
 
-
 creator.create("FitnessMax", base.Fitness, weights=(1.0,))
 creator.create("Individual", array.array, typecode='d', fitness=creator.FitnessMax)
 
@@ -181,7 +189,6 @@ toolbox.register("population", tools.initRepeat, list, toolbox.individual)
 #@profile
 def evalOneMax(individual):
     global quant_por_grupo
-    
     quant_por_grupoMODELO = [0] * len(individual)
     for i in range(len(individual)):
         quant_por_grupoMODELO[i] = poisson_press(individual[i], quant_por_grupo[i])

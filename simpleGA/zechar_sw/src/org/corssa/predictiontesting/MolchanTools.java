@@ -23,8 +23,7 @@ public class MolchanTools {
      * @return area skill score for the given trajectory up to the given tau
      */
     public static float ass(float[] molchanTrajectory, float tau) {
-        float ass = 1.0f - MolchanTools.areaUnderMolchanTrajectory(
-                molchanTrajectory, tau);
+        float ass = 1.0f - MolchanTools.areaUnderMolchanTrajectory(molchanTrajectory, tau);
         return ass;
     }
 
@@ -217,8 +216,7 @@ public class MolchanTools {
 
         // normalize a copy of the reference values so that we're not changing
         // the reference forecast itself when we sort below
-        float[] referenceValues = ArrayUtil.normalizeIgnoreNegativeValues(
-                reference);
+        float[] referenceValues = ArrayUtil.normalizeIgnoreNegativeValues(reference);
 
         // copy the eqk distribution so that we're not changing the distribution
         // itself when we sort below
@@ -232,14 +230,12 @@ public class MolchanTools {
         // sort the forecast rates in descending order and keep everything else
         // synchronized
         // Shell sort
-        for (int i = forecastValues.length / 2; i > 0;
-                i = (i == 2 ? 1 : (int) Math.round(i / 2.2))) {
+        for (int i = forecastValues.length / 2; i > 0;i = (i == 2 ? 1 : (int) Math.round(i / 2.2))) {
             for (int j = i; j < forecastValues.length; j++) {
                 float afv_temp = forecastValues[j];
                 float reference_temp = referenceValues[j];
                 short eqk_temp = eqkMap[j];
-                for (int k = j; k >= i && forecastValues[k - i] < afv_temp;
-                        k -= i) {
+                for (int k = j; k >= i && forecastValues[k - i] < afv_temp;k -= i) {
                     forecastValues[k] = forecastValues[k - i];
                     forecastValues[k - i] = afv_temp;
 
@@ -259,10 +255,8 @@ public class MolchanTools {
             short hitsInThisCell = eqkMap[i];
             if (hitsInThisCell > 0) {
                 float thresholdInThisCell = forecastValues[i];
-                float thresholdInNextCell = forecastValues[Math.min(i + 1,
-                        forecastValues.length - 1)];
-                while (thresholdInThisCell == thresholdInNextCell && i
-                        <= forecastValues.length - 2) {
+                float thresholdInNextCell = forecastValues[Math.min(i + 1,forecastValues.length - 1)];
+                while (thresholdInThisCell == thresholdInNextCell && i<= forecastValues.length - 2) {
                     i++;
                     tau += referenceValues[i];
                     hitsInThisCell += eqkMap[i];
@@ -310,11 +304,14 @@ public class MolchanTools {
             String[] forecastsToCompare, Catalog targetEqkCatalog,
             String resultsMLFile, float alpha, long seed,
             boolean saveInMatlabFormat, boolean useMaskBit) {
-        Forecast referenceForecast = new Forecast(referenceForecastPath,
-                useMaskBit);
+
+        Forecast referenceForecast = new Forecast(referenceForecastPath,useMaskBit);
+
         float[] originalReferenceValues = referenceForecast.values();
-        boolean[] forecastOverlapFilter =
-                new boolean[originalReferenceValues.length];
+
+        boolean[] forecastOverlapFilter = new boolean[originalReferenceValues.length];
+        
+
         for (int i = 0; i < forecastOverlapFilter.length; i++) {
             forecastOverlapFilter[i] = true;
         }
@@ -360,13 +357,10 @@ public class MolchanTools {
         // Compute the trajectories for all other forecasts relative to the
         // reference trajectory
         for (int i = 0; i < forecastsToCompare.length; i++) {
-            Forecast forecastToCompare = new Forecast(forecastsToCompare[i],
-                    forecastOverlapFilter);
+            Forecast forecastToCompare = new Forecast(forecastsToCompare[i],forecastOverlapFilter);
             forecastsToCompareNames[i] = forecastToCompare.modelName();
-            molchanTrajectories[i] = MolchanTools.molchanTrajectory(
-                    forecastToCompare.values(), referenceValues, targetEqksMap);
-            assTrajectories[i] = MolchanTools.assTrajectory(
-                    molchanTrajectories[i]);
+            molchanTrajectories[i] = MolchanTools.molchanTrajectory(forecastToCompare.values(), referenceValues, targetEqksMap);
+            assTrajectories[i] = MolchanTools.assTrajectory(molchanTrajectories[i]);
         }
 
         // Compute the confidence bounds for the specified target eqk

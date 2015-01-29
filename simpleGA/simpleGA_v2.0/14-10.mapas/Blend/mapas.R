@@ -1,6 +1,6 @@
 #2000-media melhores
 #2001-media pop
-setwd("~/Documents/UnB/GA/projeto-ga/simpleGA/simpleGA_v2.0/14-10.mapas/Blend")
+setwd("~/Documents/Estudos/UnB/GA/projeto-ga/simpleGA/simpleGA_v2.0/14-10.mapas/Blend")
 options(scipen=999)
 library(grid)
 library(latticeExtra)

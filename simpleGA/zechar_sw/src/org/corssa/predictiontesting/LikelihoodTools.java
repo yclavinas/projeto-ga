@@ -51,8 +51,7 @@ public class LikelihoodTools {
      * @return the log-likelihood ratio of the models conditional on the
      *          observed seismicity.
      */
-    public static float logLikelihoodRatio(float[] forecastA, float[] forecastB,
-            short[] observation) {
+    public static float logLikelihoodRatio(float[] forecastA, float[] forecastB,short[] observation) {
         float llr = 0.0f;
         for (int i = 0; i < forecastA.length; i++) {
             if (!Float.isInfinite(forecastA[i]) && !Float.isInfinite(forecastB[i])) {
@@ -128,8 +127,7 @@ public class LikelihoodTools {
      * @return simulated catalog, represented as a vector with each entry
      *      representing the number of earthquakes occurring in each bin.
      */
-    public static short[] simulatedEqkCatalog(float[] forecast,
-            int numberOfEventsToSimulate) {
+    public static short[] simulatedEqkCatalog(float[] forecast,int numberOfEventsToSimulate) {
         int bins = forecast.length;
         Random rndgen = new Random();
         float rnd = rndgen.nextFloat();

@@ -1,0 +1,1046 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"mn",
+				"menor_long"
+			],
+			[
+				"definito",
+				"Definitions"
+			],
+			[
+				"defi",
+				"definitions"
+			],
+			[
+				"re",
+				"return"
+			],
+			[
+				"fil",
+				"filename"
+			],
+			[
+				"fie",
+				"filename"
+			],
+			[
+				"ste",
+				"strModel"
+			],
+			[
+				"file",
+				"file_saida"
+			],
+			[
+				"file_",
+				"file_entrada"
+			],
+			[
+				"ano_",
+				"ano_teste"
+			],
+			[
+				"ano",
+				"ano"
+			],
+			[
+				"pr",
+				"print"
+			],
+			[
+				"lam",
+				"lambda_ano"
+			],
+			[
+				"la",
+				"lambda_ano"
+			],
+			[
+				"mut",
+				"mut_cx"
+			],
+			[
+				"m",
+				"mut_cx"
+			],
+			[
+				"c",
+				"child2"
+			],
+			[
+				"mutat",
+				"mutant"
+			],
+			[
+				"best",
+				"best_ind"
+			],
+			[
+				"fit",
+				"fitness"
+			],
+			[
+				"qua",
+				"quant_por_grupo"
+			],
+			[
+				"mo",
+				"MODELO"
+			],
+			[
+				"q",
+				"quant_por_grupoMODELO"
+			],
+			[
+				"inva",
+				"invalid_ind"
+			],
+			[
+				"lo",
+				"log_likelihood_total"
+			],
+			[
+				"max",
+				"max_range_long"
+			],
+			[
+				"me",
+				"menor_lat"
+			],
+			[
+				"men",
+				"menor_long"
+			],
+			[
+				"n",
+				"N_ano"
+			],
+			[
+				"ve",
+				"vector_quantidade"
+			],
+			[
+				"in",
+				"Individual"
+			],
+			[
+				"an",
+				"ano_str"
+			],
+			[
+				"a",
+				"aux2"
+			],
+			[
+				"vec",
+				"vector"
+			],
+			[
+				"N",
+				"N_ano"
+			],
+			[
+				"pro",
+				"profile"
+			],
+			[
+				"chi",
+				"child1"
+			],
+			[
+				"va",
+				"valid_ind"
+			],
+			[
+				"peos",
+				"peso_mut"
+			],
+			[
+				"joi",
+				"joint_log_likelihood_ind"
+			],
+			[
+				"ex",
+				"expectations"
+			],
+			[
+				"e",
+				"expectation"
+			],
+			[
+				"tot",
+				"total_size"
+			],
+			[
+				"mod",
+				"modified_vetor"
+			],
+			[
+				"to",
+				"total_size"
+			],
+			[
+				"bins_",
+				"bins_long"
+			],
+			[
+				"Set",
+				"TileSet"
+			],
+			[
+				"tileSet",
+				"TileSet"
+			],
+			[
+				"map",
+				"mapHeight"
+			],
+			[
+				"len",
+				"len"
+			],
+			[
+				"med",
+				"media_atual"
+			],
+			[
+				"b",
+				"b0"
+			],
+			[
+				"val2",
+				"valor2"
+			],
+			[
+				"d",
+				"dividido"
+			],
+			[
+				"valor",
+				"valor1"
+			],
+			[
+				"pa",
+				"parte2"
+			],
+			[
+				"par",
+				"parte1"
+			],
+			[
+				"par2",
+				"parte2"
+			],
+			[
+				"ev",
+				"evaluations"
+			],
+			[
+				"f",
+				"fitness"
+			],
+			[
+				"sen",
+				"seno_pow"
+			],
+			[
+				"fn",
+				"fcntl"
+			],
+			[
+				"of",
+				"offspring"
+			],
+			[
+				"ran",
+				"range"
+			],
+			[
+				"ind",
+				"individual"
+			],
+			[
+				"L",
+				"L_test"
+			],
+			[
+				"j",
+				"joint_log_likelihood"
+			],
+			[
+				"jo",
+				"joint_log_likelihood"
+			],
+			[
+				"chil",
+				"children"
+			],
+			[
+				"da2",
+				"data2Save"
+			],
+			[
+				"info",
+				"info"
+			],
+			[
+				"tw",
+				"tweet"
+			],
+			[
+				"t",
+				"tweet"
+			],
+			[
+				"st",
+				"StreamListener"
+			],
+			[
+				"p",
+				"prompt"
+			],
+			[
+				"ini",
+				"inicio"
+			],
+			[
+				"s",
+				"string"
+			],
+			[
+				"ar",
+				"argv"
+			],
+			[
+				"S",
+				"SERVICE_PORT"
+			],
+			[
+				"mes",
+				"mensagem"
+			],
+			[
+				"tota",
+				"total_size"
+			],
+			[
+				"be",
+				"best_ind"
+			],
+			[
+				"ji",
+				"joint_log_likelihood_simulacao"
+			],
+			[
+				"simu",
+				"simulacao_quant_por_grupo"
+			],
+			[
+				"desc",
+				"descata_modelo_simulacao"
+			],
+			[
+				"su",
+				"simulacao_quant_por_grupo"
+			],
+			[
+				"bin",
+				"bins_lat"
+			],
+			[
+				"ra",
+				"range"
+			],
+			[
+				"bli",
+				"bins_lat"
+			],
+			[
+				"bn",
+				"bins_lat"
+			],
+			[
+				"log",
+				"log_criacao"
+			],
+			[
+				"matr",
+				"matriz_quantidade"
+			],
+			[
+				"de",
+				"descarta_Modelo"
+			],
+			[
+				"ma",
+				"matriz_dados"
+			],
+			[
+				"ci",
+				"cria_matriz"
+			],
+			[
+				"w",
+				"write"
+			],
+			[
+				"bi",
+				"bins_lat"
+			],
+			[
+				"o",
+				"observacoes"
+			],
+			[
+				"ob",
+				"obs_menor_long"
+			],
+			[
+				"di",
+				"dif_long"
+			],
+			[
+				"obs",
+				"obs_menor_long"
+			],
+			[
+				"cal",
+				"calc_grupo_coord"
+			],
+			[
+				"y",
+				"y_lat"
+			],
+			[
+				"x",
+				"x_long"
+			],
+			[
+				"bl",
+				"bins_lat"
+			],
+			[
+				"dif",
+				"dif_lat"
+			],
+			[
+				"eps",
+				"espaco_lat"
+			],
+			[
+				"calc",
+				"calc_coordenadas"
+			],
+			[
+				"meno",
+				"menor_lat"
+			],
+			[
+				"mai",
+				"maior_lat"
+			],
+			[
+				"quant",
+				"quant_por_grupo"
+			],
+			[
+				"toal",
+				"total_obs"
+			],
+			[
+				"total",
+				"total_obs"
+			],
+			[
+				"r",
+				"raw_input"
+			],
+			[
+				"arq",
+				"arq_saida"
+			],
+			[
+				"qu",
+				"quant_por_grupo"
+			],
+			[
+				"ca",
+				"calculo_grupos"
+			],
+			[
+				"cria",
+				"cria_matriz"
+			],
+			[
+				"po",
+				"polygline"
+			],
+			[
+				"prin",
+				"print_grid"
+			],
+			[
+				"emre",
+				"empresario_id"
+			],
+			[
+				"em",
+				"empresario_id"
+			],
+			[
+				"resul",
+				"resultado"
+			],
+			[
+				"res",
+				"result"
+			],
+			[
+				"empres",
+				"empresario_id"
+			],
+			[
+				"for",
+				"foreach	foreach …"
+			],
+			[
+				"nom",
+				"nome_empresa"
+			],
+			[
+				"nome",
+				"nome_cracha"
+			]
+		]
+	},
+	"buffers":
+	[
+	],
+	"build_system": "",
+	"command_palette":
+	{
+		"height": 392.0,
+		"selected_items":
+		[
+		],
+		"width": 449.0
+	},
+	"console":
+	{
+		"height": 0.0,
+		"history":
+		[
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"expanded_folders":
+	[
+		"/Users/yclavinas/Documents/Estudos/UnB/GA/projeto-ga/simpleGA/simpleGA_v2.0"
+	],
+	"file_history":
+	[
+		"/Users/yclavinas/Documents/Estudos/UnB/GA/projeto-ga/simpleGA/simpleGA_v2.0/50_exec_ComparacaoOperadores.py",
+		"/Users/yclavinas/Documents/Estudos/UnB/GA/projeto-ga/simpleGA/simpleGA_v2.0/simpleGA_V2.0.py",
+		"/Users/yclavinas/Documents/Estudos/Tsukuba/testes/createLatLong.py",
+		"/Users/yclavinas/Documents/Estudos/Tsukuba/testes/createMap.py",
+		"/Users/yclavinas/Documents/Estudos/Tsukuba/testes/Scotland_photos.csv",
+		"/Users/yclavinas/Documents/Estudos/Tsukuba/earthquakemodels/code/models/randomModel.py",
+		"/Users/yclavinas/Documents/Estudos/Tsukuba/earthquakemodels/code/earthquake/model.py",
+		"/Users/yclavinas/Documents/Estudos/Tsukuba/earthquakemodels/code/TODO",
+		"/Users/yclavinas/Documents/Estudos/Tsukuba/earthquakemodels/code/earthquake/catalog.py",
+		"/tmp/subl stdin ESKpqQ.txt",
+		"/Users/yclavinas/.bash_profile",
+		"/Users/yclavinas/Documents/Estudos/UnB/Downloads/src/main2.c",
+		"/Users/yclavinas/Documents/SentimentAnalysis/TSA/TsukubaShi.txt",
+		"/Users/yclavinas/Documents/SentimentAnalysis/TSA/semurl.py",
+		"/Users/yclavinas/Documents/SentimentAnalysis/TSA/UnivesityofTsukuba.txt",
+		"/Users/yclavinas/Documents/SentimentAnalysis/TSA/tweet_search.py",
+		"/Users/yclavinas/Documents/SentimentAnalisys/Aulas/tweet_search.py",
+		"/Users/yclavinas/Movies/Star Wars/~uTorrentPartFile_398F86832.dat",
+		"/Users/yclavinas/Documents/SentimentAnalisys/prática/movies_Model.py",
+		"/Users/yclavinas/Documents/UnB/GA/projeto-ga/simpleGA/simpleGA_v2.0/logBook/2000_Uniform.txt",
+		"/Users/yclavinas/Documents/tsukuba/earthquakemodels/LICENSE",
+		"/Users/yclavinas/Documents/UnB/GA/projeto-ga/simpleGA/simpleGA_v2.0/logBook/2000 Uniform,roleta,polynomialBounded",
+		"/Users/yclavinas/Documents/UnB/GA/projeto-ga/simpleGA/simpleGA_v2.0/analiseOperadores/selBest(cxOnePoint, mutPolynomialBounded).txt",
+		"/Users/yclavinas/Documents/UnB/GA/projeto-ga/simpleGA/simpleGA_v2.0/logBook/2000 simulatedBinary,roleta,polynomialBounded",
+		"/Users/yclavinas/Documents/UnB/GA/projeto-ga/simpleGA/simpleGA_v2.0/logBook/2001 Uniform,roleta,polynomialBounded",
+		"/Users/yclavinas/Documents/UnB/GA/projeto-ga/simpleGA/simpleGA_v2.0/analiseOperadores/selWorst(cxOnePoint, mutPolynomialBounded).txt",
+		"/Users/yclavinas/Documents/UnB/GA/projeto-ga/simpleGA/simpleGA_v2.0/logBook/2001 21226",
+		"/Users/yclavinas/Documents/UnB/GA/projeto-ga/simpleGA/simpleGA_v2.0/logBook/cleaner.py",
+		"/Users/yclavinas/Documents/UnB/GA/projeto-ga/simpleGA/simpleGA_v2.0/logBook/2000_blend.txt",
+		"/Users/yclavinas/Documents/UnB/GA/projeto-ga/simpleGA/simpleGA_v2.0/logBook/2001 blend,roleta,polynomialBounded",
+		"/Users/yclavinas/Documents/UnB/GA/projeto-ga/simpleGA/simpleGA_v2.0/logBook/2000 blend,roleta,polynomialBounded",
+		"/Users/yclavinas/Documents/UnB/GA/projeto-ga/simpleGA/simpleGA_v2.0/logBook/2000 simBinBounded,roleta,polynomialBounded",
+		"/Users/yclavinas/Documents/UnB/GA/projeto-ga/simpleGA/simpleGA_v2.0/simpleGA_V2.0.py",
+		"/Users/yclavinas/Documents/UnB/GA/projeto-ga/simpleGA/simpleGA_v2.0/50_exec_ComparacaoOperadores.py",
+		"/Users/yclavinas/Documents/UnB/GA/projeto-ga/simpleGA/simpleGA_v2.0/logBook/2010_blend.txt",
+		"/Users/yclavinas/Documents/UnB/GA/projeto-ga/simpleGA/simpleGA_v2.0/logBook/2010_simBinBounded.txt",
+		"/Users/yclavinas/Documents/UnB/GA/projeto-ga/simpleGA/simpleGA_v2.0/logBook/2010 21223",
+		"/Users/yclavinas/Documents/UnB/GA/projeto-ga/simpleGA/simpleGA_v2.0/logBook/2000 21227",
+		"/Users/yclavinas/Documents/UnB/GA/projeto-ga/simpleGA/simpleGA_v2.0/analiseOperadores/selRoulette(cxOnePoint, mutPolynomialBounded).txt",
+		"/Users/yclavinas/Documents/UnB/GA/projeto-ga/simpleGA/simpleGA_v2.0/analiseOperadores/selRandom(cxOnePoint, mutPolynomialBounded).txt",
+		"/Users/yclavinas/Documents/UnB/GA/projeto-ga/simpleGA/simpleGA_v2.0/analiseOperadores/selTournament(cxUniform, mutPolynomialBounded).txt",
+		"/Users/yclavinas/Documents/UnB/GA/projeto-ga/simpleGA/simpleGA_v2.0/AutoAdaptativo.py",
+		"/Users/yclavinas/Documents/UnB/GA/projeto-ga/simpleGA/simpleGA_v2.0/50_exec_Auto.py",
+		"/Users/yclavinas/Documents/UnB/GA/projeto-ga/saida.txt",
+		"/Users/yclavinas/Documents/UnB/GA/projeto-ga/simpleGA/simpleGA_v2.0/cleaner.py",
+		"/Users/yclavinas/Documents/UnB/GA/projeto-ga/simpleGA/simpleGA_v2.0/2000 Uniform,roleta,polynomialBounded",
+		"/Users/yclavinas/Documents/UnB/GA/projeto-ga/simpleGA/simpleGA_v2.0/teste.txt",
+		"/Users/yclavinas/Documents/UnB/GA/projeto-ga/simpleGA/simpleGA_v2.0/teste2.txt",
+		"/Users/yclavinas/Documents/UnB/GA/projeto-ga/simpleGA/simpleGA_v2.0/2006 simulatedBinary,roleta,polynomialBounded",
+		"/Users/yclavinas/Documents/UnB/GA/projeto-ga/simpleGA/simpleGA_v2.0/14-10.mapas/SimulatedBinaryBounded/cleaner.py",
+		"/Users/yclavinas/Documents/UnB/GA/projeto-ga/simpleGA/simpleGA_v2.0/14-10.mapas/Uniform/cleaner.py",
+		"/Users/yclavinas/Documents/UnB/GA/projeto-ga/simpleGA/simpleGA_v2.0/14-10.mapas/AA/AA-analise_operadores(cxUniform, selRoulette).txt",
+		"/Users/yclavinas/Documents/UnB/GA/projeto-ga/simpleGA/simpleGA_v2.0/14-10.mapas/AA/2011-AA-analise_operadores(cxUniform, selRoulette).txt",
+		"/Users/yclavinas/Documents/UnB/GA/projeto-ga/simpleGA/simpleGA_v2.0/14-10.mapas/AA/mapas.R",
+		"/Users/yclavinas/Documents/UnB/GA/projeto-ga/simpleGA/simpleGA_v2.0/14-10.mapas/AA/cleaner.py",
+		"/Users/yclavinas/Documents/UnB/GA/projeto-ga/simpleGA/simpleGA_v2.0/14-10.mapas/cleaner.py",
+		"/Users/yclavinas/Documents/UnB/GA/projeto-ga/simpleGA/simpleGA_v2.0/14-10.mapas/2000-cxBlend(selRoulette, mutPolynomialBounded).txt",
+		"/Users/yclavinas/Documents/UnB/GA/projeto-ga/simpleGA/simpleGA_v2.0/14-10.mapas/cxBlend(selRoulette, mutPolynomialBounded).txt",
+		"/Users/yclavinas/Documents/UnB/GA/11-06-Data/MapaCalor/2000-modelo.txt",
+		"/Users/yclavinas/Documents/Eric 14.08.2013/D/Programas/AVG/3rd_party/licenses/ace.txt",
+		"/Users/yclavinas/Documents/UnB/GA/projeto-ga/simpleGA/simpleGA_v2.0/logBook/2000 21224",
+		"/Users/yclavinas/Documents/UnB/GA/projeto-ga/simpleGA/simpleGA_v2.0/analiseOperadores/untitled",
+		"/Users/yclavinas/Documents/UnB/GA/projeto-ga/simpleGA/simpleGA_v2.0/100_exec.py",
+		"/Users/yclavinas/Dropbox/operadores/1-cxOnePoint(selWorst, mutShuffleIndexes).txt",
+		"/Users/yclavinas/Dropbox/operadores-?/1-selTournament(cxOnePoint, mutShuffleIndexes).txt",
+		"/Users/yclavinas/Documents/UnB/GA/projeto-ga/simpleGA/simpleGA_v2.0/umaVez.py",
+		"/Users/yclavinas/Documents/UnB/GA/projeto-ga/log_com_vetor/testes.py",
+		"/Users/yclavinas/Documents/UnB/GA/11-06-Data/MapaCalor/2013-reais.txt",
+		"/Users/yclavinas/Documents/SentimentAnalisys/prática/lesson3_code.py",
+		"/Users/yclavinas/Documents/SentimentAnalisys/new_Tweet_CPBR_R.R",
+		"/Users/yclavinas/Documents/UnB/GA/projeto-ga/jmacat_20000101_20131115_Mth2.5.dat",
+		"/Users/yclavinas/Documents/UnB/GA/projeto-ga/testes.py",
+		"/Users/yclavinas/Documents/UnB/GA/projeto-ga/simpleGA/simpleGA_v2.0/terremotos.txt",
+		"/Users/yclavinas/Documents/UnB/GA/projeto-ga/novo_filtro_terremotos.txt",
+		"/Users/yclavinas/Documents/UnB/GA/projeto-ga/catalog_fnet_1997_20130429_f3.txt",
+		"/Users/yclavinas/Documents/SentimentAnalisys/lesson2_code.py",
+		"/Users/yclavinas/Documents/UnB/GA/projeto-ga/simpleGA/simpleGA_v2.0/simpleGA_V2.0",
+		"/Users/yclavinas/Documents/UnB/GA/projeto-ga/log_com_vetor/simple_GA.py",
+		"/Users/yclavinas/Documents/UnB/GA/projeto-ga/<h3>",
+		"/Users/yclavinas/Documents/UnB/GA/projeto-ga/98-2013.txt",
+		"/Users/yclavinas/Documents/UnB/GA/projeto-ga/quantAnos.txt",
+		"/Users/yclavinas/Documents/UnB/GA/projeto-ga/simpleGA/zechar_sw/readme.txt",
+		"/Users/yclavinas/Documents/UnB/GA/projeto-ga/simpleGA/zechar_sw/SWPCatalog.dat",
+		"/Users/yclavinas/Documents/UnB/GA/projeto-ga/simpleGA/zechar_sw/DBMForecast.xml",
+		"/Users/yclavinas/Documents/UnB/GA/projeto-ga/simpleGA/zechar_sw/swConfig.txt",
+		"/Users/yclavinas/Documents/UnB/GA/projeto-ga/simpleGA/zechar_sw/src/org/corssa/predictiontesting/ROCTools.java",
+		"/Users/yclavinas/Documents/UnB/GA/projeto-ga/simpleGA/zechar_sw/src/org/corssa/predictiontesting/GamblingScoreTools.java",
+		"/Users/yclavinas/Documents/UnB/GA/projeto-ga/simpleGA/zechar_sw/src/org/corssa/predictiontesting/MathUtil.java",
+		"/Users/yclavinas/Documents/UnB/GA/projeto-ga/simpleGA/zechar_sw/src/org/corssa/predictiontesting/LikelihoodTools.java",
+		"/Users/yclavinas/Documents/UnB/SO/trabalho/trabalhoSO/teste.txt",
+		"/Users/yclavinas/Downloads/zechar_sw/src/org/corssa/predictiontesting/Catalog.java",
+		"/Users/yclavinas/Downloads/zechar_sw/src/org/corssa/predictiontesting/ArrayUtil.java",
+		"/Users/yclavinas/Downloads/zechar_sw/readme.txt",
+		"/Users/yclavinas/Downloads/zechar_sw/src/org/corssa/predictiontesting/Forecast.java",
+		"/Users/yclavinas/Downloads/zechar_sw/src/org/corssa/predictiontesting/MathUtil.java",
+		"/Users/yclavinas/Downloads/zechar_sw/src/org/corssa/predictiontesting/LikelihoodTools.java",
+		"/Users/yclavinas/Downloads/zechar_sw/src/org/corssa/predictiontesting/GeoUtil.java",
+		"/Users/yclavinas/Downloads/zechar_sw/src/org/corssa/predictiontesting/GamblingScoreTools.java",
+		"/Users/yclavinas/Documents/UnB/GA/projeto-ga/profiler2.0.py",
+		"/Users/yclavinas/Documents/UnB/GA/11-06-Data/MapaCalor/cleaner.py",
+		"/Users/yclavinas/Documents/UnB/GA/11-06-Data/cleaner.py",
+		"/Users/yclavinas/Documents/UnB/GA/11-06-Data/MapaCalor/analiseOperadores.txt",
+		"/Users/yclavinas/Documents/UnB/GA/11-06-Data/MapaCalor/1-analise_operadores(cxOnePoint, mutShuffleIndexes).txt",
+		"/Users/yclavinas/Downloads/noname",
+		"/Users/yclavinas/Documents/UnB/GA/projeto-ga/testes_cx_deap/one_max_prob.py",
+		"/Users/yclavinas/Dropbox/100operadores-cf0?/1-selWorst_COMtabelafatorial(cxOnePoint, mutShuffleIndexes).txt",
+		"/Users/yclavinas/Dropbox/hmm.txt",
+		"/Users/yclavinas/Documents/UnB/GA/projeto-ga/log_com_vetor/simpleGA_old.py",
+		"/Users/yclavinas/Documents/UnB/GA/projeto-ga/log_com_vetor/umaVez.py",
+		"/Users/yclavinas/Dropbox/operadores-?/faltam",
+		"/Users/yclavinas/Documents/UnB/GA/projeto-ga/umaVez.py",
+		"/Users/yclavinas/Documents/UnB/GA/projeto-ga/simpleGA(old).py",
+		"/Users/yclavinas/Documents/UnB/GA/projeto-ga/log com vetor/log_likelihood.py",
+		"/Users/yclavinas/Dropbox/100operadores-cf0?/44-analise_operadores(cxOnePoint, mutShuffleIndexes).txt",
+		"/Users/yclavinas/Dropbox/operadores-?/1-cxOnePoint(selWorst, mutShuffleIndexes).txt",
+		"/Users/yclavinas/Documents/UnB/GA/11-06-Data/cxOnePoint(selWorst, mutShuffleIndexes)/2000-cxOnePoint.txt",
+		"/Users/yclavinas/Documents/UnB/GA/projeto-ga/log com vetor/exec.py",
+		"/Users/yclavinas/Documents/UnB/GA/11-06(Data)/analiseOperadores.txt",
+		"/Users/yclavinas/Documents/UnB/GA/11-06(Data)/cleaner.py",
+		"/Users/yclavinas/Documents/UnB/GA/projeto-ga/log com vetor/teste.py",
+		"/Users/yclavinas/Documents/UnB/GA/projeto-ga/profiler.py",
+		"/Users/yclavinas/Documents/UnB/GA/projeto-ga/log com vetor/simple_GA.py",
+		"/Users/yclavinas/Dropbox/operadores-?/1-cxTwoPoints(selWorst, mutShuffleIndexes).txt",
+		"/Users/yclavinas/Documents/UnB/GA/projeto-ga/tabela_fatorial.txt",
+		"/Users/yclavinas/Documents/UnB/GA/projeto-ga/log com vetor/calculo_grupos.py",
+		"/Users/yclavinas/Documents/UnB/GA/projeto-ga/log com vetor/fatorial.py",
+		"/Users/yclavinas/Documents/UnB/GA/projeto-ga/log com vetor/calc_longitude.py",
+		"/Users/yclavinas/Documents/UnB/GA/projeto-ga/log com vetor/calc_lat.py"
+	],
+	"find":
+	{
+		"height": 35.0
+	},
+	"find_in_files":
+	{
+		"height": 93.0,
+		"where_history":
+		[
+			""
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": true,
+		"find_history":
+		[
+			"calc_grupo_coord",
+			"wifi",
+			"line",
+			"\\t",
+			"	> ",
+			"[1]",
+			"	> simBinBounded",
+			"2000",
+			"Blend",
+			"blend",
+			"gen	time   	min     	avg     	max     	std    ",
+			"99\\ ",
+			"-2087.8",
+			"f.open",
+			"array",
+			"random",
+			"2000",
+			"blend",
+			"Uniform",
+			"2093.53000",
+			"\\n",
+			"^[a-z]*\\t*[a-z]*   \\t[a-z]*     \\t[a-z]*     \\t[a-z]*     \\t[a-z]*    \\n",
+			"^[a-z]*\\t*[a-z]*   \\t[a-z]*     \\t[a-z]*     \\t[a-z]*     \\t[a-z]*    ",
+			"[a-z]*",
+			"logbook",
+			"exit(",
+			"ano_limite",
+			"5",
+			"exit(0",
+			"print",
+			"exit",
+			"vector_quantidade",
+			"evaluate",
+			"poisson_",
+			"dados_observados_R",
+			"cria_vector",
+			"arq_entrada",
+			"poisson",
+			"mi",
+			"print",
+			"evaluate",
+			"exit(",
+			"exit",
+			"logbook",
+			"log",
+			"select",
+			"logbook",
+			"mate",
+			"poisson",
+			"double",
+			"float",
+			"for i in range(1):",
+			"starttime",
+			"f.close()",
+			"hof",
+			"print",
+			"tools",
+			"toolbox = base.Toolbox()",
+			"pop",
+			"for i in range(50):",
+			"best",
+			"selBest",
+			"for i in range(1):",
+			"../../../",
+			"operadores-?",
+			"for i in range(50):",
+			"../../../",
+			"	for i in range(50):",
+			"\n	# 	NUM_PROCESSES = 2\n	# 	def timeConsumingFunction():\n	# 	    x = 1\n	# 	    for n in xrange(1000000):\n	# 	        x += 1",
+			"def timeConsumingFunction():\n		    x = 1\n		    for n in xrange(1000000):\n		        x += 1",
+			"NUM_PROCESSES = 1",
+			"for i in range(50):",
+			"for i in range(100):",
+			"simple_GA.py",
+			"arg",
+			"poisson_press",
+			"mi",
+			"quant_por_grupoMODELO",
+			"print",
+			"expectations",
+			"print q",
+			"print",
+			"quant_por_grupo",
+			"mi =",
+			"mi",
+			"quant_por_grupo",
+			"sera",
+			"global mi",
+			"global quant_por_grupo",
+			"global",
+			"arq_entrada",
+			"exit(0",
+			"36.3",
+			"140.3",
+			"print",
+			"calcular_expectations",
+			"raw_input",
+			"raw_",
+			"print",
+			"2010",
+			"4000",
+			"2000",
+			"RELMCatalog",
+			"orderedRandomIntegers",
+			"numberOfEqksInFile",
+			"observationFile",
+			"12",
+			"2010",
+			"print",
+			"mi",
+			"poisson",
+			"poissin",
+			"print",
+			"poisson_press",
+			"exit(0)",
+			"cria_vector",
+			"dados_obser",
+			"fatorial",
+			"\\,",
+			"\\]",
+			"\\[",
+			"\\(-.*\\n",
+			"\\(-[0-9]*\\.[0-9]*\\,\\)\\n",
+			"\\,\\)\\(",
+			"\\(-.*\\n",
+			"\\,\\)\\(",
+			"\\(-.*",
+			"\\,\\)\\("
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": true,
+		"replace_history":
+		[
+			" ",
+			"simBinBounded",
+			"simulatedBinary",
+			"blend",
+			"",
+			"for i in range(50):",
+			"for i in range(1):",
+			"for i in range(50):",
+			"../../../../../../",
+			"operadores",
+			"for i in range(1):",
+			"",
+			"	for i in range(1):",
+			"",
+			"#",
+			"",
+			"NUM_PROCESSES = 2",
+			"for i in range(25):",
+			"for i in range(50):",
+			"simpleGA_V2.0.py",
+			"",
+			"\\n",
+			"",
+			"\\n",
+			"",
+			" ",
+			"",
+			" ",
+			"",
+			" ",
+			"",
+			" ",
+			"",
+			" ",
+			"",
+			" ",
+			"",
+			" ",
+			"",
+			" ",
+			"",
+			" ",
+			"",
+			"#@profile",
+			"@profile",
+			"#@profile",
+			"@profile",
+			"#@profile",
+			"@profile",
+			"#@profile",
+			"NUM_PROCESSES = 25",
+			"NUM_PROCESSES = 500",
+			"range(1)",
+			"NUM_PROCESSES = 1",
+			"w+1",
+			"range(1)",
+			"NUM_PROCESSES = 1",
+			"NUM_PROCESSES = 500",
+			"\"CF0\" + str(w+3)/\"CF0\" + str(w+3)",
+			"str(w+3)",
+			", str(k)",
+			"NUM_PROCESSES = 1",
+			"str(k+3)",
+			"CF0\" + str(i+3) + \"",
+			"\"CF0\" + str(i+3) + \"",
+			"NUM_PROCESSES = 500",
+			"",
+			" ",
+			"",
+			"analise_operadores",
+			"\\t",
+			" ",
+			"",
+			"brucedickinson",
+			"saopaulo",
+			"bruce_dickinson",
+			"amanha",
+			"sao",
+			"alcool",
+			"video",
+			"saopaulo",
+			"sao_paulo",
+			"",
+			"e",
+			"porta",
+			"server",
+			"client",
+			"server",
+			"msg",
+			"sock",
+			"msg_cliente",
+			"msg_servidor",
+			"msg_cliente",
+			"teste",
+			"N",
+			"expectation",
+			"matriz",
+			"tamanho_vetor",
+			"agrupamento",
+			"+",
+			"lista_2",
+			"lista_1",
+			"meio",
+			"t_total",
+			"arq_saida",
+			"arq",
+			"saida",
+			"arq_saida",
+			"merge_sort",
+			"quant_entrada",
+			"t_clock",
+			"size",
+			"t_exato",
+			"arq_saida",
+			"arq",
+			"t_fim",
+			"t_inicio",
+			"'"
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"sheets":
+			[
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 21.0
+	},
+	"input":
+	{
+		"height": 0.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"project": "50_exec_Auto.sublime-project",
+	"replace":
+	{
+		"height": 40.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_symbol":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"selected_group": 0,
+	"settings":
+	{
+	},
+	"show_minimap": true,
+	"show_open_files": true,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 155.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}
